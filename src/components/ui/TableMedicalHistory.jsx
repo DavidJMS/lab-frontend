@@ -28,11 +28,11 @@ import {
           </FormControl>
           <Text>Fecha</Text>
           <FormControl isReadOnly={true} >
-          <Select placeholder='Select option'>
-            <option value='option1'>Option 1</option>
-            <option value='option2'>Option 2</option>
-            <option value='option3'>Option 3</option>
-          </Select>
+          <Input
+            placeholder="Select Date and Time"
+            size="md"
+            type="datetime-local"
+            />
           </FormControl>
           <Image height='2rem' src={SearchIcon} />
         </HStack>
