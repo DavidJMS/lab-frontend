@@ -1,17 +1,27 @@
 import { useState } from 'react'
-import { Button } from '@chakra-ui/react'
-import LayoutMedicalHistory from './components/Layouts/LayoutMedicalHistory.jsx'
-import LayoutFormMedical from './components/Layouts/LayoutFormMedical.jsx'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 
+// Layouts
+import MainLayout from './components/Layouts/MainLayout'
+
+// Pages
+import MedicalHistories from './pages/MedicalHistories'
+import AddMedicalHistory from './pages/AddMedicalHistory'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div>
-      <LayoutMedicalHistory />,
-      <LayoutFormMedical />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="" element={<MedicalHistories />} />
+        <Route path="add" element={<AddMedicalHistory />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
