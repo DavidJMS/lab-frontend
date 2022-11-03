@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react"
+import { Box, Flex } from "@chakra-ui/react"
 import TableMedicalHistory from "../ui/TableMedicalHistory"
 import PaginationButtons from "../ui/PaginationButtons"
 import Header from "./Header"
@@ -11,7 +11,9 @@ const LayoutMedicalHistory = () => {
          <Box mb={4}  width='100%' overflow='auto' whiteSpace='nowrap'>
             <TableMedicalHistory />
         </Box>
+        <Flex justifyContent='flex-end' w='84%'>
         <PaginationButtons/>
+        </Flex>
        </Box>
     )
 }

@@ -19,8 +19,8 @@ import {
     
   const TableMedicalHistory = ({ data }) => {
     return (
-     <Box>
-       <Flex justifyContent='space-around'>
+     <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
+       <Flex justifyContent='space-around' w='82%'>
        <HStack mb={4} mt={4}>
           <Text>Cedula</Text>
           <FormControl isReadOnly={true} >

@@ -11,7 +11,7 @@ const ModalClient = () => {
       setSize(newSize)
       onOpen()
     }
-  
+
     const sizes = [  'xl']
   
     return (
@@ -28,8 +28,8 @@ const ModalClient = () => {
           <ModalOverlay />
           <ModalContent>
             <ModalHeader bgColor='#0DA7D9' height='1rem' color='#F5F5F5' textAlign='center' w='100%'>Modal Title</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
+            <ModalCloseButton color='#F5F5F5' />
+            <ModalBody w='100%'>
                 <LayoutClient />
             </ModalBody>
             <ModalFooter>

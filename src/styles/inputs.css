@@ -1,0 +1,7 @@
+.input--file {
+    display: none;
+}
+
+.input--text__borderbottom ::focus-visible {
+    box-shadow: none;
+}

@@ -23,13 +23,13 @@ import {
      <Box >
        <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
         <Box>
-          <HStack>
+          <HStack w='100%' padding={4}>
               <Text>Cedula :</Text>
               <Input placeholder="Texto" w='auto' />
               <Image height='2rem' src={SearchIcon} />
           </HStack>
         </Box>
-        <Table variant='simple' width='70%' m={4}>
+        <Table variant='simple' width='100%' m={4}>
           <Thead bg='#F4F7FF'>
             <Tr>
               <Th>Nombre y Apellido</Th>
