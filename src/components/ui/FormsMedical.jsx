@@ -5,7 +5,8 @@ import {
     Box,
     Select,
     Button,
-    Image
+    FormControl,
+    Spacer
   } from "@chakra-ui/react";
   import Folder from '../../assets/Folder.svg'
     
@@ -15,44 +16,52 @@ import {
         <Text mt={4} borderRadius='5px' textAlign='center' fontSize='1.1rem' color='#F5F5F5' bgColor='#0DA7D9' w='90%'>Datos Personales</Text>
       <Box mt={4} width='80%'>
        <HStack mb={4}>
+          <FormControl>
           <Text>Nombre y Apellido :</Text>
           <Input w='auto' />
-       </HStack>
-       <HStack mb={4}>
+          </FormControl>
+          <FormControl>
           <Text>Cedula :</Text>
           <Input w='auto' />
-       </HStack>
-       <HStack mb={4}>
+          </FormControl>
+          <FormControl>
           <Text>Edad :</Text>
           <Input w='auto' />
+          </FormControl>
        </HStack>
-       <HStack mb={4}>
+       <HStack mb={4} w='66%'>
+         <FormControl>
           <Text>Sexo :</Text>
-          <Select placeholder='Select option' w='auto'>
+          <Select placeholder='Select option' w='14rem'>
             <option value='option1'>Option 1</option>
             <option value='option2'>Option 2</option>
             <option value='option3'>Option 3</option>
           </Select>
-       </HStack>
-       <HStack mb={4}>
+         </FormControl>
+         <Spacer />
+          <FormControl>
           <Text>Numero de telefono :</Text>
           <Input w='auto' />
+          </FormControl>
+         <Spacer />
        </HStack>
        <HStack mb={4}>
+         <FormControl>
           <Text>Direccion :</Text>
           <Input w='auto' />
-       </HStack>
-       <HStack mb={4}>
+          </FormControl>
+          <FormControl>
           <Text>Correo :</Text>
           <Input w='auto' />
-       </HStack>
-       <HStack mb={4}>
+          </FormControl>
+          <FormControl>
           <Text>Fecha :</Text>
-          <Select placeholder='Select option' w='auto'>
-            <option value='option1'>Option 1</option>
-            <option value='option2'>Option 2</option>
-            <option value='option3'>Option 3</option>
-          </Select>
+          <Input
+            placeholder="Select Date and Time"
+            size="md"
+            type="datetime-local"
+            />
+         </FormControl>
        </HStack>
        <HStack justifyContent='end' w='100%' display='flex'>
           <Button bgColor='#D0D0D0' mr={8}>Agregar</Button>
@@ -64,8 +73,8 @@ import {
       <HStack  mt={4}  w='40%' borderBottom='1px solid #D0D0D0'>
          <Text >Prueba 1</Text>
       </HStack>
-      <HStack  mt={4}  w='40%' borderBottom='1px solid #D0D0D0'>
          <Text >Prueba 2</Text>
+      <HStack  mt={4}  w='40%' borderBottom='1px solid #D0D0D0'>
       </HStack>
       <HStack  mt={4}  w='40%' borderBottom='1px solid #D0D0D0'>
          <Text >Prueba 3</Text>
@@ -76,26 +85,13 @@ import {
       <HStack mt={4} w='40%' borderBottom='1px solid #D0D0D0'>
          <Text >Prueba 5</Text>
       </HStack>
+      <HStack justifyContent='end' w='100%' display='flex'>
+            <Button bgColor='#D0D0D0' mr={8}>Agregar</Button>
+        </HStack>
       </Box>
 
         <Text mt={4} borderRadius='5px' textAlign='center' fontSize='1.1rem' color='#F5F5F5' bgColor='#0DA7D9' w='90%'>Resultado de Examenes</Text>
       <Box mt={8} width='80%'>
-        <HStack>
-         <label htmlFor="1">
-          <Image height='4rem' src={Folder}></Image>
-         </label>
-         <input className="input--file" type="file" name="prueba2" id="1" />
-
-         <label htmlFor="2">
-          <Image height='4rem' src={Folder}></Image>
-         </label>
-         <input className="input--file" type="file" name="prueba3" id="2" />
-
-         <label htmlFor="3">
-          <Image height='4rem' src={Folder}></Image>
-         </label>
-         <input className="input--file" type="file" name="prueba3" id="3" />
-        </HStack>
         <HStack justifyContent='end' w='100%' display='flex'>
             <Button bgColor='#D0D0D0' mr={8}>Agregar</Button>
         </HStack>

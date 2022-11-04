@@ -14,8 +14,6 @@ const LayoutFormMedical = () => {
          <Box mb={4}  width='100%'>
             <FormsMedical />
         </Box>
-        <ModalClient />
-        <ModalTest />
        </Box>
     )
 }
