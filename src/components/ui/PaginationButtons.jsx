@@ -1,4 +1,4 @@
-import { Flex, Button } from '@chakra-ui/react';
+import { Flex, Button } from '@chakra-ui/react'
 
 const PaginationButtons = () => {
   return (
@@ -17,7 +17,7 @@ const PaginationButtons = () => {
         Siguiente
       </Button>
     </Flex>
-  );
+  )
 }
- 
-export default PaginationButtons;
+
+export default PaginationButtons

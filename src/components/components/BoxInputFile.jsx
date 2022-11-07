@@ -232,8 +232,8 @@ const BoxInput = ({ setFiles, files: filesInfo, errors, setErrors, extensionsAll
           do {
             fileData = await window.pdfjsLib.getDocument({ url: base64, password }).promise.then(function () {
               const data = {
-                file: file,
-                type: type,
+                file,
+                type,
                 id: Math.round(new Date().getTime() * (Math.random() + 1))
               }
               if (password) {
@@ -249,8 +249,8 @@ const BoxInput = ({ setFiles, files: filesInfo, errors, setErrors, extensionsAll
               const message = titles[error.message]
               if (!message) {
                 return {
-                  file: file,
-                  type: type,
+                  file,
+                  type,
                   id: Math.round(new Date().getTime() * (Math.random() + 1))
                 }
               }
@@ -306,8 +306,8 @@ const BoxInput = ({ setFiles, files: filesInfo, errors, setErrors, extensionsAll
           } while (fileData.error)
         } else {
           data.push({
-            file: file,
-            type: type,
+            file,
+            type,
             id: Math.round(new Date().getTime() * (Math.random() + 1))
           })
         }

@@ -1,4 +1,4 @@
-import { useField, useFormikContext, ErrorMessage } from 'formik';
+import { useField, useFormikContext, ErrorMessage } from 'formik'
 import {
   Textarea,
   Input,
@@ -8,7 +8,7 @@ import {
 import { WarningIcon } from '@chakra-ui/icons'
 
 const MessageError = ({ children }) => {
-  return <small style={{ marginTop: '5px', color: '#F44336' }} >{children}</small>
+  return <small style={{ marginTop: '5px', color: '#F44336' }}>{children}</small>
 }
 
 const withError = Field => {
@@ -21,15 +21,15 @@ const withError = Field => {
           <Field {...props} />
           {
             errors[name] && touched[name] &&
-            <WarningIcon color='#F44336' position='absolute' right='10px' top='50%' transform='translateY(-50%)' />
+              <WarningIcon color='#F44336' position='absolute' right='10px' top='50%' transform='translateY(-50%)' />
           }
         </Box>
         <ErrorMessage name={name} component={MessageError} />
       </>
-    );
+    )
   }
   MyComp.displayName = 'withError'
-  return MyComp;
+  return MyComp
 }
 
 const FieldSelect = withError(Select)
@@ -39,17 +39,17 @@ const FieldInput = withError(Input)
 const Field = (props) => {
   const [field] = useField(props)
 
-  if (props.component === 'select'){
+  if (props.component === 'select') {
     return (
-      <FieldSelect boxShadow='sm' {...props} {...field} >
+      <FieldSelect boxShadow='sm' {...props} {...field}>
         {props.children}
       </FieldSelect>
     )
-  } else if(props.component === 'textarea'){
+  } else if (props.component === 'textarea') {
     return <FieldTexarea boxShadow='sm' {...props} {...field} />
   }
-  
+
   return <FieldInput boxShadow='sm' {...props} {...field} />
 }
 
-export default Field;
+export default Field

@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import LayoutMedicalHistory from '../components/Layouts/LayoutMedicalHistory'
 
-// Services 
+// Services
 import { getMedicalHistories } from '../services/medical.js'
 
 const MedicalHistories = () => {
