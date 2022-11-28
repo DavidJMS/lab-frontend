@@ -4,7 +4,7 @@ import PaginationButtons from '../ui/PaginationButtons'
 import Header from './Header'
 
 const LayoutMedicalHistory = () => {
-  const title = 'Historial medico'
+  const title = 'Listado de clientes'
   return (
     <Box width='100%'>
       <Header title={title} />

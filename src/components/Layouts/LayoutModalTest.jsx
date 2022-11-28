@@ -9,7 +9,7 @@ import {
 import Header from './Header'
 import SearchIcon from '../../assets/SearchTest.svg'
 
-const LayoutTest = () => {
+const LayoutModalTest = () => {
   const title = 'Modal Cliente'
   return (
     <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
@@ -34,13 +34,13 @@ const LayoutTest = () => {
         </HStack>
         <Checkbox defaultChecked />
       </HStack> <HStack mt={4} w='70%'>
-                  <HStack border='1px solid #D0D0D0' borderRadius='6px' color='#718096' padding='1rem' w='100%' height='2.5rem'>
+            <HStack border='1px solid #D0D0D0' borderRadius='6px' color='#718096' padding='1rem' w='100%' height='2.5rem'>
           <Text>Otros</Text>
         </HStack>
-                  <Checkbox />
-                          </HStack>
+          <Checkbox />
+        </HStack>
     </Box>
   )
 }
 
-export default LayoutTest
+export default LayoutModalTest

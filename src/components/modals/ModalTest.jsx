@@ -4,7 +4,7 @@ import {
   Modal, ModalOverlay, ModalContent,
   ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, useDisclosure
 } from '@chakra-ui/react'
-import LayoutTest from '../Layouts/LayoutTest'
+import LayoutModalTest from '../Layouts/LayoutModalTest'
 
 const ModalTest = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -23,10 +23,10 @@ const ModalTest = () => {
       <Modal onClose={onClose} size={size} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader bgColor='#0DA7D9' height='1rem' color='#F5F5F5' textAlign='center' w='100%'>Modal Title</ModalHeader>
+          <ModalHeader bgColor='#0DA7D9' height='1rem' color='#F5F5F5' textAlign='center' w='100%'>Modal Test</ModalHeader>
           <ModalCloseButton color='#F5F5F5' />
           <ModalBody>
-            <LayoutTest />
+            <LayoutModalTest />
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Cerrar</Button>

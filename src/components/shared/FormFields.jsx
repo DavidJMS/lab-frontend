@@ -51,7 +51,7 @@ const withError = Field => {
           {
             !noErrorIcon && errors[name] && touched[name] &&
               <InputRightElement color='danger.100' {...errorIconProps}>
-                <ErrorOutlineIcon style={{ width: '14px', height: '14px', color: 'inherit' }} />
+                <ErrorOutlineIcon style={{ width: '18px', height: '18px', color: 'inherit' }} />
               </InputRightElement>
           }
         </InputGroup>

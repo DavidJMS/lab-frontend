@@ -15,6 +15,7 @@ import {
   Image
 } from '@chakra-ui/react'
 import SearchIcon from '../../assets/SearchClient.svg'
+import ModalTest from '../modals/ModalTest'
 
 const TableMedicalHistory = ({ data }) => {
   return (
@@ -39,7 +40,7 @@ const TableMedicalHistory = ({ data }) => {
         <HStack mb={4} mt={4} />
 
         <HStack>
-          <Button bgColor='#D0D0D0'>Agregar historial</Button>
+          <ModalTest />
         </HStack>
 
       </Flex>
