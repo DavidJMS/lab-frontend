@@ -2,20 +2,20 @@ import { Box } from '@chakra-ui/react'
 import TableMedicalHistory from '../ui/TableMedicalHistory'
 import PaginationButtons from '../ui/PaginationButtons'
 import Header from './Header'
-import FormsMedical from '../ui/FormsMedical'
 import ModalClient from '../modals/ModalClient'
 import ModalTest from '../modals/ModalTest'
+import ClientForm from '../ui/ClientForm'
 
-const LayoutFormMedical = () => {
-  const title = 'Formulario Medico'
+const FormClients = () => {
+  const title = 'Formulario de clientes'
   return (
     <Box width='100%'>
       <Header title={title} />
       <Box mb={4} width='100%'>
-        <FormsMedical />
+        <ClientForm />
       </Box>
     </Box>
   )
 }
 
-export default LayoutFormMedical
+export default FormClients

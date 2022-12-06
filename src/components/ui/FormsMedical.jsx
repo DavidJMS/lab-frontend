@@ -1,135 +1,304 @@
-import React from 'react'
+import React, {useState} from 'react'
+import { Formik, Form } from 'formik'
 import {
   Text,
   HStack,
   Input,
   Box,
-  Select,
+  Stack,
   Button,
   FormControl,
+  useToast,
   Spacer,
-  useDisclosure
+  useDisclosure,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Spinner
 } from '@chakra-ui/react'
 import ModalClient from '../modals/ModalClient'
+import { Field, Select } from '../shared/FormFields'
+import { useNavigate } from 'react-router-dom'
+import { BoxInputIneFront } from '../shared/BoxInputFile'
+
+// services
+import { createClient } from '../../services/clients'
+import { useEffect } from 'react'
 import ModalTest from '../modals/ModalTest'
 
-const FormsMedical = () => {
+const FormsMedical = (client) => {
   // Const para los modales
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [size, setSize] = React.useState('xl')
-
-  const handleSizeClick = (newSize) => {
-    setSize(newSize)
-    onOpen()
+  const toast = useToast()
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+  const [ineFront, setIneFront] = useState([])
+  const [errors, setErrors] = useState({})
+  const [userData, setUserData] = useState()
+  const first_names = userData?.first_names || ''
+  const last_names = userData?.last_names || ''
+  const address = userData?.address || ''
+  const dni = userData?.dni
+  const email = userData?.email
+  const phone = userData?.phone
+  const birth_date = userData?.birth_date
+  const sex = userData?.sex
+console.log(birth_date)
+  const handleSubmit = async (data) => {
+    try {
+      setLoading(true)
+      await createClient(data)
+      toast({
+        title: 'Exito',
+        description: 'Cliente creado de manera exitosa',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right'
+      })
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Hubo en error, intentelo luego.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right'
+      })
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const sizes = ['xl']
+  console.log(loading)
 
+  useEffect(() => {
+    if (userData) {
+      setLoading(true)
+    }
+      
+  }, [userData])
+
+  useEffect(() => {
+    if (userData && loading === true) {
+      setLoading(false)
+    }
+  
+  }, [loading])
+  
+  if (loading) return <Spinner />
   return (
     <>
-      <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
-        <Text mt={4} borderRadius='5px' textAlign='center' fontSize='1.1rem' color='#F5F5F5' bgColor='#0DA7D9' w='90%'>Datos Personales</Text>
+    <Formik
+        initialValues={{
+          first_names: userData?.first_names || '',
+          last_names: last_names || '',
+          email:  email || '',
+          dni: dni || '',
+          sex:  sex || 'Masculino',
+          birth_date: birth_date || '',
+          phone: phone || '',
+          address: address || '',
+        }}
+        validate={(values) => {
+          const errors = {}
+          
+          return errors
+        }}
+        onSubmit={values => {
+          const data = {
+            first_names: values.first_names,
+            last_names: values.last_names,
+            email: values.email,
+            dni: values.dni,
+            sex: values.sex,
+            birth_date: values.birth_date,
+            phone: values.phone,
+            address: values.address,
+          }
+          handleSubmit(data)
+        }}
+      >
+      <Form id='form'>
+      <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
+        <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
+          <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos Personales</Text>
+        </Box>
         <Box mt={4} width='80%'>
           <HStack mb={4}>
             <FormControl>
-              <Text>Nombre y Apellido :</Text>
-              <Input w='auto' />
+              <Text>Nombre :</Text>
+              <Field name='first_names' />
             </FormControl>
             <FormControl>
               <Text>Cedula :</Text>
-              <Input w='auto' />
+              <Field name='dni' />
             </FormControl>
             <FormControl>
-              <Text>Edad :</Text>
-              <Input w='auto' />
+              <Text>Apellido :</Text>
+              <Field name='last_names' />
             </FormControl>
           </HStack>
           <HStack mb={4} w='66%'>
             <FormControl>
               <Text>Sexo :</Text>
-              <Select placeholder='Selecciona una opcion' w='14rem'>
-                <option value='option1'>Masculino</option>
-                <option value='option2'>Femenino</option>
-              </Select>
+              <Field as='select' name='sexo'>
+                <option value="masculino">Masculino</option>
+                <option value="femenino">Femenino</option>
+              </Field>
             </FormControl>
             <Spacer />
             <FormControl>
               <Text>Numero de telefono :</Text>
-              <Input w='auto' />
+              <Field name='phone'/>
             </FormControl>
             <Spacer />
           </HStack>
           <HStack mb={4}>
             <FormControl>
               <Text>Direccion :</Text>
-              <Input w='auto' />
+              <Field name='address' />
             </FormControl>
             <FormControl>
               <Text>Correo :</Text>
-              <Input w='auto' />
+              <Field name='email' />
             </FormControl>
             <FormControl>
               <Text>Fecha :</Text>
-              <Input
-                placeholder='Select Date and Time'
-                size='md'
-                type='datetime-local'
+              <Field
+                name='birth_date'
               />
             </FormControl>
           </HStack>
           <HStack justifyContent='end' w='100%' display='flex'>
-            <ModalClient onClose={onClose} size={size} isOpen={isOpen} />
+            <ModalClient setUserData={setUserData} />
 
           </HStack>
         </Box>
+        
+      </Box>
+      <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
+        <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
+          <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Solicitud de Examen</Text>
+        </Box>
+        <Box mt={4} width='80%'>
+          <Text w={['100%','80%','20%']} borderBottom='1px solid #B7B4B4'>
+            Perfil Tiroideo
+          </Text>
+          <Text mt={8} w={['100%','80%','20%']} borderBottom='1px solid #B7B4B4'>
+            Perfil Tiroideo
+          </Text>
+          <Text mt={8} w={['100%','80%','20%']} borderBottom='1px solid #B7B4B4'>
+            Perfil Tiroideo
+          </Text>
+          <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
+            <ModalTest onClose={onClose} size={size} isOpen={isOpen} />
+          </HStack>
+        </Box>
+      </Box>
+      <Box w='100%' mb={8} mt={4} display='flex' flexDirection='column' alignItems='center'>
+        <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
+          <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos de Pago</Text>
+        </Box>
+        <Box mt={4} width='80%'>
+        <Accordion allowToggle>
+        <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box flex='1' textAlign='left'>
+                Pago Movil
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel w='100%' pb={4}>
+            <HStack>
+              <Text w='25%'>
+                Metodo de pago
+              </Text>
+              <Field name='name' w='auto' />
+            </HStack>
+            <HStack mt={4}>
+            <Text w='25%'>
+                Monto
+              </Text>
+              <Field name='name' w='auto' />
+            </HStack>
+            <HStack mt={4}>
+            <Text w='25%' >
+                Referencia
+              </Text>
+              <Field name='name' w='auto' />
+            </HStack>
+          </AccordionPanel>
+        </AccordionItem>
 
-        <Text mt={4} borderRadius='5px' textAlign='center' fontSize='1.1rem' color='#F5F5F5' bgColor='#0DA7D9' w='90%'>Solicitud de Examenes</Text>
-        <Box mt={8} width='80%'>
-          <HStack mt={4} w='40%' borderBottom='1px solid #D0D0D0'>
-            <Text>Hematologia Completa</Text>
-          </HStack>
-          <HStack mt={4} w='40%' borderBottom='1px solid #D0D0D0'>
-            <Text>Prueba de Covid</Text>
-          </HStack>
-          <HStack mt={4} w='40%' borderBottom='1px solid #D0D0D0'>
-            <Text>Prueba de insulina</Text>
-          </HStack>
-          <HStack justifyContent='end' w='100%' display='flex'>
-            <ModalTest />
-          </HStack>
-        </Box>
-        <Text mt={4} borderRadius='5px' textAlign='center' fontSize='1.1rem' color='#F5F5F5' bgColor='#0DA7D9' w='90%'>Resultado de Examenes</Text>
-        <Box mt={8} width='80%'>
-          <HStack justifyContent='end' w='100%' display='flex'>
-            <Button bgColor='#D0D0D0' mr={8}><label htmlFor='formDocument'>Agregar</label></Button>
-            <input name='formDocument' id='formDocument' type='file' hidden />
-          </HStack>
-        </Box>
-        <Text mt={4} borderRadius='5px' textAlign='center' fontSize='1.1rem' color='#F5F5F5' bgColor='#0DA7D9' w='90%'>Datos de Pago</Text>
-        <Box mt={8} width='80%'>
+        <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box flex='1' textAlign='left'>
+                Divisas
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
           <HStack>
-            <Text>Metodo de pago</Text>
-            <Select placeholder='Seleccionar' w='auto'>
-              <option value='option1'>Pago Movil</option>
-              <option value='option2'>Divisa</option>
-            </Select>
-          </HStack>
+              <Text w='25%'>
+                Metodo de pago
+              </Text>
+              <Field name='name' w='auto' />
+            </HStack>
+            <HStack mt={4}>
+            <Text w='25%'>
+                Monto
+              </Text>
+              <Field name='name' w='auto' />
+            </HStack>
+            <HStack mt={4}>
+            <BoxInputIneFront setFiles={setIneFront} files={ineFront} errors={errors} setErrors={setErrors} />
+            </HStack>
+          </AccordionPanel>
+        </AccordionItem>
+
+        <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box flex='1' textAlign='left'>
+                Efectivo
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
           <HStack>
-            <FormControl>
-              <Text>Monto</Text>
-              <Input type='text' />
-            </FormControl>
-            <FormControl>
-              <Text>Numero de Referencia</Text>
-              <Input w='auto' type='text' />
-            </FormControl>
-          </HStack>
+              <Text w='25%'>
+                Metodo de pago
+              </Text>
+              <Field name='name' w='auto' />
+            </HStack>
+            <HStack mt={4}>
+            <Text w='25%'>
+                Monto
+              </Text>
+              <Field name='name' w='auto' />
+            </HStack>
+            <HStack mt={4}>
+              <BoxInputIneFront setFiles={setIneFront} files={ineFront} errors={errors} setErrors={setErrors} />
+            </HStack>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
         </Box>
         <HStack mt={4} w='100%' justifyContent='center'>
-          <Button>Guardar</Button>
-          <Button bgColor='#F03434'>Cancelar</Button>
+          <Button w='20%' type='submit'>Crear</Button>
         </HStack>
       </Box>
+      </Form>
+      </Formik>
     </>
   )
 }

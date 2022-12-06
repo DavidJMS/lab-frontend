@@ -4,7 +4,7 @@ const fontSizes = {
       sm: "0.875rem",
       md: "1rem",
       lg: "1.125rem",
-      xl: "1.25rem",
+      xl: "1.50rem",
       "2xl": "1.5rem", // h6
       "3xl": "1.875rem", // h5
       "4xl":"2.25rem", // h4
