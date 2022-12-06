@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import LayoutClient from '../Layouts/LayoutClient'
 import {
   Modal, ModalOverlay, ModalContent,
-  ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, useDisclosure
+  ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, useDisclosure, useMediaQuery
 } from '@chakra-ui/react'
 import { getClient, deleteClient } from '../../services/clients'
 
@@ -31,6 +31,9 @@ const ModalClient = ({setUserData}) => {
   const [data, setData] = useState([])
   const toast = useToast()
   const [size, setSize] = React.useState('full')
+
+  const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
+
 
   const handleSizeClick = (newSize) => {
     setSize(newSize)
@@ -105,20 +108,28 @@ const handleDelete = async (id) => {
           <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
             <Box>
               <HStack w='100%' padding={4}>
-                <Text>Cedula :</Text>
-                <Input placeholder='Texto' w='auto' />
-                <Image height='2rem' src={SearchIcon} />
+                <Text fontSize={['.9rem', '1rem']}>Cedula :</Text>
+                <Input placeholder='Texto' w={['50%','auto']} />
+                <Image height='2rem' w={['3.5rem','auto']}  src={SearchIcon} />
               </HStack>
             </Box>
-            <Table variant='simple' width='80%' m={4}>
+            <Table variant='simple' width='100%' m={4}>
+             {IsNotSmallScreen ? 
               <Thead bg='#F4F7FF'>
-                <Tr>
-                  <Th w='42%'>Nombres y Apellidos</Th>
-                  <Th>Cedula</Th>
-                  <Th>Nmro de telefono</Th>
-                  <Th>Escoger</Th>
-                </Tr>
+              <Tr>
+                <Th fontSize={['.5rem', '1rem']}>Nombres y Apellidos</Th>
+                <Th fontSize={['.5rem', '1rem']}>Cedula</Th>
+                <Th fontSize={['.5rem', '1rem']}>Nmro de telefono</Th>
+                <Th fontSize={['.5rem', '1rem']}>Escoger</Th>
+              </Tr>
+              </Thead> :
+              <Thead bg='#F4F7FF'>
+              <Tr>
+                <Th fontSize={['.9rem', '1rem']}>Nombres y Apellidos</Th>
+                <Th fontSize={['.9rem', '1rem']}>Cedula</Th>
+              </Tr>
               </Thead>
+             }
 
               <Tbody>
                 {data.map((client) => (

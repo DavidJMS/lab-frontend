@@ -26,6 +26,7 @@ import { BoxInputIneFront } from '../shared/BoxInputFile'
 // services
 import { createClient } from '../../services/clients'
 import { useEffect } from 'react'
+import ModalTest from '../modals/ModalTest'
 
 const FormsMedical = (client) => {
   // Const para los modales
@@ -184,17 +185,17 @@ console.log(birth_date)
           <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Solicitud de Examen</Text>
         </Box>
         <Box mt={4} width='80%'>
-          <Text w='20%' borderBottom='1px solid #B7B4B4'>
+          <Text w={['100%','80%','20%']} borderBottom='1px solid #B7B4B4'>
             Perfil Tiroideo
           </Text>
-          <Text mt={8} w='20%' borderBottom='1px solid #B7B4B4'>
+          <Text mt={8} w={['100%','80%','20%']} borderBottom='1px solid #B7B4B4'>
             Perfil Tiroideo
           </Text>
-          <Text mt={8} w='20%' borderBottom='1px solid #B7B4B4'>
+          <Text mt={8} w={['100%','80%','20%']} borderBottom='1px solid #B7B4B4'>
             Perfil Tiroideo
           </Text>
-          <HStack justifyContent='end' w='100%' display='flex'>
-            <ModalClient onClose={onClose} size={size} isOpen={isOpen} />
+          <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
+            <ModalTest onClose={onClose} size={size} isOpen={isOpen} />
           </HStack>
         </Box>
       </Box>
@@ -291,9 +292,6 @@ console.log(birth_date)
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-          <HStack justifyContent='end' mt={4} w='100%' display='flex'>
-            <ModalClient onClose={onClose} size={size} isOpen={isOpen} />
-          </HStack>
         </Box>
         <HStack mt={4} w='100%' justifyContent='center'>
           <Button w='20%' type='submit'>Crear</Button>

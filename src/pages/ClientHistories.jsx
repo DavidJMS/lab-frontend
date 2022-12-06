@@ -5,10 +5,12 @@ import { useToast } from '@chakra-ui/react'
 // Services
 import { getClient, deleteClient } from '../services/clients'
 import { useRouteLoaderData } from 'react-router-dom'
+import Header from '../components/Layouts/Header'
 
 const ClientHistories = () => {
     const [data, setData] = useState([])
     const toast = useToast()
+    const title = 'Clientes'
     console.log(data)
 
   useEffect(() => {
@@ -50,7 +52,12 @@ const ClientHistories = () => {
     }
   }
 
-  return <LayoutClient data={data} handleDelete={handleDelete} />
+  return (
+    <>
+      <Header title= {title} />
+      <LayoutClient data={data} handleDelete={handleDelete} />
+    </>
+  )
 }
 
 export default ClientHistories

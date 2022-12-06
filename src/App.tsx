@@ -5,6 +5,9 @@ import {
   Route
 } from 'react-router-dom'
 
+//styles
+import './styles/menu/szhsin.css'
+
 // Layouts
 import MainLayout from './components/Layouts/MainLayout'
 
@@ -23,7 +26,7 @@ function App () {
       <Routes>
         <Route path='' element={<MedicalHistories />} />
         <Route path='client' element={<ClientHistories />} />
-        <Route path='add' element={<AddClient />} />
+        <Route path='add/client' element={<AddClient />} />
         <Route path='add/medical' element={<AddFormMedical />} />
         <Route path='client/edit/:id/' element={<LayoutEditUser />} />
       </Routes>

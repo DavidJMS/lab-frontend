@@ -19,7 +19,7 @@ const ModalTest = () => {
 
   return (
     <>
-      <Button bgColor='#D0D0D0' mr={8} onClick={() => handleSizeClick(size)}>Agregar</Button>
+      <Button bgColor='#D0D0D0' fontSize={['.8rem', '1rem']} mr={8} onClick={() => handleSizeClick(size)}>Agregar</Button>
       <Modal onClose={onClose} size={size} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>

@@ -24,7 +24,7 @@ const ClientForm = () => {
   const toast = useToast()
   const [loadin, setLoading] = useState(true)
   const navigate = useNavigate()
-
+  const title = 'Formulario de clientes'
   const handleSizeClick = (newSize) => {
     setSize(newSize)
     onOpen()
@@ -119,7 +119,7 @@ const ClientForm = () => {
       <Form id='form'>
       <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
         <Box mt={4} width='80%'>
-          <HStack mb={4}>
+          <HStack mb={4} display='flex' flexDirection={['column', 'column', 'row']}>
             <FormControl>
               <Text>Nombre :</Text>
               <Field name='first_names' />
@@ -133,7 +133,7 @@ const ClientForm = () => {
               <Field name='last_names' />
             </FormControl>
           </HStack>
-          <HStack mb={4} w='66%'>
+          <HStack mb={4} mt={4} w={['100%','100%','66%']}  display='flex' flexDirection={['column', 'column', 'row']}>
             <FormControl>
               <Text>Sexo :</Text>
               <Field as='select' name='sexo'>
@@ -143,12 +143,12 @@ const ClientForm = () => {
             </FormControl>
             <Spacer />
             <FormControl>
-              <Text>Numero de telefono :</Text>
+              <Text mt={[4,4,0]}>Numero de telefono :</Text>
               <Field name='phone'/>
             </FormControl>
             <Spacer />
           </HStack>
-          <HStack mb={4}>
+          <HStack mb={4}  display='flex' flexDirection={['column', 'column', 'row']}>
             <FormControl>
               <Text>Direccion :</Text>
               <Field name='address' />

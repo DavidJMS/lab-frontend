@@ -1,0 +1,9 @@
+ /* .szh-menu:hover {
+    background-color: #0DA7D9;
+    color: #FFFF;
+ } */
+ 
+ .szh-menu__item:hover  {
+    background-color: #0DA7D9;
+    color: #FFFF;
+}
