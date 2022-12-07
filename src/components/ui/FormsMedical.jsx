@@ -37,6 +37,7 @@ const FormsMedical = (client) => {
   const [ineFront, setIneFront] = useState([])
   const [errors, setErrors] = useState({})
   const [userData, setUserData] = useState()
+  const [examData, setExamData] = useState([{}])
   const first_names = userData?.first_names || ''
   const last_names = userData?.last_names || ''
   const address = userData?.address || ''
@@ -45,7 +46,7 @@ const FormsMedical = (client) => {
   const phone = userData?.phone
   const birth_date = userData?.birth_date
   const sex = userData?.sex
-  console.log(birth_date)
+console.log(examData)
   const handleSubmit = async (data) => {
     try {
       setLoading(true)
@@ -173,8 +174,29 @@ const FormsMedical = (client) => {
               <HStack justifyContent='end' w='100%' display='flex'>
                 <ModalClient setUserData={setUserData} />
 
-              </HStack>
-            </Box>
+          </HStack>
+        </Box>
+        
+      </Box>
+      <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
+        <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
+          <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Solicitud de Examen</Text>
+        </Box>
+        <Box mt={4} width='80%'>
+          <Text w={['100%','80%','20%']} borderBottom='1px solid #B7B4B4'>
+            Perfil Tiroideo
+          </Text>
+          <Text mt={8} w={['100%','80%','20%']} borderBottom='1px solid #B7B4B4'>
+            Perfil Tiroideo
+          </Text>
+          <Text mt={8} w={['100%','80%','20%']} borderBottom='1px solid #B7B4B4'>
+            Perfil Tiroideo
+          </Text>
+          <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
+            <ModalTest setExamData={setExamData} />
+          </HStack>
+        </Box>
+      </Box>
 
           </Box>
           <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
@@ -197,108 +219,56 @@ const FormsMedical = (client) => {
             </Box>
           </Box>
 
-          <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
-            <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
-              <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Resultado del Examen</Text>
-            </Box>
-            <Box mt={4} width='80%' />
-          </Box>
-          <Box w='100%' mb={8} mt={4} display='flex' flexDirection='column' alignItems='center'>
-            <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
-              <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos de Pago</Text>
-            </Box>
-            <Box mt={4} width='80%'>
-              <Accordion allowToggle>
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box flex='1' textAlign='left'>
-                        Pago Movil
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel w='100%' pb={4}>
-                    <HStack>
-                      <Text w='25%'>
-                        Metodo de pago
-                      </Text>
-                      <Field name='name' w='auto' />
-                    </HStack>
-                    <HStack mt={4}>
-                      <Text w='25%'>
-                        Monto
-                      </Text>
-                      <Field name='name' w='auto' />
-                    </HStack>
-                    <HStack mt={4}>
-                      <Text w='25%'>
-                        Referencia
-                      </Text>
-                      <Field name='name' w='auto' />
-                    </HStack>
-                  </AccordionPanel>
-                </AccordionItem>
+        <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box flex='1' textAlign='left'>
+                Divisas
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+          <HStack>
+              <Text w='25%'>
+                Metodo de pago
+              </Text>
+              <Field name='name' w='auto' />
+            </HStack>
+            <HStack mt={4}>
+            <Text w='25%'>
+                Monto
+              </Text>
+              <Field name='name' w='auto' />
+            </HStack>
+            <HStack mt={4}>
+            </HStack>
+          </AccordionPanel>
+        </AccordionItem>
 
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box flex='1' textAlign='left'>
-                        Divisas
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    <HStack>
-                      <Text w='25%'>
-                        Metodo de pago
-                      </Text>
-                      <Field name='name' w='auto' />
-                    </HStack>
-                    <HStack mt={4}>
-                      <Text w='25%'>
-                        Monto
-                      </Text>
-                      <Field name='name' w='auto' />
-                    </HStack>
-                    <HStack mt={4}>
-                      <BoxInputIneFront setFiles={setIneFront} files={ineFront} errors={errors} setErrors={setErrors} />
-                    </HStack>
-                  </AccordionPanel>
-                </AccordionItem>
-
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box flex='1' textAlign='left'>
-                        Efectivo
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    <HStack>
-                      <Text w='25%'>
-                        Metodo de pago
-                      </Text>
-                      <Field name='name' w='auto' />
-                    </HStack>
-                    <HStack mt={4}>
-                      <Text w='25%'>
-                        Monto
-                      </Text>
-                      <Field name='name' w='auto' />
-                    </HStack>
-                    <HStack mt={4}>
-                      <BoxInputIneFront setFiles={setIneFront} files={ineFront} errors={errors} setErrors={setErrors} />
-                    </HStack>
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
-            </Box>
-            <HStack mt={4} w='100%' justifyContent='center'>
-              <Button w='20%' type='submit'>Crear</Button>
+        <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box flex='1' textAlign='left'>
+                Efectivo
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+          <HStack>
+              <Text w='25%'>
+                Metodo de pago
+              </Text>
+              <Field name='name' w='auto' />
+            </HStack>
+            <HStack mt={4}>
+            <Text w='25%'>
+                Monto
+              </Text>
+              <Field name='name' w='auto' />
+            </HStack>
+            <HStack mt={4}>
             </HStack>
           </Box>
         </Form>
