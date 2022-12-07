@@ -1,4 +1,4 @@
-import { Box, Flex, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 import TableMedicalHistory from '../ui/TableMedicalHistory'
 import PaginationButtons from '../ui/PaginationButtons'
 import Header from './Header'

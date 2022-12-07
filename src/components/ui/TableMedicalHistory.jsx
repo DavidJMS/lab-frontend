@@ -41,20 +41,21 @@ const TableMedicalHistory = ({ data }) => {
           </Flex>
           <Box width={['40%', '80%', '100%']} display='flex' flexDirection={['row', 'row', 'row', 'row']} justifyContent='center'>
             <Table fontSize={['.8rem', '1rem']} variant='simple' width='70%' m={4}>
-              {IsNotSmallScreen && <Thead bg='#F4F7FF'>
-                <Tr>
-                  <Th>Nombre y Apellido</Th>
-                  <Th>Cedula</Th>
-                  <Th>Fecha</Th>
-                </Tr>
-                                   </Thead>}
+              {IsNotSmallScreen &&
+                <Thead bg='#F4F7FF'>
+                  <Tr>
+                    <Th>Nombre y Apellido</Th>
+                    <Th>Cedula</Th>
+                    <Th>Fecha</Th>
+                  </Tr>
+                </Thead>}
               <Tbody>
-                {data && data.map((medical) => {
+                {data && data.map((medical, index) => {
                   return (
-                    <Tr>
+                    <Tr key={index}>
                       <Td><Text color='#8E9196'>{medical?.client?.full_name}</Text></Td>
                       <Td><Text color='#8E9196'>{medical?.client?.dni}</Text></Td>
-                      <Td><Text color='#8E9196'>{medical.create_at}</Text></Td>
+                      <Td><Text color='#8E9196'>{medical?.create_at}</Text></Td>
                     </Tr>
                   )
                 })}

@@ -198,7 +198,6 @@ console.log(examData)
         </Box>
       </Box>
 
-          </Box>
           <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
             <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
               <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Solicitud de Examen</Text>
@@ -270,7 +269,8 @@ console.log(examData)
             </HStack>
             <HStack mt={4}>
             </HStack>
-          </Box>
+            </AccordionPanel>
+          </AccordionItem>
         </Form>
       </Formik>
     </>
