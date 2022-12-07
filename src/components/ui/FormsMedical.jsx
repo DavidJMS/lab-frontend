@@ -37,6 +37,7 @@ const FormsMedical = (client) => {
   const [ineFront, setIneFront] = useState([])
   const [errors, setErrors] = useState({})
   const [userData, setUserData] = useState()
+  const [examData, setExamData] = useState([{}])
   const first_names = userData?.first_names || ''
   const last_names = userData?.last_names || ''
   const address = userData?.address || ''
@@ -45,7 +46,7 @@ const FormsMedical = (client) => {
   const phone = userData?.phone
   const birth_date = userData?.birth_date
   const sex = userData?.sex
-console.log(birth_date)
+console.log(examData)
   const handleSubmit = async (data) => {
     try {
       setLoading(true)
@@ -194,7 +195,7 @@ console.log(birth_date)
             Perfil Tiroideo
           </Text>
           <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
-            <ModalTest onClose={onClose} size={size} isOpen={isOpen} />
+            <ModalTest setExamData={setExamData} />
           </HStack>
         </Box>
       </Box>
