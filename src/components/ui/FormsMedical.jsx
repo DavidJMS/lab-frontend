@@ -266,7 +266,6 @@ console.log(birth_date)
               <Field name='name' w='auto' />
             </HStack>
             <HStack mt={4}>
-            <BoxInputIneFront setFiles={setIneFront} files={ineFront} errors={errors} setErrors={setErrors} />
             </HStack>
           </AccordionPanel>
         </AccordionItem>
@@ -294,7 +293,6 @@ console.log(birth_date)
               <Field name='name' w='auto' />
             </HStack>
             <HStack mt={4}>
-              <BoxInputIneFront setFiles={setIneFront} files={ineFront} errors={errors} setErrors={setErrors} />
             </HStack>
           </AccordionPanel>
         </AccordionItem>
