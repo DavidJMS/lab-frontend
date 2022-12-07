@@ -2,7 +2,7 @@
 import Swal from 'sweetalert2'
 import useScript from '../../hooks/useScript'
 
-import { Flex, Box, Progress, Image } from '@chakra-ui/react'
+import { Flex, Box, Progress, Button} from '@chakra-ui/react'
 import { createStandaloneToast } from '@chakra-ui/toast'
 import getBase64 from '../../functions/getBase64'
 import DownloadIcon from '../../assets/Download.svg'
@@ -72,7 +72,9 @@ const ButtonIneFront = () => {
     <Flex
     w='40%'
     >
-    <Image src={DownloadIcon} />
+      <Button backgroundColor='#D0D0D0'>
+        Agregar
+      </Button>
     </Flex>
   )
 }

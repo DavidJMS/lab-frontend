@@ -21,7 +21,6 @@ import {
 import ModalClient from '../modals/ModalClient'
 import { Field, Select } from '../shared/FormFields'
 import { useNavigate } from 'react-router-dom'
-import { BoxInputIneFront } from '../shared/BoxInputFile'
 
 // services
 import { createClient } from '../../services/clients'
@@ -197,6 +196,14 @@ console.log(birth_date)
           <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
             <ModalTest onClose={onClose} size={size} isOpen={isOpen} />
           </HStack>
+        </Box>
+      </Box>
+
+      <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
+        <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
+          <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Resultado del Examen</Text>
+        </Box>
+        <Box mt={4} width='80%'>
         </Box>
       </Box>
       <Box w='100%' mb={8} mt={4} display='flex' flexDirection='column' alignItems='center'>
