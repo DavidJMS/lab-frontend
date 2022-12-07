@@ -5,7 +5,7 @@ import {
   Route
 } from 'react-router-dom'
 
-//styles
+// styles
 import './styles/menu/szhsin.css'
 
 // Layouts
@@ -31,6 +31,7 @@ function App () {
         <Route path='add/medical' element={<AddFormMedical />} />
         <Route path='client/edit/:id/' element={<LayoutEditUser />} />
         <Route path='list/exams' element={<LayoutListExams />} />
+        <Route path='*' element={<MedicalHistories />} />
       </Routes>
     </BrowserRouter>
   )

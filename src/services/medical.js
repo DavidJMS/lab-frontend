@@ -1,8 +1,8 @@
 import api from './api'
 
-const getMedicalHistories = () => {
+const getMedicalHistories = async () => {
   try {
-    const res = api.get('medical/history-client/')
+    const res = await api.get('medical/history-client/')
     return res.data
   } catch {
     console.log()
