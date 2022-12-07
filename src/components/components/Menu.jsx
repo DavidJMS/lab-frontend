@@ -22,8 +22,7 @@ export default function Example() {
 			</HStack>
 			<HStack mr={4} color='#FFFF'>
 				<Menu menuButton={<MenuButton>Examenes</MenuButton>}transition>
-					<MenuItem>Lista de examenes</MenuItem>
-					<MenuItem>Agregar examenes</MenuItem>
+					<MenuItem><Link to='/list/exams'>Lista de examenes</Link></MenuItem>
 				</Menu>
 			</HStack>
     </Box>

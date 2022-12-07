@@ -17,6 +17,7 @@ import ClientHistories from './pages/ClientHistories'
 import LayoutEditUser from './components/Layouts/LayoutEditUser'
 import AddClient from './pages/AddClient'
 import AddFormMedical from './pages/AddFormMedical'
+import LayoutListExams from './components/Layouts/LayoutListExams'
 
 function App () {
   const [count, setCount] = useState(0)
@@ -29,6 +30,7 @@ function App () {
         <Route path='add/client' element={<AddClient />} />
         <Route path='add/medical' element={<AddFormMedical />} />
         <Route path='client/edit/:id/' element={<LayoutEditUser />} />
+        <Route path='list/exams' element={<LayoutListExams />} />
       </Routes>
     </BrowserRouter>
   )

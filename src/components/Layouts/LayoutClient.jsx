@@ -18,6 +18,7 @@ import { Link } from '@chakra-ui/react'
 import iconDelete from '../../assets/Delete.svg'
 import SearchIcon from '../../assets/SearchClient.svg'
 import IconEdit from '../../assets/Edit.svg'
+import ModalTypesExams from '../modals/ModalTypesExams'
 
 const LayoutClient = ({ data, handleDelete }) => {
   const title = 'Modal Cliente'
@@ -31,6 +32,7 @@ const LayoutClient = ({ data, handleDelete }) => {
             <Text>Cedula :</Text>
             <Input placeholder='Texto' w='auto' />
             <Image height='2rem' src={SearchIcon} />
+            <ModalTypesExams />
           </HStack>
         </Box>
         <Table variant='simple' width='100%' m={4}>
