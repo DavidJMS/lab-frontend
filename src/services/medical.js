@@ -9,6 +9,17 @@ const getMedicalHistories = async () => {
   }
 }
 
+const createMedical = async (data) => {
+	try {
+		const res = await api.post('medical/history-client/', data)
+		return res.data
+		} catch (error) {
+		console.log()
+	}
+}
+
+
 export {
-  getMedicalHistories
+  getMedicalHistories,
+  createMedical
 }
