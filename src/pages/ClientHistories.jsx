@@ -8,20 +8,19 @@ import { useRouteLoaderData } from 'react-router-dom'
 import Header from '../components/Layouts/Header'
 
 const ClientHistories = () => {
-    const [data, setData] = useState([])
-    const toast = useToast()
-    const title = 'Clientes'
-    console.log(data)
+  const [data, setData] = useState([])
+  const toast = useToast()
+  const title = 'Clientes'
+  console.log(data)
 
   useEffect(() => {
     getData()
   }, [])
-  
+
   const getData = async () => {
     try {
       const data = await getClient()
       setData(data.data)
-     
     } catch (error) {
       console.log(error)
     }
@@ -54,7 +53,7 @@ const ClientHistories = () => {
 
   return (
     <>
-      <Header title= {title} />
+      <Header title={title} />
       <LayoutClient data={data} handleDelete={handleDelete} />
     </>
   )
