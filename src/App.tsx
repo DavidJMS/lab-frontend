@@ -12,14 +12,14 @@ import './styles/menu/szhsin.css'
 import MainLayout from './components/Layouts/MainLayout'
 
 // Pages
-import MedicalHistories from './pages/MedicalHistories'
+import MedicalHistories from './pages/MedicalHistories/MedicalHistories'
 import ClientHistories from './pages/ClientHistories'
 import LayoutEditUser from './components/Layouts/LayoutEditUser'
 import AddClient from './pages/AddClient'
 import AddFormMedical from './pages/AddFormMedical'
 import LayoutListExams from './components/Layouts/LayoutListExams'
 
-function App () {
+function App() {
   const [count, setCount] = useState(0)
 
   return (

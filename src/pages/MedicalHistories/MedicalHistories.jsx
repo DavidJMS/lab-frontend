@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-import LayoutMedicalHistory from '../components/Layouts/LayoutMedicalHistory'
+import LayoutMedicalHistory from '../../components/Layouts/LayoutMedicalHistory'
 
 // Services
-import { getMedicalHistories } from '../services/medical.js'
+import { getMedicalHistories } from '../../services/medical.js'
 
 const MedicalHistories = () => {
   const [data, setData] = useState(undefined)
