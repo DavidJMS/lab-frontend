@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Formik, Form } from 'formik'
 import {
   Text,
@@ -21,11 +21,10 @@ import {
 import ModalClient from '../modals/ModalClient'
 import { Field, Select } from '../shared/FormFields'
 import { useNavigate } from 'react-router-dom'
+import ModalTest from '../modals/ModalTest'
 
 // services
-import { createClient } from '../../services/clients'
-import { useEffect } from 'react'
-import ModalTest from '../modals/ModalTest'
+import { createMedical } from '../../services/medical'
 
 const FormsMedical = (client) => {
   // Const para los modales
@@ -37,7 +36,7 @@ const FormsMedical = (client) => {
   const [ineFront, setIneFront] = useState([])
   const [errors, setErrors] = useState({})
   const [userData, setUserData] = useState()
-  const [examData, setExamData] = useState([{}])
+  const [examData, setExamData] = useState()
   const first_names = userData?.first_names || ''
   const last_names = userData?.last_names || ''
   const address = userData?.address || ''
@@ -50,7 +49,7 @@ console.log(examData)
   const handleSubmit = async (data) => {
     try {
       setLoading(true)
-      await createClient(data)
+      await createMedical(data)
       toast({
         title: 'Exito',
         description: 'Cliente creado de manera exitosa',
@@ -60,30 +59,21 @@ console.log(examData)
         position: 'top-right'
       })
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Hubo en error, intentelo luego.',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right'
-      })
+     console.log(error)
     } finally {
       setLoading(false)
     }
   }
 
-  console.log(loading)
-
   useEffect(() => {
-    if (userData) {
+    if (examData) {
       setLoading(true)
     }
       
-  }, [userData])
+  }, [examData])
 
   useEffect(() => {
-    if (userData && loading === true) {
+    if (examData && loading === true) {
       setLoading(false)
     }
   
@@ -102,6 +92,8 @@ console.log(examData)
           birth_date: birth_date || '',
           phone: phone || '',
           address: address || '',
+          medical_exams: examData?.id,
+          total_pay: '50',
         }}
         validate={(values) => {
           const errors = {}
@@ -118,6 +110,8 @@ console.log(examData)
             birth_date: values.birth_date,
             phone: values.phone,
             address: values.address,
+            medical_exams: [values.medical_exams],
+            total_pay: values.total_pay
           }
           handleSubmit(data)
         }}
@@ -185,9 +179,7 @@ console.log(examData)
           <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Solicitud de Examen</Text>
         </Box>
         <Box mt={4} width='80%'>
-          <Text w={['100%','80%','20%']} borderBottom='1px solid #B7B4B4'>
-            Perfil Tiroideo
-          </Text>
+          <Field name='medical_exams' />
           <Text mt={8} w={['100%','80%','20%']} borderBottom='1px solid #B7B4B4'>
             Perfil Tiroideo
           </Text>

@@ -17,7 +17,6 @@ const ModalTest = ({ setExamData }) => {
     setSize(newSize)
     onOpen()
   }
-
   const passData = (exam) => {
     console.log(exam)
     setExamData(exam)
@@ -46,7 +45,7 @@ const ModalTest = ({ setExamData }) => {
               <HStack border='1px solid #D0D0D0' borderRadius='6px' color='#718096' padding='1rem' w='100%' height='2.5rem'>
                 <Text>{exam.name}</Text>
               </HStack>
-              <Text onClick={() => passData(exam)}>Elegir</Text>
+              <Text onClick={() => [passData(exam), onClose()]}>Elegir</Text>
             </HStack>
             ))}
           </Box>
