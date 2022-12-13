@@ -15,8 +15,12 @@ const MedicalHistories = () => {
     }
     getData()
   }, [])
+  const filterMedicalHistories = async (data) => {
+    const dataFiltered = await getMedicalHistories(data)
+    setData(dataFiltered)
+  }
   if (!data) return <></>
-  return <LayoutMedicalHistory data={data} />
+  return <LayoutMedicalHistory data={data} filterMedicalHistories={filterMedicalHistories} />
 }
 
 export default MedicalHistories

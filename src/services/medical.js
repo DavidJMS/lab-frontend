@@ -1,8 +1,15 @@
 import api from './api'
 
-const getMedicalHistories = async () => {
+const getMedicalHistories = async (props) => {
   try {
-    const res = await api.get('medical/history-client/')
+    let url = 'medical/history-client/'
+    if (props?.dni) {
+      url = url + `?client__dni=${props.dni}`
+    }
+    if (props?.date) {
+      url = url + `?create_at__date=${props.date}`
+    }
+    const res = await api.get(url)
     return res.data
   } catch {
     console.log()
@@ -10,14 +17,13 @@ const getMedicalHistories = async () => {
 }
 
 const createMedical = async (data) => {
-	try {
-		const res = await api.post('medical/history-client/', data)
-		return res.data
-		} catch (error) {
-		console.log()
-	}
+  try {
+    const res = await api.post('medical/history-client/', data)
+    return res.data
+  } catch (error) {
+    console.log()
+  }
 }
-
 
 export {
   getMedicalHistories,
