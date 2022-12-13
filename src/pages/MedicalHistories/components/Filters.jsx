@@ -16,9 +16,10 @@ const Filters = ({ handleSubmit }) => {
 
   return (
     <Formik
-      initialValues={{ dni: '' }}
+      initialValues={{ dni: '', date: '' }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmiting }) => {
+        console.log(values)
         handleSubmit(values)
       }}
     >
@@ -30,6 +31,7 @@ const Filters = ({ handleSubmit }) => {
           <Field
             w={['60px', '150px']}
             name='date'
+            type='date'
           />
           <button type='submit'>
             <Image height='2rem' width={['3.5rem', '4rem', '7rem']} src={SearchIcon} />

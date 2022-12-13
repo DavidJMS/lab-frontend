@@ -6,6 +6,9 @@ const getMedicalHistories = async (props) => {
     if (props?.dni) {
       url = url + `?client__dni=${props.dni}`
     }
+    if (props?.date) {
+      url = url + `?create_at__date=${props.date}`
+    }
     const res = await api.get(url)
     return res.data
   } catch {
