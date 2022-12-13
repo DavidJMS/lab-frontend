@@ -65,8 +65,8 @@ const LayoutListExams = () => {
     </HStack>
      <Box alignItems='center' flexDirection='column' display='flex' w='100%'>
      {dataExam && dataExam.map((exam, i) => (
-        <HStack w='40%' key={i} mt={8}>
-          <Text w='100%' height='2rem' borderRadius='5px' paddingLeft='.8rem' border='1.6px solid #E2E8F0' backgroundColor='none'>
+        <HStack w='100%' display='flex' justifyContent={'center'} key={i} mt={8}>
+          <Text w='40%' height='2rem' borderRadius='5px' paddingLeft='.8rem' border='1.6px solid #E2E8F0' backgroundColor='none'>
           {exam.name}
           </Text>
           <Img cursor='pointer' onClick={() => handleDelete(exam.id)} src={DeleteIcon}></Img>

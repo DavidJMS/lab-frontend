@@ -25,6 +25,7 @@ import ModalTest from '../modals/ModalTest'
 
 // services
 import { createMedical } from '../../services/medical'
+import { BoxInputSelfie } from '../shared/BoxInputFile'
 
 const FormsMedical = (client) => {
   // Const para los modales
@@ -45,7 +46,11 @@ const FormsMedical = (client) => {
   const phone = userData?.phone
   const birth_date = userData?.birth_date
   const sex = userData?.sex
-console.log(examData)
+  const [results_exams, setResults_exams] = useState()
+  console.log(results_exams)
+
+  const handleFileChange = (e) => setResults_exams({...Form, [e.target.name]: e.target.files[0]})
+
   const handleSubmit = async (data) => {
     try {
       setLoading(true)
@@ -66,14 +71,14 @@ console.log(examData)
   }
 
   useEffect(() => {
-    if (examData) {
+    if (examData || userData) {
       setLoading(true)
     }
       
-  }, [examData])
+  }, [ userData,examData])
 
   useEffect(() => {
-    if (examData && loading === true) {
+    if (examData && loading === true || userData && loading === true) {
       setLoading(false)
     }
   
@@ -93,7 +98,8 @@ console.log(examData)
           phone: phone || '',
           address: address || '',
           medical_exams: examData?.id,
-          total_pay: '',
+          total_pay: '4',
+          results_exams: results_exams
         }}
         validate={(values) => {
           const errors = {}
@@ -111,9 +117,15 @@ console.log(examData)
             phone: values.phone,
             address: values.address,
             medical_exams: [values.medical_exams],
-            total_pay: values.total_pay
+            total_pay: values.total_pay,
+            results_exams: [values.results_exams]
+          }
+          console.log(data)
+          if (results_exams.length >= 1) {
+            results_exams =  values.results_exams
           }
           handleSubmit(data)
+          console.log(data)
         }}
       >
       <Form id='form'>
@@ -122,7 +134,7 @@ console.log(examData)
           <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos Personales</Text>
         </Box>
         <Box mt={4} width='80%'>
-          <HStack mb={4}>
+          <HStack mb={4} flexDirection={['column', 'column' , 'row' , 'row']}>
             <FormControl>
               <Text>Nombre :</Text>
               <Field name='first_names' />
@@ -136,7 +148,7 @@ console.log(examData)
               <Field name='last_names' />
             </FormControl>
           </HStack>
-          <HStack mb={4} w='66%'>
+          <HStack mb={4} w={[ 'auto', 'auto', '66%']} flexDirection={['column', 'column' , 'row' , 'row']}>
             <FormControl>
               <Text>Sexo :</Text>
               <Field as='select' name='sexo'>
@@ -151,7 +163,7 @@ console.log(examData)
             </FormControl>
             <Spacer />
           </HStack>
-          <HStack mb={4}>
+          <HStack mb={4} flexDirection={['column', 'column' , 'row' , 'row']}>
             <FormControl>
               <Text>Direccion :</Text>
               <Field name='address' />
@@ -197,6 +209,7 @@ console.log(examData)
           <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Resultado del Examen</Text>
         </Box>
         <Box mt={4} width='80%'>
+          <input type="file" onChange={(e) =>  setResults_exams({[e.target.name]: e.target.files[0]})} />
         </Box>
       </Box>
       <Box w='100%' mb={8} mt={4} display='flex' flexDirection='column' alignItems='center'>

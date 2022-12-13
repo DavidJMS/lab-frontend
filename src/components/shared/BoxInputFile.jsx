@@ -412,7 +412,6 @@ export const BoxInputIneFront = ({ setFiles, files, errors, setErrors }) => {
         return
       }
       for (let i = 0; i < files.length; i++) {
-        const currectExtension = files[i].name.split('.').pop()
         const validation = extensionsAllowed.indexOf(currectExtension.toLowerCase())
         if (validation === -1) {
           handleError({ title: 'Este tipo de documento no es permitido' })
@@ -564,7 +563,7 @@ export const BoxInputSelfie = ({ setFiles, files, errors, setErrors }) => {
       errors={errors || {}}
       setErrors={setErrors || logError}
       extensionsAllowed={extensionsAllowed}
-      type='selfie'
+      type='results_exams'
       cropOptions={{ aspect: 1, isCircled: true, restrict: true }}
       validations={validations}
       component={ButtonSelfie}
