@@ -11,61 +11,36 @@ import {
   Td,
   Select,
   Button,
-  Image
+  Image,
+  Tab,
+  Flex
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { Link } from '@chakra-ui/react'
-import iconDelete from '../../assets/Delete.svg'
-import SearchIcon from '../../assets/SearchClient.svg'
-import IconEdit from '../../assets/Edit.svg'
-import ModalTypesExams from '../modals/ModalTypesExams'
+import PaginationButtons from '../ui/PaginationButtons'
+import TableClient from '../ui/TableClient'
+import Filters from '../../pages/MedicalHistories/components/Filters'
+import Header from './Header'
 
 const LayoutClient = ({ data, handleDelete }) => {
-  const title = 'Modal Cliente'
+  const title = 'Lista de Cliente'
   const navigate = useNavigate()
 
   return (
-    <Box>
-      <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
-        <Box>
-          <HStack w='100%' padding={4}>
-            <Text>Cedula :</Text>
-            <Input placeholder='Texto' w='auto' />
-            <Image height='2rem' src={SearchIcon} />
-            <ModalTypesExams />
-          </HStack>
+    <Box width='100%'>
+        <Header title={title} />
+        <Box mb={4} width='100%' justifyContent='center'>
+          <Box w={['100%', '100%', '100%']} display='flex' flexDirection='column' alignItems='center'>
+            <Filters />
+            <Box width={[ '80%' ]} display='flex' flexDirection={['row', 'row', 'row', 'row']} justifyContent='center'>
+              <TableClient data={data} handleDelete={handleDelete} />
+            </Box>
+          </Box>
         </Box>
-        <Table variant='simple' width='100%' m={4}>
-          <Thead bg='#F4F7FF'>
-            <Tr>
-              <Th w='42%'>Nombres y Apellidos</Th>
-              <Th>Cedula</Th>
-              <Th>Nmro de telefono</Th>
-              <Th>Eliminar</Th>
-              <Th>Editar</Th>
-            </Tr>
-          </Thead>
-
-          <Tbody>
-            {data.map((client) => (
-              <Tr 
-              key={client.id}
-              _hover={{
-                background: 'gray.50'
-              }}
-              >
-                <Td color='#8E9196'>{client.first_names} {client.last_names}</Td>
-                <Td color='#8E9196'>{client.dni}</Td>
-                <Td color='#8E9196'>{client.phone}</Td>
-                <Td color='#8E9196' alignItems='center'><Image cursor='pointer' height='1.5rem' onClick={() => handleDelete(client.id)} src={iconDelete}></Image></Td>
-                <Td color='#8E9196'><Image onClick={() => navigate(`edit/${client.id}/`)} height='1.5rem' cursor='pointer' src={IconEdit}></Image></Td>
-              </Tr>
-            ))
-            }
-          </Tbody>
-        </Table>
+        <Flex justifyContent={['center', 'flex-end']} w='80%'>
+          <PaginationButtons />
+        </Flex>
       </Box>
-    </Box>
   )
 }
 

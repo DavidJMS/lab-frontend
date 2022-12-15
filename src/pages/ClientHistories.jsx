@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import LayoutClient from '../components/Layouts/LayoutClient'
-import { useToast } from '@chakra-ui/react'
+import { Box, useToast } from '@chakra-ui/react'
 
 // Services
 import { getClient, deleteClient } from '../services/clients'
@@ -53,8 +53,9 @@ const ClientHistories = () => {
 
   return (
     <>
-      <Header title={title} />
+      <Box>
       <LayoutClient data={data} handleDelete={handleDelete} />
+      </Box>
     </>
   )
 }

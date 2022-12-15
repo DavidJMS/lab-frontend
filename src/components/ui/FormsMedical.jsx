@@ -22,11 +22,13 @@ import * as Yup from 'yup'
 
 // services
 import { createMedical } from '../../services/medical'
+import { BoxInputSelfie } from '../shared/BoxInputFile'
 
 const FormsMedical = (client) => {
   // Const para los modales
   const toast = useToast()
   const [loading, setLoading] = useState(false)
+  // <<<<<<< HEAD
 
   const [userData, setUserData] = useState({
     first_names: '',
@@ -38,6 +40,7 @@ const FormsMedical = (client) => {
     phone: '',
     address: ''
   })
+  const [results_exams, setResults_exams] = useState()
 
   const validationShema = Yup.object({
     first_names: Yup.string()
@@ -73,6 +76,8 @@ const FormsMedical = (client) => {
     setExamData(newExamData)
   }
 
+  const handleFileChange = (e) => setResults_exams({ ...Form, [e.target.name]: e.target.files[0] })
+
   const handleSubmit = async (data) => {
     try {
       setLoading(true)
@@ -93,13 +98,13 @@ const FormsMedical = (client) => {
   }
 
   useEffect(() => {
-    if (examData) {
+    if (examData || userData) {
       setLoading(true)
     }
-  }, [examData])
+  }, [userData, examData])
 
   useEffect(() => {
-    if (examData && loading === true) {
+    if (examData && loading === true || userData && loading === true) {
       setLoading(false)
     }
   }, [loading])
@@ -112,6 +117,7 @@ const FormsMedical = (client) => {
           {
             medical_exams: examData ? examData.map(exam => (exam.id)) : [],
             total_pay: '',
+            results_exams,
             ...userData
           }
         }
@@ -128,9 +134,15 @@ const FormsMedical = (client) => {
             phone: values.phone,
             address: values.address,
             medical_exams: [values.medical_exams],
-            total_pay: values.total_pay
+            total_pay: values.total_pay,
+            results_exams: [values.results_exams]
+          }
+          console.log(data)
+          if (results_exams.length >= 1) {
+            results_exams = values.results_exams
           }
           handleSubmit(data)
+          console.log(data)
         }}
       >
         <Form id='form'>
@@ -139,7 +151,7 @@ const FormsMedical = (client) => {
               <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos Personales</Text>
             </Box>
             <Box mt={4} width='80%'>
-              <HStack mb={4}>
+              <HStack mb={4} flexDirection={['column', 'column', 'row', 'row']}>
                 <FormControl>
                   <Text>Nombre :</Text>
                   <Field name='first_names' />
@@ -153,7 +165,7 @@ const FormsMedical = (client) => {
                   <Field name='last_names' />
                 </FormControl>
               </HStack>
-              <HStack mb={4} w='66%'>
+              <HStack mb={4} w={['auto', 'auto', '66%']} flexDirection={['column', 'column', 'row', 'row']}>
                 <FormControl>
                   <Text>Sexo :</Text>
                   <Field as='select' name='sexo'>
@@ -168,7 +180,7 @@ const FormsMedical = (client) => {
                 </FormControl>
                 <Spacer />
               </HStack>
-              <HStack mb={4}>
+              <HStack mb={4} flexDirection={['column', 'column', 'row', 'row']}>
                 <FormControl>
                   <Text>Direccion :</Text>
                   <Field name='address' />
@@ -188,126 +200,127 @@ const FormsMedical = (client) => {
                 <ModalClient setUserData={setUserData} />
               </HStack>
             </Box>
-
-          </Box>
-          <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
-            <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
-              <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Solicitud de Examen</Text>
+            <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
+              <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
+                <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Solicitud de Examen</Text>
+              </Box>
+              <Box mt={4} width='80%'>
+                {examData && examData.map((exam, index) => {
+                  return (
+                    <Text key={index} mt={8} w={['100%', '80%', '20%']} borderBottom='1px solid #B7B4B4'>
+                      {exam.name} costo: {exam.price}
+                      <span onClick={() => { handleRemoveExamData(exam.id) }}>Eliminar</span>
+                    </Text>
+                  )
+                })}
+                <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
+                  <ModalTest handleExamData={handleAddExamData} />
+                </HStack>
+              </Box>
             </Box>
-            <Box mt={4} width='80%'>
-              {examData && examData.map((exam, index) => {
-                return (
-                  <Text key={index} mt={8} w={['100%', '80%', '20%']} borderBottom='1px solid #B7B4B4'>
-                    {exam.name} costo: {exam.price}
-                    <span onClick={() => { handleRemoveExamData(exam.id) }}>Eliminar</span>
-                  </Text>
-                )
-              })}
-              <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
-                <ModalTest handleExamData={handleAddExamData} />
+
+            <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
+              <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
+                <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Resultado del Examen</Text>
+              </Box>
+              <Box mt={4} width='80%'>
+                <input type='file' onChange={(e) => setResults_exams({ [e.target.name]: e.target.files[0] })} />
+              </Box>
+            </Box>
+            <Box w='100%' mb={8} mt={4} display='flex' flexDirection='column' alignItems='center'>
+              <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
+                <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos de Pago</Text>
+              </Box>
+              <Box mt={4} width='80%'>
+                <Accordion allowToggle>
+                  <AccordionItem>
+                    <h2>
+                      <AccordionButton>
+                        <Box flex='1' textAlign='left'>
+                          Pago Movil
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                    </h2>
+                    <AccordionPanel w='100%' pb={4}>
+                      <HStack>
+                        <Text w='25%'>
+                          Metodo de pago
+                        </Text>
+                        <Field name='name' w='auto' />
+                      </HStack>
+                      <HStack mt={4}>
+                        <Text w='25%'>
+                          Monto
+                        </Text>
+                        <Field name='name' w='auto' />
+                      </HStack>
+                      <HStack mt={4}>
+                        <Text w='25%'>
+                          Referencia
+                        </Text>
+                        <Field name='name' w='auto' />
+                      </HStack>
+                    </AccordionPanel>
+                  </AccordionItem>
+
+                  <AccordionItem>
+                    <h2>
+                      <AccordionButton>
+                        <Box flex='1' textAlign='left'>
+                          Divisas
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4}>
+                      <HStack>
+                        <Text w='25%'>
+                          Metodo de pago
+                        </Text>
+                        <Field name='name' w='auto' />
+                      </HStack>
+                      <HStack mt={4}>
+                        <Text w='25%'>
+                          Monto
+                        </Text>
+                        <Field name='name' w='auto' />
+                      </HStack>
+                      <HStack mt={4} />
+                    </AccordionPanel>
+                  </AccordionItem>
+
+                  <AccordionItem>
+                    <h2>
+                      <AccordionButton>
+                        <Box flex='1' textAlign='left'>
+                          Efectivo
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4}>
+                      <HStack>
+                        <Text w='25%'>
+                          Metodo de pago
+                        </Text>
+                        <Field name='name' w='auto' />
+                      </HStack>
+                      <HStack mt={4}>
+                        <Text w='25%'>
+                          Monto
+                        </Text>
+                        <Field name='name' w='auto' />
+                      </HStack>
+                      <HStack mt={4} />
+                    </AccordionPanel>
+                  </AccordionItem>
+                </Accordion>
+              </Box>
+              <HStack mt={4} w='100%' justifyContent='center'>
+                <Button w='20%' type='submit'>Crear</Button>
               </HStack>
             </Box>
-          </Box>
-
-          <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
-            <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
-              <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Resultado del Examen</Text>
-            </Box>
-            <Box mt={4} width='80%' />
-          </Box>
-          <Box w='100%' mb={8} mt={4} display='flex' flexDirection='column' alignItems='center'>
-            <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
-              <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos de Pago</Text>
-            </Box>
-            <Box mt={4} width='80%'>
-              <Accordion allowToggle>
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box flex='1' textAlign='left'>
-                        Pago Movil
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel w='100%' pb={4}>
-                    <HStack>
-                      <Text w='25%'>
-                        Metodo de pago
-                      </Text>
-                      <Field name='name' w='auto' />
-                    </HStack>
-                    <HStack mt={4}>
-                      <Text w='25%'>
-                        Monto
-                      </Text>
-                      <Field name='name' w='auto' />
-                    </HStack>
-                    <HStack mt={4}>
-                      <Text w='25%'>
-                        Referencia
-                      </Text>
-                      <Field name='name' w='auto' />
-                    </HStack>
-                  </AccordionPanel>
-                </AccordionItem>
-
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box flex='1' textAlign='left'>
-                        Divisas
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    <HStack>
-                      <Text w='25%'>
-                        Metodo de pago
-                      </Text>
-                      <Field name='name' w='auto' />
-                    </HStack>
-                    <HStack mt={4}>
-                      <Text w='25%'>
-                        Monto
-                      </Text>
-                      <Field name='name' w='auto' />
-                    </HStack>
-                    <HStack mt={4} />
-                  </AccordionPanel>
-                </AccordionItem>
-
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box flex='1' textAlign='left'>
-                        Efectivo
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    <HStack>
-                      <Text w='25%'>
-                        Metodo de pago
-                      </Text>
-                      <Field name='name' w='auto' />
-                    </HStack>
-                    <HStack mt={4}>
-                      <Text w='25%'>
-                        Monto
-                      </Text>
-                      <Field name='name' w='auto' />
-                    </HStack>
-                    <HStack mt={4} />
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
-            </Box>
-            <HStack mt={4} w='100%' justifyContent='center'>
-              <Button w='20%' type='submit'>Crear</Button>
-            </HStack>
           </Box>
         </Form>
       </Formik>

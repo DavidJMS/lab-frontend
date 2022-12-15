@@ -7,6 +7,7 @@ import {
 
 // styles
 import './styles/menu/szhsin.css'
+import './styles/menu/header.css'
 
 // Layouts
 import MainLayout from './components/Layouts/MainLayout'
