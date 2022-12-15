@@ -25,6 +25,7 @@ export default function Example() {
 					<MenuItem><Link to='/list/exams'>Lista de examenes</Link></MenuItem>
 				</Menu>
 			</HStack>
+		
     </Box>
     </>
   );
