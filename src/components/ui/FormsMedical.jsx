@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Formik, Form, useFormikContext } from 'formik'
+import { Formik, Form } from 'formik'
 import {
   Text,
   HStack,
@@ -8,7 +8,6 @@ import {
   FormControl,
   useToast,
   Spacer,
-  useDisclosure,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -17,8 +16,7 @@ import {
   Spinner
 } from '@chakra-ui/react'
 import ModalClient from '../modals/ModalClient'
-import { Field, Select } from '../shared/FormFields'
-import { useNavigate } from 'react-router-dom'
+import { Field } from '../shared/FormFields'
 import ModalTest from '../modals/ModalTest'
 import * as Yup from 'yup'
 
@@ -27,13 +25,8 @@ import { createMedical } from '../../services/medical'
 
 const FormsMedical = (client) => {
   // Const para los modales
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [size, setSize] = React.useState('xl')
   const toast = useToast()
   const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
-  const [ineFront, setIneFront] = useState([])
-  const [errors, setErrors] = useState({})
 
   const [userData, setUserData] = useState({
     first_names: '',
@@ -45,8 +38,6 @@ const FormsMedical = (client) => {
     phone: '',
     address: ''
   })
-
-  const [examData, setExamData] = useState()
 
   const validationShema = Yup.object({
     first_names: Yup.string()
@@ -66,6 +57,21 @@ const FormsMedical = (client) => {
     address: Yup.string()
       .max(15, 'El maximo de caracteres es de 15')
   })
+
+  const [examData, setExamData] = useState([])
+
+  const handleAddExamData = (newExam) => {
+    if (!examData.some((exam) => exam.id === newExam.id)) {
+      setExamData(examData => [...examData, newExam])
+    }
+  }
+
+  const handleRemoveExamData = (id) => {
+    const newExamData = examData.filter((exam) => {
+      return exam.id !== id
+    })
+    setExamData(newExamData)
+  }
 
   const handleSubmit = async (data) => {
     try {
@@ -104,7 +110,7 @@ const FormsMedical = (client) => {
       <Formik
         initialValues={
           {
-            medical_exams: examData?.id,
+            medical_exams: examData ? examData.map(exam => (exam.id)) : [],
             total_pay: '',
             ...userData
           }
@@ -189,15 +195,16 @@ const FormsMedical = (client) => {
               <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Solicitud de Examen</Text>
             </Box>
             <Box mt={4} width='80%'>
-              <Field name='medical_exams' />
-              <Text mt={8} w={['100%', '80%', '20%']} borderBottom='1px solid #B7B4B4'>
-                Perfil Tiroideo
-              </Text>
-              <Text mt={8} w={['100%', '80%', '20%']} borderBottom='1px solid #B7B4B4'>
-                Perfil Tiroideo
-              </Text>
+              {examData && examData.map((exam, index) => {
+                return (
+                  <Text key={index} mt={8} w={['100%', '80%', '20%']} borderBottom='1px solid #B7B4B4'>
+                    {exam.name} costo: {exam.price}
+                    <span onClick={() => { handleRemoveExamData(exam.id) }}>Eliminar</span>
+                  </Text>
+                )
+              })}
               <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
-                <ModalTest setExamData={setExamData} />
+                <ModalTest handleExamData={handleAddExamData} />
               </HStack>
             </Box>
           </Box>
