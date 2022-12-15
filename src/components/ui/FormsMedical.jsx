@@ -46,21 +46,21 @@ const FormsMedical = (client) => {
 
   const validationShema = Yup.object({
     first_names: Yup.string()
-      .max(15, 'El maximo de caracteres es de 15'),
+      .max(25, 'El maximo de caracteres es de 25'),
     last_names: Yup.string()
-      .max(15, 'El maximo de caracteres es de 15'),
+      .max(25, 'El maximo de caracteres es de 25'),
     email: Yup.string()
-      .max(15, 'El maximo de caracteres es de 15'),
+      .max(25, 'El maximo de caracteres es de 25'),
     dni: Yup.string()
-      .max(15, 'El maximo de caracteres es de 15'),
+      .max(25, 'El maximo de caracteres es de 25'),
     gender: Yup.string()
-      .max(15, 'El maximo de caracteres es de 15'),
+      .max(25, 'El maximo de caracteres es de 25'),
     birth_date: Yup.string()
-      .max(15, 'El maximo de caracteres es de 15'),
+      .max(25, 'El maximo de caracteres es de 25'),
     phone: Yup.string()
-      .max(15, 'El maximo de caracteres es de 15'),
+      .max(25, 'El maximo de caracteres es de 25'),
     address: Yup.string()
-      .max(15, 'El maximo de caracteres es de 15')
+      .max(25, 'El maximo de caracteres es de 25')
   })
 
   const [examData, setExamData] = useState([])
@@ -126,27 +126,28 @@ const FormsMedical = (client) => {
           }
         }
         enableReinitialize
-        validate={validationShema}
-        onSubmit={values => {
-          const data = {
-            first_names: values.first_names,
-            last_names: values.last_names,
-            email: values.email,
-            dni: values.dni,
-            sex: values.sex,
-            birth_date: values.birth_date,
-            phone: values.phone,
-            address: values.address,
-            medical_exams: [values.medical_exams],
-            total_pay: values.total_pay,
-            results_exams: [values.results_exams]
-          }
-          console.log(data)
-          if (results_exams.length >= 1) {
-            results_exams = values.results_exams
-          }
-          handleSubmit(data)
-          console.log(data)
+        validationSchema={validationShema}
+        onSubmit={(values) => {
+          console.log(values)
+          // const data = {
+          //   first_names: values.first_names,
+          //   last_names: values.last_names,
+          //   email: values.email,
+          //   dni: values.dni,
+          //   sex: values.sex,
+          //   birth_date: values.birth_date,
+          //   phone: values.phone,
+          //   address: values.address,
+          //   medical_exams: [values.medical_exams],
+          //   total_pay: values.total_pay,
+          //   results_exams: [values.results_exams]
+          // }
+          // console.log(data)
+          // if (results_exams.length >= 1) {
+          //   results_exams = values.results_exams
+          // }
+          handleSubmit(values)
+          console.log(values)
         }}
       >
         <Form id='form'>
