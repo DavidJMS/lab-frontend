@@ -23,6 +23,7 @@ import * as Yup from 'yup'
 // services
 import { createMedical } from '../../services/medical'
 import { BoxInputSelfie } from '../shared/BoxInputFile'
+import { values } from 'lodash'
 
 const FormsMedical = (client) => {
   // Const para los modales
@@ -40,6 +41,7 @@ const FormsMedical = (client) => {
     phone: '',
     address: ''
   })
+  const [totalPay, setTotalPay] = useState(0)
   const [results_exams, setResults_exams] = useState()
 
   const validationShema = Yup.object({
@@ -66,14 +68,16 @@ const FormsMedical = (client) => {
   const handleAddExamData = (newExam) => {
     if (!examData.some((exam) => exam.id === newExam.id)) {
       setExamData(examData => [...examData, newExam])
+      setTotalPay(totalPay + parseFloat(newExam.price))
     }
   }
 
-  const handleRemoveExamData = (id) => {
+  const handleRemoveExamData = (props) => {
     const newExamData = examData.filter((exam) => {
-      return exam.id !== id
+      return exam.id !== props.id
     })
     setExamData(newExamData)
+    setTotalPay(totalPay - parseFloat(props.price))
   }
 
   const handleFileChange = (e) => setResults_exams({ ...Form, [e.target.name]: e.target.files[0] })
@@ -116,7 +120,7 @@ const FormsMedical = (client) => {
         initialValues={
           {
             medical_exams: examData ? examData.map(exam => (exam.id)) : [],
-            total_pay: '',
+            total_pay: totalPay,
             results_exams,
             ...userData
           }
@@ -209,7 +213,7 @@ const FormsMedical = (client) => {
                   return (
                     <Text key={index} mt={8} w={['100%', '80%', '20%']} borderBottom='1px solid #B7B4B4'>
                       {exam.name} costo: {exam.price}
-                      <span onClick={() => { handleRemoveExamData(exam.id) }}>Eliminar</span>
+                      <span onClick={() => { handleRemoveExamData(exam) }}>Eliminar</span>
                     </Text>
                   )
                 })}
@@ -232,6 +236,7 @@ const FormsMedical = (client) => {
                 <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos de Pago</Text>
               </Box>
               <Box mt={4} width='80%'>
+                <p>Total a pagar: {totalPay}</p>
                 <Accordion allowToggle>
                   <AccordionItem>
                     <h2>
