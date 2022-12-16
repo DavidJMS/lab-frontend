@@ -13,12 +13,20 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  Spinner
+  Spinner,
+  Img,
+  Table,
+  Tr,
+  Td,
+  Thead,
+  Tbody,
+  Th
 } from '@chakra-ui/react'
 import ModalClient from '../modals/ModalClient'
 import { Field } from '../shared/FormFields'
 import ModalTest from '../modals/ModalTest'
 import * as Yup from 'yup'
+import deleteIcon from '../../assets/Delete.svg'
 
 // services
 import { createMedical } from '../../services/medical'
@@ -212,10 +220,39 @@ const FormsMedical = (client) => {
               <Box mt={4} width='80%'>
                 {examData && examData.map((exam, index) => {
                   return (
-                    <Text key={index} mt={8} w={['100%', '80%', '20%']} borderBottom='1px solid #B7B4B4'>
-                      {exam.name} costo: {exam.price}
-                      <span onClick={() => { handleRemoveExamData(exam) }}>Eliminar</span>
-                    </Text>
+                    // <HStack key={exam.id} mt={4}>
+                    //    <Text key={index} w={['100%', '80%', '30%']} borderBottom='1px solid #B7B4B4'>
+                    //   {exam.name}
+                    // </Text><Text key={index} w={['100%', '80%', '20%']} borderBottom='1px solid #B7B4B4'>
+                    //  costo: {exam.price}
+                    // </Text>
+                    //   <Img cursor={'pointer'} height={'1.2rem'} src={deleteIcon} onClick={() => { handleRemoveExamData(exam) }} />
+                    // </HStack>
+                    <Table fontSize={['.5rem', '1rem']} variant='simple' width='80%' m={4}>
+                  <Thead  bg='#F4F7FF'>
+                    <Tr>
+                      <Th w='42%'>Nombre</Th>
+                      <Th>Costo</Th>
+                      <Th>Eliminar</Th>
+                    </Tr>
+                  </Thead>
+                    
+                  <Tbody >
+                  {examData && examData.map((exam, index) => (
+                      <Tr 
+                      key={client.id}
+                      _hover={{
+                        background: 'gray.50'
+                      }}
+                      >
+                        <Td color='#8E9196'>{exam.name}</Td>
+                        <Td color='#8E9196'>costo: {exam.price}</Td>
+                        <Td  textAlign={'center'}  color='#8E9196'><Img cursor={'pointer'} height={'1.2rem'} src={deleteIcon} onClick={() => { handleRemoveExamData(exam) }} /></Td>
+                      </Tr>
+                    ))
+                    }
+                  </Tbody>
+                </Table>
                   )
                 })}
                 <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
@@ -237,7 +274,7 @@ const FormsMedical = (client) => {
                 <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos de Pago</Text>
               </Box>
               <Box mt={4} width='80%'>
-                <p>Total a pagar: {totalPay}</p>
+                <Text mb={4} >Total a pagar: {totalPay}</Text>
                 <Accordion allowToggle>
                   <AccordionItem>
                     <h2>
