@@ -2,7 +2,8 @@ import { useState } from 'react'
 import {
   BrowserRouter,
   Routes,
-  Route
+  Route,
+  useLocation
 } from 'react-router-dom'
 
 // styles
@@ -25,7 +26,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
+      <Routes >
         <Route path='' element={<MedicalHistories />} />
         <Route path='client' element={<ClientHistories />} />
         <Route path='add/client' element={<AddClient />} />
