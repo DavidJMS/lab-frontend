@@ -14,9 +14,10 @@ import {
   Image,
   Tab,
   Flex
+  , Link
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
-import { Link } from '@chakra-ui/react'
+
 import PaginationButtons from '../ui/PaginationButtons'
 import TableClient from '../ui/TableClient'
 import Filters from '../../pages/MedicalHistories/components/Filters'
@@ -28,19 +29,19 @@ const LayoutClient = ({ data, handleDelete }) => {
 
   return (
     <Box width='100%'>
-        <Header title={title} />
-        <Box mb={4} width='100%' justifyContent='center'>
-          <Box w={['100%', '100%', '100%']} display='flex' flexDirection='column' alignItems='center'>
-            <Filters />
-            <Box width={[ '80%' ]} display='flex' flexDirection={['row', 'row', 'row', 'row']} justifyContent='center'>
-              <TableClient data={data} handleDelete={handleDelete} />
-            </Box>
+      {/* <Header title={title} /> */}
+      <Box mb={4} width='100%' justifyContent='center'>
+        <Box w={['100%', '100%', '100%']} display='flex' flexDirection='column' alignItems='center'>
+          <Filters />
+          <Box width={['80%']} display='flex' flexDirection={['row', 'row', 'row', 'row']} justifyContent='center'>
+            <TableClient data={data} handleDelete={handleDelete} />
           </Box>
         </Box>
-        <Flex justifyContent={['center', 'flex-end']} w='80%'>
-          <PaginationButtons />
-        </Flex>
       </Box>
+      <Flex justifyContent={['center', 'flex-end']} w='80%'>
+        <PaginationButtons />
+      </Flex>
+    </Box>
   )
 }
 

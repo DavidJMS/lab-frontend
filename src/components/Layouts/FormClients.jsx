@@ -10,7 +10,7 @@ const FormClients = () => {
   const title = 'Formulario de clientes'
   return (
     <Box width='100%'>
-      <Header title={title} />
+      {/* <Header title={title} /> */}
       <Box mb={4} width='100%'>
         <ClientForm />
       </Box>
