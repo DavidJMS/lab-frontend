@@ -9,7 +9,7 @@ const LayoutMedicalHistory = ({ data, filterMedicalHistories }) => {
   const title = 'Historial Clinico'
   return (
     <Box width='100%'>
-      <Header title={title} />
+      {/* <Header title={title} /> */}
       <Box mb={4} width='100%' justifyContent='center'>
         <Box w={['100%', '100%', '100%']} display='flex' flexDirection='column' alignItems='center'>
           <Flex flexDirection={['colum', 'row']} justifyContent='space-around' w='82%'>
