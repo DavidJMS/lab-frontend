@@ -2,7 +2,8 @@ import { Formik, Form } from 'formik'
 import {
   Text,
   HStack,
-  Image
+  Image,
+  FormControl
 } from '@chakra-ui/react'
 import SearchIcon from '../../../assets/SearchClient.svg'
 import { Field } from '../../../components/shared/FormFields'
@@ -14,6 +15,7 @@ const Filters = ({ handleSubmit }) => {
       .max(15, 'El maximo de caracteres es de 15')
   })
 
+
   return (
     <Formik
       initialValues={{ dni: '', date: '' }}
@@ -23,19 +25,25 @@ const Filters = ({ handleSubmit }) => {
         handleSubmit(values)
       }}
     >
-      <Form>
-        <HStack mb={4} mt={4}>
+      <Form className='form--medical__history'>
+        <HStack mb={4} mt={4} w={['100%', '100%', '84%', '84%']} flexDirection={['column', 'column', 'row', 'row']} >
+          <FormControl w={['90%', '100%']}>
           <Text fontSize={['.8rem', '1rem']}>Cedula</Text>
-          <Field name='dni' w={['60px', '150px']} />
+          <Field name='dni' w={['85%', '150px']} />
+          </FormControl>
+          <FormControl w={['90%', '100%']}>
           <Text fontSize={['.8rem', '1rem']}>Fecha</Text>
+          <HStack w={'100%'}>
           <Field
-            w={['60px', '150px']}
+            w={['100%', '150px']}
             name='date'
             type='date'
           />
           <button type='submit'>
-            <Image height='2rem' width={['3.5rem', '4rem', '7rem']} src={SearchIcon} />
+            <Image height='2rem' minW={'2rem'} width={['3.5rem', '4rem', '7rem']} src={SearchIcon} />
           </button>
+          </HStack>
+          </FormControl>
         </HStack>
       </Form>
 
