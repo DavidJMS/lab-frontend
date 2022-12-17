@@ -20,6 +20,7 @@ import LayoutEditUser from './components/Layouts/LayoutEditUser'
 import AddClient from './pages/AddClient'
 import AddFormMedical from './pages/AddFormMedical'
 import LayoutListExams from './components/Layouts/LayoutListExams'
+import Financials from './pages/Financials'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -34,6 +35,7 @@ function App() {
         <Route path='client/edit/:id/' element={<LayoutEditUser />} />
         <Route path='list/exams' element={<LayoutListExams />} />
         <Route path='*' element={<MedicalHistories />} />
+        <Route path='financials' element={<Financials />} />
       </Routes>
     </BrowserRouter>
   )
