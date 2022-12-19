@@ -21,6 +21,7 @@ import {
 import TableFinancials from '../ui/TableFinancials'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import ModalCreateFinancials from '../modals/ModalCreateFinancials'
   
   const LayoutFinancials = () => {
     const [loading, setLoading] = useState(false)
@@ -29,6 +30,7 @@ import { useEffect } from 'react'
     useEffect(() => {
       fetchData()
     }, [])
+    console.log(data)
     const fetchData = async () => {
       try {
         const data = await getFinancials()
@@ -49,7 +51,9 @@ import { useEffect } from 'react'
               </Box>
             </Box>
           </Box>
-         
+          <Flex justifyContent={['center', 'flex-end']} w='80%'>
+            <ModalCreateFinancials />
+          </Flex>
         </Box>
     )
   }

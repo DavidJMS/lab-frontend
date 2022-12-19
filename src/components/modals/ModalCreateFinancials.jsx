@@ -1,35 +1,27 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
+import LayoutClient from '../Layouts/LayoutClient'
+import {
+  Modal, ModalOverlay, ModalContent, Box, Input, Checkbox, HStack, Image, Text,
+  ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, useDisclosure
+} from '@chakra-ui/react'
 import { Formik, Form } from 'formik'
 import {
-  Text,
-  HStack,
-  Input,
-  Box,
-  Button,
   FormControl,
   useToast,
   Spacer,
-  useDisclosure
 } from '@chakra-ui/react'
-import ModalClient from '../modals/ModalClient'
-import { Field } from '../shared/FormFields'
-import { useNavigate } from 'react-router-dom'
-// services
 import { createFinancials } from '../../services/financials'
+import { Field } from '../shared/FormFields'
 
-const CreateFinancials = () => {
-  // Const para los modales
+const ModalCreateFinancials = ({ handleExamData }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [size, setSize] = React.useState('xl')
-  const toast = useToast()
   const [loading, setLoading] = useState(true)
-  const navigate = useNavigate()
-  const title = 'Formulario de clientes'
+
   const handleSizeClick = (newSize) => {
     setSize(newSize)
     onOpen()
   }
-
   const handleSubmit = async (data) => {
     try {
       setLoading(true)
@@ -49,11 +41,16 @@ const CreateFinancials = () => {
       setLoading(false)
     }
   }
-
-  const sizes = ['xl']
-
   return (
     <>
+      <Button bgColor='#D0D0D0' fontSize={['.8rem', '1rem']} mr={8} onClick={() => handleSizeClick(size)}>Agregar</Button>
+      <Modal onClose={onClose} size={size} isOpen={isOpen}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader bgColor='#0DA7D9' height='1rem' color='#F5F5F5' textAlign='center' w='100%'>Financials</ModalHeader>
+          <ModalCloseButton color='#F5F5F5' />
+          <ModalBody>
+          <>
     <Formik
         initialValues={{
             method_payment: '',
@@ -121,7 +118,14 @@ const CreateFinancials = () => {
       </Form>
       </Formik>
     </>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Cerrar</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   )
 }
 
-export default CreateFinancials
+export default ModalCreateFinancials

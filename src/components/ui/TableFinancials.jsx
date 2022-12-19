@@ -17,7 +17,7 @@ import { useEffect } from 'react'
     const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
     const [totalPay, setTotalPay] = useState(0)
 
-    
+    console.log(data)
 
     return (
      <>
@@ -41,15 +41,6 @@ import { useEffect } from 'react'
               }
         </Tbody>
       </Table>
-
-     <Box>
-       { data && data.map((payment) => (
-        <Flex justifyContent={['center', 'flex-end']} w='80%'>
-        <Text>Total: {payment.amount}</Text>
-      </Flex> 
-        ))
-        }
-     </Box>
      </>
     )
   }
