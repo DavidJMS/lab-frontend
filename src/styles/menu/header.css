@@ -104,7 +104,11 @@ nav .menu--btn i {
     }
 
     nav ul li {
-        margin: 40px 0;
+        margin: 10px 0;
+    }
+
+    .css-nc7x8q {
+        color: #FFFF;
     }
 
     nav ul li a {
