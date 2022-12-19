@@ -21,6 +21,7 @@ import AddClient from './pages/AddClient'
 import AddFormMedical from './pages/AddFormMedical'
 import LayoutListExams from './components/Layouts/LayoutListExams'
 import Financials from './pages/Financials'
+import CreateFinancials from './components/Layouts/CreateFinancials'
 
 import Header from './components/Layouts/Header'
 
@@ -39,6 +40,7 @@ function App() {
         <Route path='examenes' element={<LayoutListExams />} />
         <Route path='*' element={<MedicalHistories />} />
         <Route path='financials' element={<Financials />} />
+        <Route path='agregar-financials' element={<CreateFinancials />} />
       </Routes>
     </BrowserRouter>
   )

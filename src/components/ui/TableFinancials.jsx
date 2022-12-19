@@ -6,13 +6,22 @@ import {
     Th,
     Tbody,
     Td,
+    Flex,
+    Box,
     useMediaQuery
   } from '@chakra-ui/react'
+import { useEffect } from 'react'
+  import { useState } from 'react'
   
   const TableFinancials = ({ data }) => {
     const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
+    const [totalPay, setTotalPay] = useState(0)
+
+    
+
     return (
-      <Table fontSize={['.8rem', '1rem']} variant='simple' width='70%' m={4}>
+     <>
+      <Table fontSize={['.8rem', '1rem']} variant='simple' width='90%' m={4}>
         {IsNotSmallScreen &&
           <Thead bg='#F4F7FF'>
             <Tr>
@@ -22,13 +31,26 @@ import {
             </Tr>
           </Thead>}
         <Tbody>
-              <Tr>
-                <Td><Text color='#8E9196'>David Julian</Text></Td>
-                <Td><Text color='#8E9196'>100</Text></Td>
-                <Td><Text color='#8E9196'>22/11/22</Text></Td>
+              { data && data.map((payment) => (
+                <Tr>
+                <Td><Text color='#8E9196'>{payment.medical_history}</Text></Td>
+                <Td><Text color='#8E9196'>{payment.amount}</Text></Td>
+                <Td><Text color='#8E9196'>{payment.payment_date}</Text></Td>
               </Tr>
+              ))
+              }
         </Tbody>
       </Table>
+
+     <Box>
+       { data && data.map((payment) => (
+        <Flex justifyContent={['center', 'flex-end']} w='80%'>
+        <Text>Total: {payment.amount}</Text>
+      </Flex> 
+        ))
+        }
+     </Box>
+     </>
     )
   }
   
