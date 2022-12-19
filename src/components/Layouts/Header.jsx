@@ -66,10 +66,10 @@ const Header = () => {
             {isVisibleHistory &&
               <Menu position='absolute' zIndex='1'>
                 <MenuGroup textAlign='center' backgroundColor='#5EC4E4'>
-                  <MenuItem textAlign='center' w='100%' backgroundColor='#5EC4E4'>
+                  <MenuItem textAlign='center' w='100%' color='#FFFF' backgroundColor='#5EC4E4'>
                     <Link to='/'>Historial</Link>
                   </MenuItem>
-                  <MenuItem textAlign='center' w='100%' backgroundColor='#5EC4E4'>
+                  <MenuItem textAlign='center' w='100%' color='#FFFF' backgroundColor='#5EC4E4'>
                     <Link to='/agregar-historia-medica'>Agregar</Link>
                   </MenuItem>
                 </MenuGroup>
@@ -80,10 +80,10 @@ const Header = () => {
             {isVisibleClient &&
               <Menu position='absolute' zIndex='1'>
                 <MenuGroup textAlign='center' backgroundColor='#5EC4E4'>
-                  <MenuItem textAlign='center' w='100%' backgroundColor='#5EC4E4'>
-                    <Link to='/clientes'>Listado</Link>
+                  <MenuItem color='#FFFF' textAlign='center' w='100%' backgroundColor='#5EC4E4'>
+                    <Link color='#FFFF' to='/clientes'>Listado</Link>
                   </MenuItem>
-                  <MenuItem textAlign='center' w='100%' backgroundColor='#5EC4E4'>
+                  <MenuItem textAlign='center' w='100%' color='#FFFF' backgroundColor='#5EC4E4'>
                     <Link to='/agregar-cliente'>Agregar</Link>
                   </MenuItem>
                 </MenuGroup>
@@ -94,7 +94,7 @@ const Header = () => {
             {isVisibleExam &&
               <Menu position='absolute' zIndex='1'>
                 <MenuGroup textAlign='center' backgroundColor='#5EC4E4'>
-                  <MenuItem textAlign='center' w='100%' backgroundColor='#5EC4E4'>
+                  <MenuItem textAlign='center' color='#FFFF' w='100%' backgroundColor='#5EC4E4'>
                     <Link to='/examenes'>Listado</Link>
                   </MenuItem>
                 </MenuGroup>

@@ -9,6 +9,7 @@ import {
 // styles
 import './styles/menu/szhsin.css'
 import './styles/menu/header.css'
+import './styles/forms/formMedicalHistory.css'
 
 // Layouts
 import MainLayout from './components/Layouts/MainLayout'
@@ -20,6 +21,7 @@ import LayoutEditUser from './components/Layouts/LayoutEditUser'
 import AddClient from './pages/AddClient'
 import AddFormMedical from './pages/AddFormMedical'
 import LayoutListExams from './components/Layouts/LayoutListExams'
+import Financials from './pages/Financials'
 
 import Header from './components/Layouts/Header'
 
@@ -37,6 +39,7 @@ function App() {
         <Route path='editar-cliente-:id' element={<LayoutEditUser />} />
         <Route path='examenes' element={<LayoutListExams />} />
         <Route path='*' element={<MedicalHistories />} />
+        <Route path='financials' element={<Financials />} />
       </Routes>
     </BrowserRouter>
   )
