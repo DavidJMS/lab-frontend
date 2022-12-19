@@ -9,6 +9,7 @@ import {
 // styles
 import './styles/menu/szhsin.css'
 import './styles/menu/header.css'
+import './styles/forms/formMedicalHistory.css'
 
 // Layouts
 import MainLayout from './components/Layouts/MainLayout'
