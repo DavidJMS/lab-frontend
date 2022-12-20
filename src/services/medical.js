@@ -25,7 +25,17 @@ const createMedical = async (data) => {
   }
 }
 
+const getPaymentsMedical = async (id) => {
+  try {
+    const res = await api.get(`medical/history-client/${id}/get_payments/`)
+    return res.data
+  } catch {
+    console.log()
+  }
+}
+
 export {
   getMedicalHistories,
-  createMedical
+  createMedical,
+  getPaymentsMedical
 }

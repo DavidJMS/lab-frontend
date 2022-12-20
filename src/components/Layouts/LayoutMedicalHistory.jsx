@@ -14,21 +14,20 @@ const LayoutMedicalHistory = ({ data, filterMedicalHistories }) => {
       {/* <Header title={title} /> */}
       <Box mb={4} width='100%' justifyContent='center'>
         <Box w={['100%', '100%', '100%']} display='flex' flexDirection='column' alignItems='center'>
-          <Flex flexDirection={['colum', 'row']} justifyContent='space-around' w={[ '100%' ,'82%']}>
+          <Flex flexDirection={['colum', 'row']} justifyContent='space-around' w={['100%', '82%']}>
             <Filters handleSubmit={filterMedicalHistories} />
             <HStack mb={4} mt={4} />
             <HStack width={['90px', '100px']} position='relative' mt={['100px', '100px', '0px']}>
-              { IsNotSmallScreen &&
-              <Link
-                as={RouterLink}
-                to='/add/medical'
-                bgColor='#D0D0D0'
-                fontSize={['.8rem', '1rem']}
-                padding='0.5rem'
-                borderRadius='10px' mr={8}
-              >Agregar
-              </Link>
-              }
+              {IsNotSmallScreen &&
+                <Link
+                  as={RouterLink}
+                  to='/add/medical'
+                  bgColor='#D0D0D0'
+                  fontSize={['.8rem', '1rem']}
+                  padding='0.5rem'
+                  borderRadius='10px' mr={8}
+                >Agregar
+                </Link>}
             </HStack>
           </Flex>
           <Box width={['40%', '80%', '100%']} display='flex' flexDirection={['row', 'row', 'row', 'row']} justifyContent='center'>

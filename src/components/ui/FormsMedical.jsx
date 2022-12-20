@@ -27,18 +27,39 @@ import { Field } from '../shared/FormFields'
 import ModalTest from '../modals/ModalTest'
 import * as Yup from 'yup'
 import deleteIcon from '../../assets/Delete.svg'
+import { useLocation, useParams } from 'react-router-dom'
 
 // services
-import { createMedical } from '../../services/medical'
-import { BoxInputSelfie } from '../shared/BoxInputFile'
-import { values } from 'lodash'
+import { createMedical, getPaymentsMedical } from '../../services/medical'
+
+// My Validation Definition to use in form
+const validationShema = Yup.object({
+  first_names: Yup.string()
+    .max(25, 'El maximo de caracteres es de 25'),
+  last_names: Yup.string()
+    .max(25, 'El maximo de caracteres es de 25'),
+  email: Yup.string()
+    .max(25, 'El maximo de caracteres es de 25'),
+  dni: Yup.string()
+    .max(25, 'El maximo de caracteres es de 25'),
+  gender: Yup.string()
+    .max(25, 'El maximo de caracteres es de 25'),
+  birth_date: Yup.string()
+    .max(25, 'El maximo de caracteres es de 25'),
+  phone: Yup.string()
+    .max(25, 'El maximo de caracteres es de 25'),
+  address: Yup.string()
+    .max(25, 'El maximo de caracteres es de 25')
+})
 
 const FormsMedical = (client) => {
-  // Const para los modales
+  // Some utils to use
+  const path = useLocation()
   const toast = useToast()
-  const [loading, setLoading] = useState(false)
-  // <<<<<<< HEAD
 
+  // Const to handle my statement
+  const [loading, setLoading] = useState(false)
+  const { medichalId } = useParams()
   const [userData, setUserData] = useState({
     first_names: '',
     last_names: '',
@@ -50,29 +71,34 @@ const FormsMedical = (client) => {
     address: ''
   })
   const [totalPay, setTotalPay] = useState(0)
-  const [results_exams, setResults_exams] = useState()
-
-  const validationShema = Yup.object({
-    first_names: Yup.string()
-      .max(25, 'El maximo de caracteres es de 25'),
-    last_names: Yup.string()
-      .max(25, 'El maximo de caracteres es de 25'),
-    email: Yup.string()
-      .max(25, 'El maximo de caracteres es de 25'),
-    dni: Yup.string()
-      .max(25, 'El maximo de caracteres es de 25'),
-    gender: Yup.string()
-      .max(25, 'El maximo de caracteres es de 25'),
-    birth_date: Yup.string()
-      .max(25, 'El maximo de caracteres es de 25'),
-    phone: Yup.string()
-      .max(25, 'El maximo de caracteres es de 25'),
-    address: Yup.string()
-      .max(25, 'El maximo de caracteres es de 25')
-  })
-
   const [examData, setExamData] = useState([])
+  const [results_exams, setResults_exams] = useState()// This only use if components is used in edit page
+  const [payments, setPayments] = useState() // This only use if components is used in edit page
 
+  // Funtions to get main data
+  const getPayments = async () => {
+    const response = await getPaymentsMedical(medichalId)
+    setPayments(response)
+  }
+  // Some useEffects
+  useEffect(() => {
+    if (examData || userData) {
+      setLoading(true)
+    }
+  }, [userData, examData])
+
+  useEffect(() => {
+    if (examData && loading === true || userData && loading === true) {
+      setLoading(false)
+    }
+  }, [loading])
+
+  useEffect(() => {
+    // Execute this funtions only if a edit form not add form
+    if (medichalId) { getPayments() }
+  }, [])
+
+  // Funtions to hanlde form data
   const handleAddExamData = (newExam) => {
     if (!examData.some((exam) => exam.id === newExam.id)) {
       setExamData(examData => [...examData, newExam])
@@ -109,18 +135,6 @@ const FormsMedical = (client) => {
     }
   }
 
-  useEffect(() => {
-    if (examData || userData) {
-      setLoading(true)
-    }
-  }, [userData, examData])
-
-  useEffect(() => {
-    if (examData && loading === true || userData && loading === true) {
-      setLoading(false)
-    }
-  }, [loading])
-
   if (loading) return <Spinner />
   return (
     <>
@@ -136,26 +150,7 @@ const FormsMedical = (client) => {
         enableReinitialize
         validationSchema={validationShema}
         onSubmit={(values) => {
-          console.log(values)
-          // const data = {
-          //   first_names: values.first_names,
-          //   last_names: values.last_names,
-          //   email: values.email,
-          //   dni: values.dni,
-          //   sex: values.sex,
-          //   birth_date: values.birth_date,
-          //   phone: values.phone,
-          //   address: values.address,
-          //   medical_exams: [values.medical_exams],
-          //   total_pay: values.total_pay,
-          //   results_exams: [values.results_exams]
-          // }
-          // console.log(data)
-          // if (results_exams.length >= 1) {
-          //   results_exams = values.results_exams
-          // }
           handleSubmit(values)
-          console.log(values)
         }}
       >
         <Form id='form'>
@@ -220,39 +215,30 @@ const FormsMedical = (client) => {
               <Box mt={4} width='80%'>
                 {examData && examData.map((exam, index) => {
                   return (
-                    // <HStack key={exam.id} mt={4}>
-                    //    <Text key={index} w={['100%', '80%', '30%']} borderBottom='1px solid #B7B4B4'>
-                    //   {exam.name}
-                    // </Text><Text key={index} w={['100%', '80%', '20%']} borderBottom='1px solid #B7B4B4'>
-                    //  costo: {exam.price}
-                    // </Text>
-                    //   <Img cursor={'pointer'} height={'1.2rem'} src={deleteIcon} onClick={() => { handleRemoveExamData(exam) }} />
-                    // </HStack>
                     <Table fontSize={['.5rem', '1rem']} variant='simple' width='80%' m={4}>
-                  <Thead  bg='#F4F7FF'>
-                    <Tr>
-                      <Th w='42%'>Nombre</Th>
-                      <Th>Costo</Th>
-                      <Th>Eliminar</Th>
-                    </Tr>
-                  </Thead>
-                    
-                  <Tbody >
-                  {examData && examData.map((exam, index) => (
-                      <Tr 
-                      key={client.id}
-                      _hover={{
-                        background: 'gray.50'
-                      }}
-                      >
-                        <Td color='#8E9196'>{exam.name}</Td>
-                        <Td color='#8E9196'>costo: {exam.price}</Td>
-                        <Td  textAlign={'center'}  color='#8E9196'><Img cursor={'pointer'} height={'1.2rem'} src={deleteIcon} onClick={() => { handleRemoveExamData(exam) }} /></Td>
-                      </Tr>
-                    ))
-                    }
-                  </Tbody>
-                </Table>
+                      <Thead bg='#F4F7FF'>
+                        <Tr>
+                          <Th w='42%'>Nombre</Th>
+                          <Th>Costo</Th>
+                          <Th>Eliminar</Th>
+                        </Tr>
+                      </Thead>
+
+                      <Tbody>
+                        {examData && examData.map((exam, index) => (
+                          <Tr
+                            key={client.id}
+                            _hover={{
+                              background: 'gray.50'
+                            }}
+                          >
+                            <Td color='#8E9196'>{exam.name}</Td>
+                            <Td color='#8E9196'>costo: {exam.price}</Td>
+                            <Td textAlign='center' color='#8E9196'><Img cursor='pointer' height='1.2rem' src={deleteIcon} onClick={() => { handleRemoveExamData(exam) }} /></Td>
+                          </Tr>
+                        ))}
+                      </Tbody>
+                    </Table>
                   )
                 })}
                 <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
@@ -260,110 +246,120 @@ const FormsMedical = (client) => {
                 </HStack>
               </Box>
             </Box>
+            {path.pathname === '/editar-historia-clinica' &&
+              <>
+                <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
+                  <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
+                    <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Resultado del Examen</Text>
+                  </Box>
+                  <Box mt={4} width='80%'>
+                    <input type='file' onChange={(e) => setResults_exams({ [e.target.name]: e.target.files[0] })} />
+                  </Box>
+                </Box>
+                <Box w='100%' mb={8} mt={4} display='flex' flexDirection='column' alignItems='center'>
+                  <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
+                    <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos de Pago</Text>
+                  </Box>
+                  <Box mt={4} width='80%'>
+                    <Text mb={4}>Total a pagar: {totalPay}</Text>
+                    <Accordion allowToggle>
+                      <AccordionItem>
+                        <h2>
+                          <AccordionButton>
+                            <Box flex='1' textAlign='left'>
+                              Pago Movil
+                            </Box>
+                            <AccordionIcon />
+                          </AccordionButton>
+                        </h2>
+                        <AccordionPanel w='100%' pb={4}>
+                          <HStack>
+                            <Text w='25%'>
+                              Metodo de pago
+                            </Text>
+                            <Field name='name' w='auto' />
+                          </HStack>
+                          <HStack mt={4}>
+                            <Text w='25%'>
+                              Monto
+                            </Text>
+                            <Field name='name' w='auto' />
+                          </HStack>
+                          <HStack mt={4}>
+                            <Text w='25%'>
+                              Referencia
+                            </Text>
+                            <Field name='name' w='auto' />
+                          </HStack>
+                        </AccordionPanel>
+                      </AccordionItem>
 
+                      <AccordionItem>
+                        <h2>
+                          <AccordionButton>
+                            <Box flex='1' textAlign='left'>
+                              Divisas
+                            </Box>
+                            <AccordionIcon />
+                          </AccordionButton>
+                        </h2>
+                        <AccordionPanel pb={4}>
+                          <HStack>
+                            <Text w='25%'>
+                              Metodo de pago
+                            </Text>
+                            <Field name='name' w='auto' />
+                          </HStack>
+                          <HStack mt={4}>
+                            <Text w='25%'>
+                              Monto
+                            </Text>
+                            <Field name='name' w='auto' />
+                          </HStack>
+                          <HStack mt={4} />
+                        </AccordionPanel>
+                      </AccordionItem>
+
+                      <AccordionItem>
+                        <h2>
+                          <AccordionButton>
+                            <Box flex='1' textAlign='left'>
+                              Efectivo
+                            </Box>
+                            <AccordionIcon />
+                          </AccordionButton>
+                        </h2>
+                        <AccordionPanel pb={4}>
+                          <HStack>
+                            <Text w='25%'>
+                              Metodo de pago
+                            </Text>
+                            <Field name='name' w='auto' />
+                          </HStack>
+                          <HStack mt={4}>
+                            <Text w='25%'>
+                              Monto
+                            </Text>
+                            <Field name='name' w='auto' />
+                          </HStack>
+                          <HStack mt={4} />
+                        </AccordionPanel>
+                      </AccordionItem>
+                    </Accordion>
+                  </Box>
+
+                </Box>
+              </>}
             <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
-              <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
-                <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Resultado del Examen</Text>
-              </Box>
-              <Box mt={4} width='80%'>
-                <input type='file' onChange={(e) => setResults_exams({ [e.target.name]: e.target.files[0] })} />
+              <Box w='85%'>
+                <HStack mt={4} w='100%' justifyContent='left'>
+                  <Text mb={4} float='left'>Total a pagar: {totalPay}</Text>
+                </HStack>
               </Box>
             </Box>
-            <Box w='100%' mb={8} mt={4} display='flex' flexDirection='column' alignItems='center'>
-              <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
-                <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos de Pago</Text>
-              </Box>
-              <Box mt={4} width='80%'>
-                <Text mb={4} >Total a pagar: {totalPay}</Text>
-                <Accordion allowToggle>
-                  <AccordionItem>
-                    <h2>
-                      <AccordionButton>
-                        <Box flex='1' textAlign='left'>
-                          Pago Movil
-                        </Box>
-                        <AccordionIcon />
-                      </AccordionButton>
-                    </h2>
-                    <AccordionPanel w='100%' pb={4}>
-                      <HStack>
-                        <Text w='25%'>
-                          Metodo de pago
-                        </Text>
-                        <Field name='name' w='auto' />
-                      </HStack>
-                      <HStack mt={4}>
-                        <Text w='25%'>
-                          Monto
-                        </Text>
-                        <Field name='name' w='auto' />
-                      </HStack>
-                      <HStack mt={4}>
-                        <Text w='25%'>
-                          Referencia
-                        </Text>
-                        <Field name='name' w='auto' />
-                      </HStack>
-                    </AccordionPanel>
-                  </AccordionItem>
-
-                  <AccordionItem>
-                    <h2>
-                      <AccordionButton>
-                        <Box flex='1' textAlign='left'>
-                          Divisas
-                        </Box>
-                        <AccordionIcon />
-                      </AccordionButton>
-                    </h2>
-                    <AccordionPanel pb={4}>
-                      <HStack>
-                        <Text w='25%'>
-                          Metodo de pago
-                        </Text>
-                        <Field name='name' w='auto' />
-                      </HStack>
-                      <HStack mt={4}>
-                        <Text w='25%'>
-                          Monto
-                        </Text>
-                        <Field name='name' w='auto' />
-                      </HStack>
-                      <HStack mt={4} />
-                    </AccordionPanel>
-                  </AccordionItem>
-
-                  <AccordionItem>
-                    <h2>
-                      <AccordionButton>
-                        <Box flex='1' textAlign='left'>
-                          Efectivo
-                        </Box>
-                        <AccordionIcon />
-                      </AccordionButton>
-                    </h2>
-                    <AccordionPanel pb={4}>
-                      <HStack>
-                        <Text w='25%'>
-                          Metodo de pago
-                        </Text>
-                        <Field name='name' w='auto' />
-                      </HStack>
-                      <HStack mt={4}>
-                        <Text w='25%'>
-                          Monto
-                        </Text>
-                        <Field name='name' w='auto' />
-                      </HStack>
-                      <HStack mt={4} />
-                    </AccordionPanel>
-                  </AccordionItem>
-                </Accordion>
-              </Box>
-              <HStack mt={4} w='100%' justifyContent='center'>
-                <Button w='20%' type='submit'>Crear</Button>
-              </HStack>
-            </Box>
+            <HStack mt={4} w='100%' justifyContent='center'>
+              <Button w='20%' type='submit'>Crear</Button>
+            </HStack>
           </Box>
         </Form>
       </Formik>
