@@ -1,26 +1,25 @@
 import {
-    Text,
-    Table,
-    Thead,
-    Tr,
-    Th,
-    Tbody,
-    Td,
-    Flex,
-    Box,
-    useMediaQuery
-  } from '@chakra-ui/react'
-import { useEffect } from 'react'
-  import { useState } from 'react'
-  
-  const TableFinancials = ({ data }) => {
-    const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
-    const [totalPay, setTotalPay] = useState(0)
+  Text,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
+  Flex,
+  Box,
+  useMediaQuery
+} from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
 
-    console.log(data)
+const TableFinancials = ({ data }) => {
+  const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
+  const [totalPay, setTotalPay] = useState(0)
 
-    return (
-     <>
+  console.log(data)
+
+  return (
+    <>
       <Table fontSize={['.8rem', '1rem']} variant='simple' width='90%' m={4}>
         {IsNotSmallScreen &&
           <Thead bg='#F4F7FF'>
@@ -31,19 +30,17 @@ import { useEffect } from 'react'
             </Tr>
           </Thead>}
         <Tbody>
-              { data && data.map((payment) => (
-                <Tr>
-                <Td><Text color='#8E9196'>{payment.medical_history}</Text></Td>
-                <Td><Text color='#8E9196'>{payment.amount}</Text></Td>
-                <Td><Text color='#8E9196'>{payment.payment_date}</Text></Td>
-              </Tr>
-              ))
-              }
+          {data && data.map((payment) => (
+            <Tr>
+              <Td><Text color='#8E9196'>{payment?.medical_history?.client?.full_name}</Text></Td>
+              <Td><Text color='#8E9196'>{payment.amount}</Text></Td>
+              <Td><Text color='#8E9196'>{payment.payment_date}</Text></Td>
+            </Tr>
+          ))}
         </Tbody>
       </Table>
-     </>
-    )
-  }
-  
-  export default TableFinancials
-  
+    </>
+  )
+}
+
+export default TableFinancials

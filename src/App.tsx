@@ -22,12 +22,11 @@ import AddClient from './pages/AddClient'
 import AddFormMedical from './pages/AddFormMedical'
 import LayoutListExams from './components/Layouts/LayoutListExams'
 import Financials from './pages/Financials'
+import EditMedicalHistory from './pages/EditMedicalHistory'
 
 import Header from './components/Layouts/Header'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function App () {
   return (
     <BrowserRouter>
       <Header />
@@ -36,10 +35,11 @@ function App() {
         <Route path='clientes' element={<ClientHistories />} />
         <Route path='agregar-cliente' element={<AddClient />} />
         <Route path='agregar-historia-medica' element={<AddFormMedical />} />
+        <Route path='editar-historia-:medicalId' element={<EditMedicalHistory />} />
         <Route path='editar-cliente-:id' element={<LayoutEditUser />} />
         <Route path='examenes' element={<LayoutListExams />} />
         <Route path='*' element={<MedicalHistories />} />
-        <Route path='financials' element={<Financials />} />
+        <Route path='finanzas' element={<Financials />} />
       </Routes>
     </BrowserRouter>
   )

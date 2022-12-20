@@ -1,5 +1,13 @@
 import api from './api'
 
+const getMedical = async (id) => {
+  try {
+    const res = await api.get(`medical/history-client/${id}`)
+    return res.data
+  } catch {
+    console.log()
+  }
+}
 const getMedicalHistories = async (props) => {
   try {
     let url = 'medical/history-client/'
@@ -25,7 +33,18 @@ const createMedical = async (data) => {
   }
 }
 
+const getPaymentsMedical = async (id) => {
+  try {
+    const res = await api.get(`medical/history-client/${id}/get_payments/`)
+    return res.data
+  } catch {
+    console.log()
+  }
+}
+
 export {
   getMedicalHistories,
-  createMedical
+  createMedical,
+  getPaymentsMedical,
+  getMedical
 }
