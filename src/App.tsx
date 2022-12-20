@@ -25,7 +25,7 @@ import Financials from './pages/Financials'
 
 import Header from './components/Layouts/Header'
 
-function App() {
+function App () {
   const [count, setCount] = useState(0)
 
   return (
@@ -39,7 +39,7 @@ function App() {
         <Route path='editar-cliente-:id' element={<LayoutEditUser />} />
         <Route path='examenes' element={<LayoutListExams />} />
         <Route path='*' element={<MedicalHistories />} />
-        <Route path='financials' element={<Financials />} />
+        <Route path='finanzas' element={<Financials />} />
       </Routes>
     </BrowserRouter>
   )
