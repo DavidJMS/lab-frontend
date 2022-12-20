@@ -5,7 +5,8 @@ const createClient = async (data) => {
     const res = await api.post('client/', data)
     return res.data
   } catch (error) {
-    console.log()
+    let message = 'hubo un error'
+    return message
   }
 }
 

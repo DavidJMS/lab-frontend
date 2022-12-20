@@ -33,22 +33,23 @@ const ClientForm = () => {
   const handleSubmit = async (data) => {
     try {
       setLoading(true)
-      await createClient(data)
-      if (!data.error) {
-        navigate('/client')
+      const res = await createClient(data)
+      console.log(res)
+
+      if (res.status === 400) {
+        toast({
+          title: 'Exito',
+          description: 'Cliente creado de manera exitosa',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right'
+        })
       }
-      toast({
-        title: 'Exito',
-        description: 'Cliente creado de manera exitosa',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right'
-      })
     } catch (error) {
       toast({
         title: 'Error',
-        description: 'Hubo en error, intentelo luego.',
+        description: res,
         status: 'error',
         duration: 3000,
         isClosable: true,
@@ -69,7 +70,7 @@ const ClientForm = () => {
           last_names: '',
           email: '',
           dni: '',
-          sex: 'Masculino',
+          gender: 'Masculino',
           birth_date: '',
           phone: '',
           address: '',
@@ -88,8 +89,8 @@ const ClientForm = () => {
           if (!values.dni) {
             errors.dni = 'Campo requerido'
           }
-          if (!values.sex) {
-            errors.sex = 'Campo requerido'
+          if (!values.gender) {
+            errors.gender = 'Campo requerido'
           }
           if (!values.birth_date) {
             errors.birth_date = 'Campo requerido'
@@ -108,7 +109,7 @@ const ClientForm = () => {
             last_names: values.last_names,
             email: values.email,
             dni: values.dni,
-            sex: values.sex,
+            gender: values.gender,
             birth_date: values.birth_date,
             phone: values.phone,
             address: values.address,
@@ -136,7 +137,7 @@ const ClientForm = () => {
           <HStack mb={4} mt={4} w={['100%','100%','66%']}  display='flex' flexDirection={['column', 'column', 'row']}>
             <FormControl>
               <Text>Sexo :</Text>
-              <Field as='select' name='sexo'>
+              <Field as='select' name='gender'>
                 <option value="masculino">Masculino</option>
                 <option value="femenino">Femenino</option>
               </Field>
