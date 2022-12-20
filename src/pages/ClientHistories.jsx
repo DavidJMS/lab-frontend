@@ -54,7 +54,7 @@ const ClientHistories = () => {
   return (
     <>
       <Box>
-      <LayoutClient data={data} handleDelete={handleDelete} />
+        <LayoutClient data={data} handleDelete={handleDelete} />
       </Box>
     </>
   )

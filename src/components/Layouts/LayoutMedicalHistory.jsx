@@ -3,11 +3,12 @@ import TableMedicalHistory from '../ui/TableMedicalHistory'
 import PaginationButtons from '../ui/PaginationButtons'
 import Header from './Header'
 import Filters from '../../pages/MedicalHistories/components/Filters'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
 const LayoutMedicalHistory = ({ data, filterMedicalHistories }) => {
   const title = 'Historial Clinico'
   const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
+  const navigate = useNavigate()
 
   return (
     <Box width='100%'>
@@ -31,7 +32,7 @@ const LayoutMedicalHistory = ({ data, filterMedicalHistories }) => {
             </HStack>
           </Flex>
           <Box width={['40%', '80%', '100%']} display='flex' flexDirection={['row', 'row', 'row', 'row']} justifyContent='center'>
-            <TableMedicalHistory data={data} />
+            <TableMedicalHistory data={data} navigate={navigate} />
           </Box>
         </Box>
       </Box>
