@@ -29,6 +29,7 @@ const EditMedicalHistory = () => {
     <FormsMedical
       medicalHistory={medicalHistory}
       payments={payments}
+      getMedicalPayments={getMedicalPayments}
     />
   )
 }

@@ -8,11 +8,6 @@ import {
   FormControl,
   useToast,
   Spacer,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
   Spinner,
   Img,
   Table,
@@ -27,6 +22,7 @@ import { Field } from '../shared/FormFields'
 import ModalTest from '../modals/ModalTest'
 import * as Yup from 'yup'
 import deleteIcon from '../../assets/Delete.svg'
+import ModalCreateFinancials from '../modals/ModalCreateFinancials'
 
 // services
 import { createMedical } from '../../services/medical'
@@ -51,7 +47,7 @@ const validationShema = Yup.object({
     .max(25, 'El maximo de caracteres es de 25')
 })
 
-const FormsMedical = ({ medicalHistory, payments }) => {
+const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
   // Some utils to use
   const toast = useToast()
 
@@ -231,6 +227,18 @@ const FormsMedical = ({ medicalHistory, payments }) => {
             </Box>
             {medicalHistory &&
               <>
+                <Box w='100%' mb={8} mt={4} display='flex' flexDirection='column' alignItems='center'>
+                  <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
+                    <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos de Pago</Text>
+                  </Box>
+                  <Box mt={4} width='80%'>
+
+                    Lista de pagos
+                    <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
+                      <ModalCreateFinancials />
+                    </HStack>
+                  </Box>
+                </Box>
                 <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
                   <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
                     <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Resultado del Examen</Text>
@@ -238,98 +246,6 @@ const FormsMedical = ({ medicalHistory, payments }) => {
                   <Box mt={4} width='80%'>
                     <input type='file' onChange={(e) => setResults_exams({ [e.target.name]: e.target.files[0] })} />
                   </Box>
-                </Box>
-                <Box w='100%' mb={8} mt={4} display='flex' flexDirection='column' alignItems='center'>
-                  <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
-                    <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos de Pago</Text>
-                  </Box>
-                  <Box mt={4} width='80%'>
-                    <Accordion allowToggle>
-                      <AccordionItem>
-                        <h2>
-                          <AccordionButton>
-                            <Box flex='1' textAlign='left'>
-                              Pago Movil
-                            </Box>
-                            <AccordionIcon />
-                          </AccordionButton>
-                        </h2>
-                        <AccordionPanel w='100%' pb={4}>
-                          <HStack>
-                            <Text w='25%'>
-                              Metodo de pago
-                            </Text>
-                            <Field name='name' w='auto' />
-                          </HStack>
-                          <HStack mt={4}>
-                            <Text w='25%'>
-                              Monto
-                            </Text>
-                            <Field name='name' w='auto' />
-                          </HStack>
-                          <HStack mt={4}>
-                            <Text w='25%'>
-                              Referencia
-                            </Text>
-                            <Field name='name' w='auto' />
-                          </HStack>
-                        </AccordionPanel>
-                      </AccordionItem>
-
-                      <AccordionItem>
-                        <h2>
-                          <AccordionButton>
-                            <Box flex='1' textAlign='left'>
-                              Divisas
-                            </Box>
-                            <AccordionIcon />
-                          </AccordionButton>
-                        </h2>
-                        <AccordionPanel pb={4}>
-                          <HStack>
-                            <Text w='25%'>
-                              Metodo de pago
-                            </Text>
-                            <Field name='name' w='auto' />
-                          </HStack>
-                          <HStack mt={4}>
-                            <Text w='25%'>
-                              Monto
-                            </Text>
-                            <Field name='name' w='auto' />
-                          </HStack>
-                          <HStack mt={4} />
-                        </AccordionPanel>
-                      </AccordionItem>
-
-                      <AccordionItem>
-                        <h2>
-                          <AccordionButton>
-                            <Box flex='1' textAlign='left'>
-                              Efectivo
-                            </Box>
-                            <AccordionIcon />
-                          </AccordionButton>
-                        </h2>
-                        <AccordionPanel pb={4}>
-                          <HStack>
-                            <Text w='25%'>
-                              Metodo de pago
-                            </Text>
-                            <Field name='name' w='auto' />
-                          </HStack>
-                          <HStack mt={4}>
-                            <Text w='25%'>
-                              Monto
-                            </Text>
-                            <Field name='name' w='auto' />
-                          </HStack>
-                          <HStack mt={4} />
-                        </AccordionPanel>
-                      </AccordionItem>
-                    </Accordion>
-                  </Box>
-
                 </Box>
               </>}
             <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
