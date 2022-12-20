@@ -49,7 +49,7 @@ const LayoutFinancials = () => {
           <Box width={['80%']} display='flex' flexDirection={['row', 'row', 'row', 'row']} justifyContent='center'>
             <TableFinancials data={data} />
           </Box>
-          <span>Total registrado: {data.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.amount), 0.0)}</span>
+          <span>Total registrado: {data && data.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.amount), 0.0)}</span>
         </Box>
       </Box>
       <Flex justifyContent={['center', 'flex-end']} w='80%'>
