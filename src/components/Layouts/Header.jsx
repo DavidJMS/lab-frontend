@@ -54,7 +54,7 @@ const Header = () => {
           </div>
 
           <input type='checkbox' id='click' />
-          <label for='click' className='menu--btn'>
+          <label htmlFor='click' className='menu--btn'>
             <img src={HamburguerIcon} id='click' className='img' alt='' />
           </label>
 
