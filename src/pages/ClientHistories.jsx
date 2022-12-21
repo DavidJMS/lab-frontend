@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import LayoutClient from '../components/Layouts/LayoutClient'
 import { Box, useToast } from '@chakra-ui/react'
+import SpinnerLayout from '../components/components/Spinner'
 
 // Services
 import { getClient, deleteClient } from '../services/clients'
@@ -8,6 +9,7 @@ import { useRouteLoaderData } from 'react-router-dom'
 import Header from '../components/Layouts/Header'
 
 const ClientHistories = () => {
+const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
   const toast = useToast()
   const title = 'Clientes'
@@ -16,13 +18,19 @@ const ClientHistories = () => {
   useEffect(() => {
     getData()
   }, [])
+  console.log(loading)
+
+  
 
   const getData = async () => {
     try {
+      setLoading(true)
       const data = await getClient()
       setData(data.data)
     } catch (error) {
       console.log(error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -51,6 +59,11 @@ const ClientHistories = () => {
     }
   }
 
+  if (loading) {
+    return (
+    <SpinnerLayout />
+    )
+  }
   return (
     <>
       <Box>

@@ -7,6 +7,7 @@ import Filters from '../../pages/MedicalHistories/components/Filters'
 import { getFinancials } from '../../services/financials'
 import TableFinancials from '../ui/TableFinancials'
 import { useState, useEffect } from 'react'
+import SpinnerLayout from '../components/Spinner'
 
 const LayoutFinancials = () => {
   const [loading, setLoading] = useState(false)
@@ -24,6 +25,15 @@ const LayoutFinancials = () => {
     } catch (error) {
 
     }
+    finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <SpinnerLayout />
+    )
   }
 
   return (

@@ -8,6 +8,11 @@ export default function Example () {
   return (
     <>
       <Box display='flex'>
+      <HStack mr={4} color='#FFFF'>
+          <Menu menuButton={<MenuButton>Finanzas</MenuButton>} transition>
+            <MenuItem><Link to='/finanzas'>Finanzas</Link></MenuItem>
+          </Menu>
+        </HStack>
         <HStack mr={4} color='#FFFF'>
           <Menu menuButton={<MenuButton>Historial Medica</MenuButton>} transition>
             <MenuItem><Link to='/'>Historial</Link></MenuItem>

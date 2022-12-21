@@ -10,25 +10,30 @@ import DeleteIcon from '../../assets/Delete.svg'
 import EditIcon from '../../assets/Edit.svg'
 
 import ModalEditExam from '../modals/ModalEditExam'
+import SpinnerLayout from '../components/Spinner'
 
 const LayoutListExams = () => {
+  const [ loading, setLoading ] = useState(false)
   const title = 'Lista de examenes'
   const [dataExam, setDataExam] = useState([])
   useEffect(() => {
     fetchUser()
   }, [])
-  console.log(dataExam)
   const fetchUser = async () => {
     try {
+      setLoading(true)
       const data = await getExams()
       setDataExam(data.data)
     } catch (error) {
       console.log(error)
+    } finally {
+      setLoading(false)
     }
   }
 
   const handleDelete = async (id) => {
     try {
+      setLoading(true)
       await deleteExams(id)
       location.reload()
       toast({
@@ -49,7 +54,15 @@ const LayoutListExams = () => {
         isClosable: true,
         position: 'top-right'
       })
+    } finally {
+      setLoading(false)
     }
+  }
+
+  if (loading) {
+    return (
+      <SpinnerLayout />
+    )
   }
 
   return (
