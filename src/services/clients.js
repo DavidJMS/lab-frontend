@@ -1,11 +1,14 @@
 import api from './api'
+import { useToast } from '@chakra-ui/react'
 
 const createClient = async (data) => {
+
   try {
     const res = await api.post('client/', data)
+    
     return res.data
   } catch (error) {
-    console.log()
+   console.log(error)
   }
 }
 

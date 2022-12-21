@@ -30,7 +30,9 @@ const LayoutFinancials = () => {
     <Box width='100%'>
       <Box mb={4} width='100%' justifyContent='center'>
         <Box w={['100%', '100%', '100%']} display='flex' flexDirection='column' alignItems='center'>
+        <Flex flexDirection={['colum', 'row']} justifyContent='space-around' w={['100%', '71%']}>
           <Filters />
+        </Flex>
           <Box width={['80%']} display='flex' flexDirection={['row', 'row', 'row', 'row']} justifyContent='center'>
             <TableFinancials data={data} />
           </Box>

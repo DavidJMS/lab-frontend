@@ -17,8 +17,7 @@ const LayoutMedicalHistory = ({ data, filterMedicalHistories }) => {
         <Box w={['100%', '100%', '100%']} display='flex' flexDirection='column' alignItems='center'>
           <Flex flexDirection={['colum', 'row']} justifyContent='space-around' w={['100%', '82%']}>
             <Filters handleSubmit={filterMedicalHistories} />
-            <HStack mb={4} mt={4} />
-            <HStack width={['90px', '100px']} position='relative' mt={['100px', '100px', '0px']}>
+            <HStack width={['90px', '100px']} position='relative' mt={['120px', '100px', '0px']}>
               {IsNotSmallScreen &&
                 <Link
                   as={RouterLink}
