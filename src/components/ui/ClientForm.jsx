@@ -32,11 +32,9 @@ const ClientForm = () => {
 
   const handleSubmit = async (data) => {
     try {
-      setLoading(true)
-      const res = await createClient(data)
+      const res =  await createClient(data)
       console.log(res)
-
-      if (res.status === 400) {
+      if (res === null) {
         toast({
           title: 'Exito',
           description: 'Cliente creado de manera exitosa',
@@ -45,16 +43,18 @@ const ClientForm = () => {
           isClosable: true,
           position: 'top-right'
         })
+      } else {
+        toast({
+          title: 'Error',
+          description: 'Hubo un error',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right'
+        })
       }
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: res,
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right'
-      })
+      console.log(error)
     } finally {
       setLoading(false)
     }

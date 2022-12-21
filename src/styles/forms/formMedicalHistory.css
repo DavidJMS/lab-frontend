@@ -1,3 +1,8 @@
 .form--medical__history {
     width: 100%;
 }
+
+.button--filter {
+    min-width: 2rem;
+    min-height: 2rem;
+}
