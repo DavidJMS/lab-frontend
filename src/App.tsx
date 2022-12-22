@@ -23,6 +23,7 @@ import AddFormMedical from './pages/AddFormMedical'
 import LayoutListExams from './components/Layouts/LayoutListExams'
 import Financials from './pages/Financials'
 import EditMedicalHistory from './pages/EditMedicalHistory'
+import LoginPage from './pages/LoginPage'
 
 import Header from './components/Layouts/Header'
 
@@ -40,6 +41,7 @@ function App () {
         <Route path='examenes' element={<LayoutListExams />} />
         <Route path='*' element={<MedicalHistories />} />
         <Route path='finanzas' element={<Financials />} />
+        <Route path='Login' element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   )

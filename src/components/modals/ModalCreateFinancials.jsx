@@ -81,31 +81,28 @@ const ModalCreateFinancials = ({ handleExamData }) => {
       <Form id='form'>
       <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
         <Box mt={4} width='80%'>
-          <HStack mb={4} display='flex' flexDirection={['column', 'column', 'row']}>
-            <FormControl>
-              <Text>Historial medico</Text>
+          <HStack mb={4} display='flex' flexDirection={['column', 'column', 'column']}>
+            <FormControl >
+              <Text mt={4}>Historial medico</Text>
               <Field name='medical_history' />
             </FormControl>
             <FormControl>
-              <Text>Monto</Text>
+              <Text mt={4}>Monto</Text>
               <Field name='amount' />
             </FormControl>
-            <FormControl>
-              <Text>Foto del billete</Text>
+            <FormControl >
+              <Text mt={4}>Foto del billete</Text>
               <Field name='photo_billet' />
             </FormControl>
-          </HStack>
-          <HStack mb={4} mt={4} w={['100%','100%','66%']}  display='flex' flexDirection={['column', 'column', 'row']}>
-            <FormControl>
-              <Text>Metodo de pago</Text>
+            <FormControl >
+              <Text mt={4}>Metodo de pago</Text>
               <Field as='select' name='method_payment'>
                 <option value="1">Pago movil</option>
                 <option value="2">Divisas</option>
               </Field>
             </FormControl>
-            <Spacer />
-            <FormControl>
-              <Text mt={[4,4,0]}>Numero de referencia</Text>
+            <FormControl >
+              <Text mt={4}>Numero de referencia</Text>
               <Field name='number_ref'/>
             </FormControl>
             <Spacer />
