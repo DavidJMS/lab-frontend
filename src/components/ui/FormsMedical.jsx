@@ -232,10 +232,13 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
                     <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos de Pago</Text>
                   </Box>
                   <Box mt={4} width='80%'>
-
                     Lista de pagos
+                    {payments && payments.map((payment, index) => (<p key={index}>{payment.id}</p>))}
                     <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
-                      <ModalCreateFinancials />
+                      <ModalCreateFinancials
+                        getMedicalPayments={getMedicalPayments}
+                        medicalId={medicalHistory?.id}
+                      />
                     </HStack>
                   </Box>
                 </Box>
