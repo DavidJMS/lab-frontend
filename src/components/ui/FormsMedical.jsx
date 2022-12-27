@@ -15,7 +15,7 @@ import {
   Td,
   Thead,
   Tbody,
-  Th
+  Th,
 } from '@chakra-ui/react'
 import ModalClient from '../modals/ModalClient'
 import { Field } from '../shared/FormFields'
@@ -23,6 +23,7 @@ import ModalTest from '../modals/ModalTest'
 import * as Yup from 'yup'
 import deleteIcon from '../../assets/Delete.svg'
 import ModalCreateFinancials from '../modals/ModalCreateFinancials'
+import { useNavigate } from 'react-router-dom'
 
 // services
 import { createMedical } from '../../services/medical'
@@ -50,7 +51,7 @@ const validationShema = Yup.object({
 const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
   // Some utils to use
   const toast = useToast()
-
+  const navigate = useNavigate()
   // Const to handle my statement
   const [loading, setLoading] = useState(false)
   const [userData, setUserData] = useState({
@@ -101,15 +102,27 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
   const handleSubmit = async (data) => {
     try {
       setLoading(true)
-      await createMedical(data)
-      toast({
-        title: 'Exito',
-        description: 'Cliente creado de manera exitosa',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right'
-      })
+      const res = await createMedical(data)
+      if (res) {
+        toast({
+          title: 'Exito',
+          description: 'Cliente creado de manera exitosa',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right'
+        })
+        navigate("/")
+      } else {
+        toast({
+          title: 'Error',
+          description: 'Hubo un error',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right'
+        })
+      }
     } catch (error) {
       console.log(error)
     } finally {
@@ -180,8 +193,9 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
                   <Field name='email' />
                 </FormControl>
                 <FormControl>
-                  <Text>Fecha :</Text>
+                  <Text>Fecha de nacimiento:</Text>
                   <Field
+                  type='date'
                     name='birth_date'
                   />
                 </FormControl>
@@ -259,7 +273,7 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
               </Box>
             </Box>
             <HStack mt={4} w='100%' justifyContent='center'>
-              <Button w='20%' type='submit'>Crear</Button>
+              <Button mb={8} w='20%' type='submit'>Crear</Button>
             </HStack>
           </Box>
         </Form>

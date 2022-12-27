@@ -32,7 +32,7 @@ const LayoutClient = ({ data, handleDelete }) => {
       {/* <Header title={title} /> */}
       <Box mb={4} width='100%' justifyContent='center'>
         <Box w={['100%', '100%', '100%']} display='flex' flexDirection='column' alignItems='center'>
-        <Flex flexDirection={['colum', 'row']} justifyContent='space-around' w={['100%', '43%']}>
+        <Flex flexDirection={['colum', 'row']} justifyContent='space-around' w={['100%', '60%']}>
           <Filters />
         </Flex>
           <Box width={['80%']} display='flex' flexDirection={['row', 'row', 'row', 'row']} justifyContent='center'>

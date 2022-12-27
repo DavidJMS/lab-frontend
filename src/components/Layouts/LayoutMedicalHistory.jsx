@@ -15,7 +15,7 @@ const LayoutMedicalHistory = ({ data, filterMedicalHistories }) => {
       {/* <Header title={title} /> */}
       <Box mb={4} width='100%' justifyContent='center'>
         <Box w={['100%', '100%', '100%']} display='flex' flexDirection='column' alignItems='center'>
-          <Flex flexDirection={['colum', 'row']} justifyContent='space-around' w={['100%', '82%']}>
+          <Flex flexDirection={['colum', 'row']} justifyContent='space-around' w={['100%', '66%']}>
             <Filters handleSubmit={filterMedicalHistories} />
             <HStack width={['90px', '100px']} position='relative' mt={['120px', '100px', '0px']}>
               {IsNotSmallScreen &&

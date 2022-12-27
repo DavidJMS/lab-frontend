@@ -167,10 +167,7 @@ const ClientForm = () => {
               />
             </FormControl>
           </HStack>
-          <HStack justifyContent='end' w='100%' display='flex'>
-            <ModalClient onClose={onClose} size={size} isOpen={isOpen} />
-
-          </HStack>
+          
         </Box>
           <HStack mt={4} w='100%' justifyContent='center'>
           <Button w='20%' type='submit'>Crear</Button>
