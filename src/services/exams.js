@@ -2,10 +2,10 @@ import api from './api'
 
 const createExam = async (data) => {
 	try {
-		const res = await api.post('medical/exams/', data)
-		return res.data
+		 await api.post('medical/exams/', data)
+		return true
 		} catch (error) {
-		console.log()
+			return false
 	}	
 }
 

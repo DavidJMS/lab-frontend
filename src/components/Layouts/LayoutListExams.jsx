@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Field } from '../shared/FormFields'
 import { getExams, deleteExams } from '../../services/exams'
 import { FormGroup } from '@mui/material'
-import { HStack, Box, Text, Input, Img } from '@chakra-ui/react'
+import { HStack, Box, Text, Input, Img, Table,Tr,Td,Tbody, useMediaQuery, Thead, Th } from '@chakra-ui/react'
 import Header from './Header'
 import ModalTypesExams from '../modals/ModalTypesExams'
 import DeleteIcon from '../../assets/Delete.svg'
@@ -14,6 +14,7 @@ import SpinnerLayout from '../components/Spinner'
 
 const LayoutListExams = () => {
   const [ loading, setLoading ] = useState(false)
+  const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
   const title = 'Lista de examenes'
   const [dataExam, setDataExam] = useState([])
   useEffect(() => {
@@ -76,16 +77,27 @@ const LayoutListExams = () => {
         <Input w='30%' />
         <ModalTypesExams />
       </HStack>
-      <Box alignItems='center' flexDirection='column' display='flex' w='100%'>
-        {dataExam && dataExam.map((exam, i) => (
-          <HStack w='100%' display='flex' justifyContent='center' key={i} mt={8}>
-            <Text w='40%' height='2rem' borderRadius='5px' paddingLeft='.8rem' border='1.6px solid #E2E8F0' backgroundColor='none'>
-              {exam.name}
-            </Text>
-            <Img cursor='pointer' onClick={() => handleDelete(exam.id)} src={DeleteIcon} />
-            <ModalEditExam id={exam.id} />
-          </HStack>
-        ))}
+      <Box width={'100%'} display={'flex'} flexDirection={'column'} alignItems={'center'}>
+      <Table fontSize={['.8rem', '1rem']} variant='simple' width='90%' m={4}>
+        {IsNotSmallScreen &&
+          <Thead bg='#F4F7FF'>
+            <Tr>
+              <Th>Cliente</Th>
+              <Th>Monto Registrado</Th>
+              <Th>Fecha</Th>
+            </Tr>
+          </Thead>}
+        <Tbody>
+          {dataExam && dataExam.map((exam) => (
+            <Tr>
+              <Td><Text color='#8E9196'>{exam.name}</Text></Td>
+              <Td><Img cursor='pointer' onClick={() => handleDelete(exam.id)} src={DeleteIcon} /></Td>
+              <Td>
+            <ModalEditExam id={exam.id} /></Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
       </Box>
     </>
   )
