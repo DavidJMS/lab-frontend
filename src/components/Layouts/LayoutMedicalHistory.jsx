@@ -21,8 +21,9 @@ const LayoutMedicalHistory = ({ data, filterMedicalHistories }) => {
               {IsNotSmallScreen &&
                 <Link
                   as={RouterLink}
-                  to='/add/medical'
+                  to='/agregar-historia-medica'
                   bgColor='#D0D0D0'
+                  color='#fff'
                   fontSize={['.8rem', '1rem']}
                   padding='0.5rem'
                   borderRadius='10px' mr={8}
