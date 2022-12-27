@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Formik, Form } from 'formik'
 import {
   Text,
@@ -32,9 +32,9 @@ const ClientForm = () => {
 
   const handleSubmit = async (data) => {
     try {
-      const res =  await createClient(data)
+      const res = await createClient(data)
       console.log(res)
-      if (res === null) {
+      if (res) {
         toast({
           title: 'Exito',
           description: 'Cliente creado de manera exitosa',
@@ -43,6 +43,7 @@ const ClientForm = () => {
           isClosable: true,
           position: 'top-right'
         })
+        navigate('/clientes')
       } else {
         toast({
           title: 'Error',
@@ -64,62 +65,62 @@ const ClientForm = () => {
 
   return (
     <>
-    <Formik
+      <Formik
         initialValues={{
-          first_names: '',
-          last_names: '',
-          email: '',
-          dni: '',
-          gender: 'Masculino',
-          birth_date: '',
-          phone: '',
-          address: '',
-        }}
+        first_names: '',
+        last_names: '',
+        email: '',
+        dni: '',
+        gender: 'Masculino',
+        birth_date: '',
+        phone: '',
+        address: ''
+      }}
         validate={(values) => {
-          const errors = {}
-          if (!values.first_names) {
-            errors.first_names = 'Campo requerido'
-          }
-          if (!values.last_names) {
-            errors.last_names = 'Campo requerido'
-          }
-          if (!values.email) {
-            errors.email = 'Campo requerido'
-          }
-          if (!values.dni) {
-            errors.dni = 'Campo requerido'
-          }
-          if (!values.gender) {
-            errors.gender = 'Campo requerido'
-          }
-          if (!values.birth_date) {
-            errors.birth_date = 'Campo requerido'
-          }
-          if (!values.phone) {
-            errors.phone = 'Campo requerido'
-          }
-          if (!values.address) {
-            errors.address = 'Campo requerido'
-          }
-          return errors
-        }}
+        const errors = {}
+        if (!values.first_names) {
+          errors.first_names = 'Campo requerido'
+        }
+        if (!values.last_names) {
+          errors.last_names = 'Campo requerido'
+        }
+        if (!values.email) {
+          errors.email = 'Campo requerido'
+        }
+        if (!values.dni) {
+          errors.dni = 'Campo requerido'
+        }
+        if (!values.gender) {
+          errors.gender = 'Campo requerido'
+        }
+        if (!values.birth_date) {
+          errors.birth_date = 'Campo requerido'
+        }
+        if (!values.phone) {
+          errors.phone = 'Campo requerido'
+        }
+        if (!values.address) {
+          errors.address = 'Campo requerido'
+        }
+        return errors
+      }}
         onSubmit={values => {
-          const data = {
-            first_names: values.first_names,
-            last_names: values.last_names,
-            email: values.email,
-            dni: values.dni,
-            gender: values.gender,
-            birth_date: values.birth_date,
-            phone: values.phone,
-            address: values.address,
-          }
-          handleSubmit(data)
-        }}
+        const data = {
+          first_names: values.first_names,
+          last_names: values.last_names,
+          email: values.email,
+          dni: values.dni,
+          gender: values.gender,
+          birth_date: values.birth_date,
+          phone: values.phone,
+          address: values.address
+        }
+        handleSubmit(data)
+      }}
       >
-      <Form id='form'>
-      <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
-        <Box mt={4} width='80%'>
+        <Form id='form'>
+        <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
+          <Box mt={4} width='80%'>
           <HStack mb={4} display='flex' flexDirection={['column', 'column', 'row']}>
             <FormControl>
               <Text>Nombre :</Text>
@@ -134,22 +135,22 @@ const ClientForm = () => {
               <Field name='last_names' />
             </FormControl>
           </HStack>
-          <HStack mb={4} mt={4} w={['100%','100%','66%']}  display='flex' flexDirection={['column', 'column', 'row']}>
+          <HStack mb={4} mt={4} w={['100%', '100%', '66%']} display='flex' flexDirection={['column', 'column', 'row']}>
             <FormControl>
               <Text>Sexo :</Text>
               <Field as='select' name='gender'>
-                <option value="masculino">Masculino</option>
-                <option value="femenino">Femenino</option>
+                <option value='masculino'>Masculino</option>
+                <option value='femenino'>Femenino</option>
               </Field>
             </FormControl>
             <Spacer />
             <FormControl>
-              <Text mt={[4,4,0]}>Numero de telefono :</Text>
-              <Field name='phone'/>
+              <Text mt={[4, 4, 0]}>Numero de telefono :</Text>
+              <Field name='phone' />
             </FormControl>
             <Spacer />
           </HStack>
-          <HStack mb={4}  display='flex' flexDirection={['column', 'column', 'row']}>
+          <HStack mb={4} display='flex' flexDirection={['column', 'column', 'row']}>
             <FormControl>
               <Text>Direccion :</Text>
               <Field name='address' />
@@ -161,7 +162,7 @@ const ClientForm = () => {
             <FormControl>
               <Text>Fecha :</Text>
               <Field
-              type='date'
+                type='date'
                 name='birth_date'
               />
             </FormControl>
@@ -171,10 +172,10 @@ const ClientForm = () => {
 
           </HStack>
         </Box>
-        <HStack mt={4} w='100%' justifyContent='center'>
+          <HStack mt={4} w='100%' justifyContent='center'>
           <Button w='20%' type='submit'>Crear</Button>
         </HStack>
-      </Box>
+        </Box>
       </Form>
       </Formik>
     </>
