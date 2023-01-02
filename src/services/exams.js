@@ -27,12 +27,12 @@ const editExam = (data, id) => {
 	}
 }
 
-const deleteExams = (id) => {
+const deleteExams = async (id) => {
 	try {
-	  const res = api.delete(`medical/exams/${id}`)
-	  return res
+	  await api.delete(`medical/exams/${id}`)
+	  return true
 	} catch {
-	  console.log()
+		return false
 	}
 }
 
