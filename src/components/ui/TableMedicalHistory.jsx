@@ -13,7 +13,6 @@ import editIcon from '../../assets/Edit.svg'
 
 const TableMedicalHistory = ({ data, navigate }) => {
   const fecha = data[0].create_at
-  console.log(fecha.toDateString())
   const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
   return (
     <Table fontSize={['.8rem', '1rem']} variant='simple' width='70%' m={4}>

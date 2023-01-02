@@ -5,27 +5,19 @@ import SpinnerLayout from '../components/components/Spinner'
 
 // Services
 import { getClient, deleteClient } from '../services/clients'
-import { useRouteLoaderData } from 'react-router-dom'
-import Header from '../components/Layouts/Header'
-
 const ClientHistories = () => {
-const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
   const toast = useToast()
-  const title = 'Clientes'
-  console.log(data)
 
   useEffect(() => {
     getData()
   }, [])
-  console.log(loading)
 
-  
-
-  const getData = async () => {
+  const getData = async (params = undefined) => {
     try {
       setLoading(true)
-      const data = await getClient()
+      const data = params === undefined ? await getClient() : await getClient(params)
       setData(data.data)
     } catch (error) {
       console.log(error)
@@ -61,15 +53,13 @@ const [loading, setLoading] = useState(false)
 
   if (loading) {
     return (
-    <SpinnerLayout />
+      <SpinnerLayout />
     )
   }
   return (
-    <>
-      <Box>
-        <LayoutClient data={data} handleDelete={handleDelete} />
-      </Box>
-    </>
+    <Box>
+      <LayoutClient data={data} handleDelete={handleDelete} getData={getData} />
+    </Box>
   )
 }
 
