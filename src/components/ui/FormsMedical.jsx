@@ -15,7 +15,7 @@ import {
   Td,
   Thead,
   Tbody,
-  Th,
+  Th
 } from '@chakra-ui/react'
 import ModalClient from '../modals/ModalClient'
 import { Field } from '../shared/FormFields'
@@ -112,7 +112,7 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
           isClosable: true,
           position: 'top-right'
         })
-        navigate("/")
+        navigate('/')
       } else {
         toast({
           title: 'Error',
@@ -195,7 +195,7 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
                 <FormControl>
                   <Text>Fecha de nacimiento:</Text>
                   <Field
-                  type='date'
+                    type='date'
                     name='birth_date'
                   />
                 </FormControl>
@@ -246,8 +246,33 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
                     <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos de Pago</Text>
                   </Box>
                   <Box mt={4} width='80%'>
-                    Lista de pagos
-                    {payments && payments.map((payment, index) => (<p key={index}>{payment.id}</p>))}
+                    {payments.length > 0 && (
+                      <Table fontSize={['.5rem', '1rem']} variant='simple' width='80%' m={4}>
+                        <Thead bg='#F4F7FF'>
+                          <Tr>
+                            <Th w='42%'>Monto</Th>
+                            <Th>Tipo de pago</Th>
+                            <Th>Referencia</Th>
+                            <Th>Acciones</Th>
+                          </Tr>
+                        </Thead>
+                        <Tbody>
+                          {payments.map((payment, index) => (
+                            <Tr
+                              key={index}
+                              _hover={{
+                                background: 'gray.50'
+                              }}
+                            >
+                              <Td color='#8E9196'>{payment.amount}</Td>
+                              <Td color='#8E9196'>{payment.method_payment}</Td>
+                              <Td color='#8E9196'>{payment.number_ref || 'No Aplica'}</Td>
+                              <Td textAlign='center' color='#8E9196'><Img cursor='pointer' height='1.2rem' src={deleteIcon} onClick={() => { handleRemoveExamData(payment) }} /></Td>
+                            </Tr>
+                          ))}
+                        </Tbody>
+                      </Table>
+                    )}
                     <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
                       <ModalCreateFinancials
                         getMedicalPayments={getMedicalPayments}
