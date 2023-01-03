@@ -18,6 +18,7 @@ import { getClient, deleteClient } from '../../services/clients'
 import * as Yup from 'yup'
 import SearchIcon from '../../assets/SearchClient.svg'
 import { Field } from '../../components/shared/FormFields'
+import ClientFilter from '../components/ClientFilter'
 
 const ModalClient = ({ setUserData }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -98,22 +99,7 @@ const ModalClient = ({ setUserData }) => {
             <Box>
               <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
                 <Box>
-                  <Formik
-                    initialValues={{ dni: '' }}
-                    validationSchema={validationSchema}
-                    onSubmit={(values, { setSubmiting }) => {
-                      console.log(values)
-                      getData(values)
-                    }}
-                  >
-                    <Form>
-                      <HStack w='100%' padding={4}>
-                        <Text fontSize={['.9rem', '1rem']}>Cedula :</Text>
-                        <Field placeholder='' w={['50%', 'auto']} name='dni' />
-                        <button type='submit'><Image height='2rem' w={['3.5rem', 'auto']} src={SearchIcon} /></button>
-                      </HStack>
-                    </Form>
-                  </Formik>
+                  <ClientFilter />
                 </Box>
                 <Table variant='simple' width='100%' m={4}>
                   {IsNotSmallScreen
