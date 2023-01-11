@@ -11,7 +11,7 @@ import * as Yup from 'yup'
 const ExamenFilter = ({ handleSubmit }) => {
   const validationSchema = Yup.object({
     name: Yup.string()
-      .max(15, 'El maximo de caracteres es de 50')
+      .max(50, 'El maximo de caracteres es de 50')
   })
 
   return (
