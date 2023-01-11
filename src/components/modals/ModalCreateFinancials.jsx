@@ -58,13 +58,6 @@ const ModalCreateFinancials = ({ getMedicalPayments, medicalId }) => {
                 return errors
               }}
               onSubmit={values => {
-                // const data = {
-                //   method_payment: values.method_payment,
-                //   amount: values.amount,
-                //   number_ref: values.number_ref,
-                //   medical_history: values.medical_history
-                // }
-                console.log(values)
                 handleSubmit(values)
               }}
             >

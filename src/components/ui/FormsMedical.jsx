@@ -27,6 +27,7 @@ import { useNavigate } from 'react-router-dom'
 
 // services
 import { createMedical } from '../../services/medical'
+import { deleteFinancials } from '../../services/financials'
 
 // My Validation Definition to use in form
 const validationShema = Yup.object({
@@ -95,6 +96,11 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
     })
     setExamData(newExamData)
     setTotalPay(totalPay - parseFloat(props.price))
+  }
+
+  const handleDeletePayment = async (paymentId) => {
+    const resp = await deleteFinancials(paymentId)
+    if (resp) getMedicalPayments()
   }
 
   const handleFileChange = (e) => setResults_exams({ ...Form, [e.target.name]: e.target.files[0] })
@@ -267,7 +273,7 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
                               <Td color='#8E9196'>{payment.amount}</Td>
                               <Td color='#8E9196'>{payment.method_payment}</Td>
                               <Td color='#8E9196'>{payment.number_ref || 'No Aplica'}</Td>
-                              <Td textAlign='center' color='#8E9196'><Img cursor='pointer' height='1.2rem' src={deleteIcon} onClick={() => { handleRemoveExamData(payment) }} /></Td>
+                              <Td textAlign='center' color='#8E9196'><Img cursor='pointer' height='1.2rem' src={deleteIcon} onClick={() => { handleDeletePayment(payment.id) }} /></Td>
                             </Tr>
                           ))}
                         </Tbody>

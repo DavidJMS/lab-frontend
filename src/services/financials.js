@@ -22,9 +22,11 @@ const getFinancials = () => {
 const editFinancials = (data, id) => {
   try {
     const res = api.put(`medical/financials/${id}/`, data)
-    return res
+    if (res.status === 204) return true
+    else return false
   } catch {
     console.log()
+    return false
   }
 }
 
