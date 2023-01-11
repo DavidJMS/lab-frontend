@@ -1,30 +1,26 @@
-import { Form, Formik } from 'formik'
-import { useEffect, useState } from 'react'
-import { Field } from '../shared/FormFields'
+import React, { useEffect, useState } from 'react'
 import { getExams, deleteExams } from '../../services/exams'
-import { FormGroup } from '@mui/material'
-import { HStack, Box, Text, Button, Flex, Input, Img, Table, Tr, Td, Tbody, useToast, useMediaQuery, Thead, Th } from '@chakra-ui/react'
-import Header from './Header'
+import { Box, Text, Flex, Img, Table, Tr, Td, Tbody, useToast, useMediaQuery, Thead, Th } from '@chakra-ui/react'
 import ModalTypesExams from '../modals/ModalTypesExams'
 import DeleteIcon from '../../assets/Delete.svg'
-import EditIcon from '../../assets/Edit.svg'
 
-import ModalEditExam from '../modals/ModalEditExam'
+import ExamenFilter from '../components/ExamFilter'
 import SpinnerLayout from '../components/Spinner'
 
 const LayoutListExams = () => {
   const [loading, setLoading] = useState(false)
   const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
-  const title = 'Lista de examenes'
   const [dataExam, setDataExam] = useState([])
   const toast = useToast()
   useEffect(() => {
-    fetchUser()
+    fetchExams()
   }, [])
-  const fetchUser = async () => {
+
+  const fetchExams = async (props = undefined) => {
+    console.log(props)
     try {
       setLoading(true)
-      const data = await getExams()
+      const data = props?.name ? await getExams(props) : await getExams()
       setDataExam(data.data)
     } catch (error) {
       console.log(error)
@@ -36,9 +32,9 @@ const LayoutListExams = () => {
   const handleDelete = async (id) => {
     try {
       setLoading(true)
-      await deleteExams(id)
-      if (true) {
-        location.reload()
+      const res = await deleteExams(id)
+      if (res) {
+        fetchExams()
         toast({
           title: 'Exito',
           description: 'Examen eliminado de manera exitosa',
@@ -72,18 +68,8 @@ const LayoutListExams = () => {
 
   return (
     <>
-      {/* <Header title={title} /> */}
-      <HStack w='100%' display='flex' mt={4} justifyContent='center'>
-        <Text>
-          Examen :
-        </Text>
-
-        <Input w='30%' />
-        <Button backgroundColor='#D0D0D0'>Buscar</Button>
-
-      </HStack>
-
-      <Box width='100%' display='flex' flexDirection='column' alignItems='center'>
+      <Box width='100%' display='flex' flexDirection='column' alignItems='center' m={4}>
+        <ExamenFilter handleSubmit={fetchExams} />
         <Table fontSize={['.8rem', '1rem']} variant='simple' width='90%' m={4}>
           {IsNotSmallScreen &&
             <Thead bg='#F4F7FF'>
@@ -96,23 +82,22 @@ const LayoutListExams = () => {
               </Tr>
             </Thead>}
           <Tbody>
-            {dataExam && dataExam.map((exam) => (
-              <Tr>
+            {dataExam && dataExam.map((exam, index) => (
+              <Tr key={index}>
                 <Td><Text color='#8E9196'>{exam.name}</Text></Td>
                 <Td><Text color='#8E9196'>{exam.description}</Text></Td>
                 <Td><Text color='#8E9196'>{exam.price}</Text></Td>
                 <Td>
-                  <ModalEditExam id={exam.id} />
+                  <ModalTypesExams exam={exam} fetchExams={fetchExams} />
                 </Td>
                 <Td><Img cursor='pointer' onClick={() => handleDelete(exam.id)} src={DeleteIcon} /></Td>
-
               </Tr>
             ))}
           </Tbody>
         </Table>
       </Box>
       <Flex justifyContent='flex-end'>
-        <ModalTypesExams />
+        <ModalTypesExams fetchExams={fetchExams} />
       </Flex>
     </>
   )

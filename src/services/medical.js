@@ -26,7 +26,7 @@ const getMedicalHistories = async (props) => {
 
 const createMedical = async (data) => {
   try {
-    const res = await api.post('medical/history-client/', data)
+    await api.post('medical/history-client/', data)
     return true
   } catch (error) {
     return false
