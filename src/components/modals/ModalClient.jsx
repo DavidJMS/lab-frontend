@@ -14,7 +14,7 @@ import {
   Td,
   Image
 } from '@chakra-ui/react'
-import { getClient, deleteClient } from '../../services/clients'
+import { getClients, deleteClient } from '../../services/clients'
 import * as Yup from 'yup'
 import SearchIcon from '../../assets/SearchClient.svg'
 import { Field } from '../../components/shared/FormFields'
@@ -43,7 +43,7 @@ const ModalClient = ({ setUserData }) => {
 
   const getData = async (params = undefined) => {
     try {
-      const data = params === undefined ? await getClient() : await getClient(params)
+      const data = params === undefined ? await getClients() : await getClients(params)
       setData(data.data)
     } catch (error) {
       console.log(error)
@@ -110,13 +110,13 @@ const ModalClient = ({ setUserData }) => {
                         <Th fontSize={['.5rem', '1rem']}>Nmro de telefono</Th>
                         <Th fontSize={['.5rem', '1rem']}>Escoger</Th>
                       </Tr>
-                      </Thead>
+                    </Thead>
                     : <Thead bg='#F4F7FF'>
                       <Tr>
                         <Th fontSize={['.9rem', '1rem']}>Nombres y Apellidos</Th>
                         <Th fontSize={['.9rem', '1rem']}>Cedula</Th>
                       </Tr>
-                      </Thead>}
+                    </Thead>}
 
                   <Tbody>
                     {data.map((client) => (

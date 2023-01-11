@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getClient } from "../services/clients"
+import { getClients } from "../services/clients"
 
 const userData = () => {
     const [dataUser, setDataUser] = useState()
@@ -9,8 +9,8 @@ const userData = () => {
     }, [])
     const fetchData = async () => {
         try {
-           const data = await getClient()
-           setDataUser(data)
+            const data = await getClients()
+            setDataUser(data)
         } catch (error) {
             console.log(error)
         }

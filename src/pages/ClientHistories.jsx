@@ -4,7 +4,7 @@ import { Box, useToast } from '@chakra-ui/react'
 import SpinnerLayout from '../components/components/Spinner'
 
 // Services
-import { getClient, deleteClient } from '../services/clients'
+import { getClients, deleteClient } from '../services/clients'
 const ClientHistories = () => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
@@ -17,7 +17,7 @@ const ClientHistories = () => {
   const getData = async (params = undefined) => {
     try {
       setLoading(true)
-      const data = params === undefined ? await getClient() : await getClient(params)
+      const data = params === undefined ? await getClients() : await getClients(params)
       setData(data.data)
     } catch (error) {
       console.log(error)

@@ -2,8 +2,7 @@ import { Formik, Form } from 'formik'
 import {
   Text,
   HStack,
-  Button,
-  FormControl
+  Button
 } from '@chakra-ui/react'
 import { Field } from '../shared/FormFields'
 import * as Yup from 'yup'

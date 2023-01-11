@@ -5,8 +5,6 @@ import { useLocation } from 'react-router-dom'
 import FormClients from '../components/Layouts/FormClients'
 
 const AddClient = () => {
-
-
   return <FormClients />
 }
 

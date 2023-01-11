@@ -1,30 +1,20 @@
-import { useState } from 'react'
+import React from 'react'
 import {
-  Text,
-  HStack,
-  Input,
-  Box,
   Table,
   Thead,
   Tr,
   Th,
   Tbody,
   Td,
-  Select,
-  Button,
   Image,
   useMediaQuery
-  , Link
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 
 import iconDelete from '../../assets/Delete.svg'
-import SearchIcon from '../../assets/SearchClient.svg'
 import IconEdit from '../../assets/Edit.svg'
-import ModalTypesExams from '../modals/ModalTypesExams'
 
 const TableClient = ({ data, handleDelete }) => {
-  const title = 'Modal Cliente'
   const navigate = useNavigate()
 
   const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
@@ -53,7 +43,7 @@ const TableClient = ({ data, handleDelete }) => {
             <Td color='#8E9196'>{client.dni}</Td>
             <Td color='#8E9196'>{client.phone}</Td>
             <Td color='#8E9196' alignItems='center'><Image cursor='pointer' w={['.5rem', '.7rem', '1rem', '1.5rem']} onClick={() => handleDelete(client.id)} src={iconDelete} /></Td>
-            <Td color='#8E9196'><Image onClick={() => navigate(`edit/${client.id}/`)} w={['.5rem', '1.5rem']} cursor='pointer' src={IconEdit} /></Td>
+            <Td color='#8E9196'><Image onClick={() => navigate(`/editar-cliente-${client.id}`)} w={['.5rem', '1.5rem']} cursor='pointer' src={IconEdit} /></Td>
           </Tr>
         ))}
       </Tbody>
