@@ -11,7 +11,12 @@ import { Field } from '../shared/FormFields'
 const FinancialsFilter = ({ handleSubmit }) => {
   return (
     <Formik
-      initialValues={{ typeFilter: 'dia', date: new Date() }}
+      initialValues={{
+        typeFilter: 'dia',
+        date: new Date().toISOString().split('T')[0],
+        range__start: new Date().toISOString().split('T')[0],
+        range__end: new Date().toISOString().split('T')[0]
+      }}
       onSubmit={(values, { setSubmiting }) => {
         console.log(values)
         handleSubmit(values)
@@ -48,7 +53,7 @@ const FinancialsFilter = ({ handleSubmit }) => {
                   <HStack w={['100%', '80%']}>
                     <Field
                       w={['100%', 'auto']}
-                      name='date'
+                      name='range__start'
                       type='date'
                     />
                   </HStack>
@@ -58,7 +63,7 @@ const FinancialsFilter = ({ handleSubmit }) => {
                   <HStack w={['100%', '80%']}>
                     <Field
                       w={['100%', 'auto']}
-                      name='date'
+                      name='range__end'
                       type='date'
                     />
                     <button type='submit' className='button--filter'>

@@ -13,8 +13,10 @@ const createFinancials = async (data) => {
 const getFinancials = (props) => {
   try {
     let url = 'medical/financials/'
-    if (props?.date) {
+    if (props?.typeFilter === 'date') {
       url = url + `?payment_date__date=${props.date}`
+    } else if (props?.typeFilter === 'range') {
+      url = url + `?payment_date__range=${props.range__start},${props.range__end}`
     }
     const res = api.get(url)
     return res
