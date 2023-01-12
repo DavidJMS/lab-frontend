@@ -1,4 +1,4 @@
-import { Box, HStack, Text, Button, useToast } from '@chakra-ui/react'
+import { Box, HStack, Text, Button, useToast, FormLabel } from '@chakra-ui/react'
 import { FormGroup } from '@mui/material'
 import { Formik, Form } from 'formik'
 import { Field } from '../shared/FormFields'
@@ -18,7 +18,7 @@ const Login = () => {
         validate={(values) => {
           const errors = {}
           if (!values.username) {
-            errors.first_names = 'Campo requerido'
+            errors.username = 'Campo requerido'
           }
           if (!values.password) {
             errors.password = 'Campo requerido'
@@ -50,11 +50,10 @@ const Login = () => {
         }}
       >
         <Form id='form'>
-          <Box width='100%' height='100vh' display='flex' backgroundColor='#FFF' justifyContent='center' alignItems='center'>
+          <Box width='100%' height='100vh' display='flex' id='login' justifyContent='center' alignItems='center'>
             <Box
               display='flex'
               flexDirection='column'
-              className='block--form__login'
               borderRadius='5px'
               width={[
                 '80%',
@@ -62,20 +61,24 @@ const Login = () => {
                 '35%']}
               padding='2rem'
               alignItems='center'
-              h='40vh'
-              backgroundColor='#0DA7D9'
+              h='80vh'
+              backgroundColor='#FFFF'
             >
-              <HStack w='100%' flexDirection={['column', 'column', 'column']} height='100%' alignItems='center' justifyContent='center'>
-                <FormGroup>
-                  <Text color='#FFF'>Usuario</Text>
-                  <Field name='username' w={['100%', '100%']} />
+              <HStack width={'100%'} flexDirection={['column', 'column', 'column']} height='100%' alignItems='center' justifyContent='center'>
+                <Text className='title--login'>LOGIN</Text>
+                <FormGroup className='group--login' width={['100%', '100%']} >
+                  <FormLabel>usuario</FormLabel>
+                  <Field borderRadius='2px' name='username' backgroundColor='#D0D0D0' w={['100%', '100%']} />
                 </FormGroup>
-                <FormGroup>
-                  <Text color='#FFF'>Contraseña</Text>
-                  <Field name='password' w={['100%', '100%']} />
+                <FormGroup className='group--login' width='100%'>
+                  <FormLabel>password</FormLabel>
+                  <Field borderRadius='2px' name='password' backgroundColor='#D0D0D0' w={['100%', '100%']} />
                 </FormGroup>
+                <HStack>
+                  <FormLabel>forgot?</FormLabel>
+                </HStack>
               </HStack>
-              <Button backgroundColor='#FFF' w='50%' color='#0DA7D9' mb={4} type='submit'>Iniciar</Button>
+              <Button w='100%' mb={4} type='submit'>Login</Button>
             </Box>
           </Box>
         </Form>
