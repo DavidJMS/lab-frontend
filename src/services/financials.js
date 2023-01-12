@@ -10,9 +10,13 @@ const createFinancials = async (data) => {
   }
 }
 
-const getFinancials = () => {
+const getFinancials = (props) => {
   try {
-    const res = api.get('medical/financials/')
+    let url = 'medical/financials/'
+    if (props?.date) {
+      url = url + `?payment_date__date=${props.date}`
+    }
+    const res = api.get(url)
     return res
   } catch {
     console.log()

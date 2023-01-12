@@ -3,7 +3,7 @@ import {
   Flex
 } from '@chakra-ui/react'
 import PaginationButtons from '../ui/PaginationButtons'
-import Filters from '../../pages/MedicalHistories/components/Filters'
+import FinancialsFilter from '../components/FinancialsFilter'
 import { getFinancials } from '../../services/financials'
 import TableFinancials from '../ui/TableFinancials'
 import { useState, useEffect } from 'react'
@@ -16,16 +16,15 @@ const LayoutFinancials = () => {
   useEffect(() => {
     fetchData()
   }, [])
-  console.log(data)
-  const fetchData = async () => {
+
+  const fetchData = async (props = undefined) => {
     try {
-      const data = await getFinancials()
+      const data = props ? await getFinancials(props) : await getFinancials()
       setData(data.data)
       setLoading(true)
     } catch (error) {
-
-    }
-    finally {
+      console.log(error)
+    } finally {
       setLoading(false)
     }
   }
@@ -40,9 +39,9 @@ const LayoutFinancials = () => {
     <Box width='100%'>
       <Box mb={4} width='100%' justifyContent='center'>
         <Box w={['100%', '100%', '100%']} display='flex' flexDirection='column' alignItems='center'>
-        <Flex flexDirection={['colum', 'row']} justifyContent='space-around' w={['100%', '71%']}>
-          <Filters />
-        </Flex>
+          <Flex flexDirection={['colum', 'row']} justifyContent='space-around' w={['100%', '71%']}>
+            <FinancialsFilter handleSubmit={fetchData} />
+          </Flex>
           <Box width={['80%']} display='flex' flexDirection={['row', 'row', 'row', 'row']} justifyContent='center'>
             <TableFinancials data={data} />
           </Box>

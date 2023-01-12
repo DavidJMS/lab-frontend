@@ -13,7 +13,7 @@ const getExams = (props) => {
   try {
     let url = 'medical/exams/'
     if (props?.name) {
-      url = url + `?name=${props.name}`
+      url = url + `?name__icontains=${props.name}`
     }
     const res = api.get(url)
     return res
