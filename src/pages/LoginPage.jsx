@@ -1,10 +1,9 @@
-import Login from "../components/Layouts/Login"
+import Login from '../components/Layouts/Login'
 
 const LoginPage = () => {
-
-    return (
-        <Login />
-    )
+  return (
+    <Login />
+  )
 }
 
 export default LoginPage
