@@ -10,8 +10,7 @@ import {
 import Example from '../components/Menu'
 import HamburguerIcon from '../../assets/menu.svg'
 import { Link, useLocation } from 'react-router-dom'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 const Header = () => {
   const [isVisibleHistory, setIsVisibleHistory] = useState(false)
@@ -43,13 +42,13 @@ const Header = () => {
     }
   }
 
- useEffect(() => {
-  if (location.pathname === '/login') {
-    setIsLogin(true)
-  } else {
-    setIsLogin(false)
-  }
- }, [location.pathname])
+  useEffect(() => {
+    if (location.pathname === '/login') {
+      setIsLogin(true)
+    } else {
+      setIsLogin(false)
+    }
+  }, [location.pathname])
 
   console.log(location.pathname, isLogin)
 
@@ -57,28 +56,28 @@ const Header = () => {
 
   return (
     <Box bgColor='#0DA7D9' display='flex' justifyContent='space-between' alignItems='center' width='100%' height='3rem'>
-     { isLogin ? 
-         <Text ml={4} color='#F5F5F5' fontWeight='500' fontSize={['.8rem', '1.5rem']}>Login</Text>: 
-    <>
-    <Text ml={4} color='#F5F5F5' fontWeight='500' fontSize={['.8rem', '1.5rem']}>{location && location.pathname.slice(1).toUpperCase() || 'HISTORIAS MEDICAS'}</Text>
-    {IsNotSmallScreen
-      ? <Example />
-      : <nav>
-        <div className='logo'>
-          <Link to='/' />
-        </div>
+      {isLogin
+        ? <Text ml={4} color='#F5F5F5' fontWeight='500' fontSize={['.8rem', '1.5rem']}>Login</Text>
+        : <>
+          <Text ml={4} color='#F5F5F5' fontWeight='500' fontSize={['.8rem', '1.5rem']}>{location && location.pathname.slice(1).toUpperCase() || 'HISTORIAS MEDICAS'}</Text>
+          {IsNotSmallScreen
+             ? <Example />
+             : <nav>
+               <div className='logo'>
+            <Link to='/' />
+          </div>
 
-        <input type='checkbox' id='click' />
-        <label htmlFor='click' className='menu--btn'>
-          <img src={HamburguerIcon} id='click' className='img' alt='' />
-        </label>
+               <input type='checkbox' id='click' />
+               <label htmlFor='click' className='menu--btn'>
+            <img src={HamburguerIcon} id='click' className='img' alt='' />
+          </label>
 
-        <ul>
-          <li><Link to='/finanzas'>Finanzas</Link></li>
-          <li>
+               <ul>
+            <li><Link to='/finanzas'>Finanzas</Link></li>
+            <li>
             <Link onClick={() => handleVisibleHistory()}>Historial Medico</Link>
           </li>
-          {isVisibleHistory &&
+            {isVisibleHistory &&
             <Menu position='absolute' zIndex='1'>
               <MenuGroup textAlign='center' backgroundColor='#5EC4E4'>
                 <MenuItem textAlign='center' w='100%' color='#FFFF' backgroundColor='#5EC4E4'>
@@ -89,10 +88,10 @@ const Header = () => {
                 </MenuItem>
               </MenuGroup>
             </Menu>}
-          <li>
+            <li>
             <Link onClick={() => handleVisibleClient()}>Cliente</Link>
           </li>
-          {isVisibleClient &&
+            {isVisibleClient &&
             <Menu position='absolute' zIndex='1'>
               <MenuGroup textAlign='center' backgroundColor='#5EC4E4'>
                 <MenuItem color='#FFFF' textAlign='center' w='100%' backgroundColor='#5EC4E4'>
@@ -103,10 +102,10 @@ const Header = () => {
                 </MenuItem>
               </MenuGroup>
             </Menu>}
-          <li>
+            <li>
             <Link onClick={() => handleVisibleExam()}>Examenes</Link>
           </li>
-          {isVisibleExam &&
+            {isVisibleExam &&
             <Menu position='absolute' zIndex='1'>
               <MenuGroup textAlign='center' backgroundColor='#5EC4E4'>
                 <MenuItem textAlign='center' color='#FFFF' w='100%' backgroundColor='#5EC4E4'>
@@ -114,11 +113,9 @@ const Header = () => {
                 </MenuItem>
               </MenuGroup>
             </Menu>}
-        </ul>
-      </nav>
-      }
-    </>
-      }
+          </ul>
+               </nav>}
+          </>}
     </Box>
   )
 }

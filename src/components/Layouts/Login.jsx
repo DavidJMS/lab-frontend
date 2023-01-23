@@ -2,12 +2,38 @@ import { Box, HStack, Text, Button, useToast, FormLabel } from '@chakra-ui/react
 import { FormGroup } from '@mui/material'
 import { Formik, Form } from 'formik'
 import { Field } from '../shared/FormFields'
-import { login } from '../../services/auth'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { loginUser } from '../../action/userAction'
 
 const Login = () => {
   const toast = useToast()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const handleSubmit = async (values) => {
+    const { payload } = await dispatch(loginUser(values))
+    console.log(payload)
+    if (payload) {
+      toast({
+        title: 'Exito',
+        description: payload.message,
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right'
+      })
+      navigate('/historias-medicas')
+    } else {
+      toast({
+        title: 'Error',
+        description: 'Hubo un error',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right'
+      })
+    }
+  }
   return (
     <>
       <Formik
@@ -26,27 +52,7 @@ const Login = () => {
           return errors
         }}
         onSubmit={async (values) => {
-          const res = await login(values)
-          if (res) {
-            toast({
-              title: 'Exito',
-              description: res.message,
-              status: 'success',
-              duration: 3000,
-              isClosable: true,
-              position: 'top-right'
-            })
-            navigate('/historias-medicas')
-          } else {
-            toast({
-              title: 'Error',
-              description: 'Hubo un error',
-              status: 'error',
-              duration: 3000,
-              isClosable: true,
-              position: 'top-right'
-            })
-          }
+          handleSubmit(values)
         }}
       >
         <Form id='form'>
@@ -64,15 +70,15 @@ const Login = () => {
               h='80vh'
               backgroundColor='#FFFF'
             >
-              <HStack width={'100%'} flexDirection={['column', 'column', 'column']} height='100%' alignItems='center' justifyContent='center'>
+              <HStack width='100%' flexDirection={['column', 'column', 'column']} height='100%' alignItems='center' justifyContent='center'>
                 <Text className='title--login'>LOGIN</Text>
-                <FormGroup className='group--login' width={['100%', '100%']} >
+                <FormGroup className='group--login' width={['100%', '100%']}>
                   <FormLabel>usuario</FormLabel>
                   <Field borderRadius='2px' name='username' backgroundColor='#D0D0D0' w={['100%', '100%']} />
                 </FormGroup>
                 <FormGroup className='group--login' width='100%'>
                   <FormLabel>password</FormLabel>
-                  <Field borderRadius='2px' name='password' backgroundColor='#D0D0D0' w={['100%', '100%']} />
+                  <Field borderRadius='2px' name='password' type='password' backgroundColor='#D0D0D0' w={['100%', '100%']} />
                 </FormGroup>
                 <HStack>
                   <FormLabel>forgot?</FormLabel>

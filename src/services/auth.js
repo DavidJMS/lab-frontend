@@ -3,7 +3,7 @@ import api from './api'
 const login = async (data) => {
   try {
     const resp = await api.post('auth/login/', data)
-    if (resp.status === 201) return true
+    if (resp.status === 201) return resp.data
     throw Error
   } catch (error) {
     return false
