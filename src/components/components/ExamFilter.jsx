@@ -22,7 +22,7 @@ const ExamenFilter = ({ handleSubmit }) => {
       }}
     >
       <Form>
-        <HStack w='100%' display='flex' mt={4} justifyContent='center'>
+        <HStack w='90%' display='flex' mt={4} justifyContent='center'>
           <Text m='2'>Examen</Text>
           <Field m='2' name='name' w='100%' type='text' />
           <Button m='2' backgroundColor='#D0D0D0' type='submit'>Buscar</Button>
