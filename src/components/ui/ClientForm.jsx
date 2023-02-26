@@ -97,7 +97,7 @@ const ClientForm = ({ client }) => {
           email: client?.email || '',
           dni: client?.dni || '',
           gender: client?.gender || 'Masculino',
-          birth_date: client?.birth_date || '',
+          age: client?.age || '',
           phone: client?.phone || '',
           address: client?.address || ''
         }}
@@ -118,7 +118,7 @@ const ClientForm = ({ client }) => {
           if (!values.gender) {
             errors.gender = 'Campo requerido'
           }
-          if (!values.birth_date) {
+          if (!values.age) {
             errors.birth_date = 'Campo requerido'
           }
           if (!values.phone) {
@@ -136,7 +136,7 @@ const ClientForm = ({ client }) => {
             email: values.email,
             dni: values.dni,
             gender: values.gender,
-            birth_date: values.birth_date,
+            age: values.age,
             phone: values.phone,
             address: values.address
           }
@@ -149,21 +149,21 @@ const ClientForm = ({ client }) => {
             <Box mt={4} width='80%'>
               <HStack mb={4} display='flex' flexDirection={['column', 'column', 'row']}>
                 <FormControl>
-                  <Text>Nombre :</Text>
+                  <Text>Nombres:</Text>
                   <Field name='first_names' />
                 </FormControl>
                 <FormControl>
-                  <Text>Cedula :</Text>
-                  <Field name='dni' />
+                  <Text>Apellidos:</Text>
+                  <Field name='last_names' />
                 </FormControl>
                 <FormControl>
-                  <Text>Apellido :</Text>
-                  <Field name='last_names' />
+                  <Text>Cédula:</Text>
+                  <Field name='dni' />
                 </FormControl>
               </HStack>
               <HStack mb={4} mt={4} w={['100%', '100%', '66%']} display='flex' flexDirection={['column', 'column', 'row']}>
                 <FormControl>
-                  <Text>Sexo :</Text>
+                  <Text>Sexo:</Text>
                   <Field as='select' name='gender'>
                     <option value='masculino'>Masculino</option>
                     <option value='femenino'>Femenino</option>
@@ -171,25 +171,27 @@ const ClientForm = ({ client }) => {
                 </FormControl>
                 <Spacer />
                 <FormControl>
-                  <Text mt={[4, 4, 0]}>Numero de telefono :</Text>
+                  <Text mt={[4, 4, 0]}>Teléfono:</Text>
                   <Field name='phone' />
                 </FormControl>
                 <Spacer />
               </HStack>
               <HStack mb={4} display='flex' flexDirection={['column', 'column', 'row']}>
                 <FormControl>
-                  <Text>Direccion :</Text>
+                  <Text>Direccién:</Text>
                   <Field name='address' />
                 </FormControl>
                 <FormControl>
-                  <Text>Correo :</Text>
+                  <Text>Correo:</Text>
                   <Field name='email' type='email' />
                 </FormControl>
                 <FormControl>
-                  <Text>Fecha :</Text>
+                  <Text>Edad:</Text>
                   <Field
-                    type='date'
-                    name='birth_date'
+                    type='number'
+                    name='age'
+                    min='1'
+                    max='120'
                   />
                 </FormControl>
               </HStack>

@@ -24,9 +24,10 @@ const TableClient = ({ data, handleDelete }) => {
       {IsNotSmallScreen &&
         <Thead bg='#F4F7FF'>
           <Tr>
-            <Th w='42%'>Nombres y Apellidos</Th>
-            <Th>Cedula</Th>
-            <Th>Nmro de telefono</Th>
+            <Th w='42%'>Nombres</Th>
+            <Th w='42%'>Apellidos</Th>
+            <Th>Cédula</Th>
+            <Th>Teléfono</Th>
             <Th>Eliminar</Th>
             <Th>Editar</Th>
           </Tr>
@@ -39,7 +40,8 @@ const TableClient = ({ data, handleDelete }) => {
               background: 'gray.50'
             }}
           >
-            <Td color='#8E9196'>{client.first_names} {client.last_names}</Td>
+            <Td color='#8E9196'>{client.first_names}</Td>
+            <Td color='#8E9196'>{client.last_names}</Td>
             <Td color='#8E9196'>{client.dni}</Td>
             <Td color='#8E9196'>{client.phone}</Td>
             <Td color='#8E9196' alignItems='center'><Image cursor='pointer' w={['.5rem', '.7rem', '1rem', '1.5rem']} onClick={() => handleDelete(client.id)} src={iconDelete} /></Td>

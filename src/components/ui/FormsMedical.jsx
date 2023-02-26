@@ -61,7 +61,7 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
     email: medicalHistory?.client?.email || '',
     dni: medicalHistory?.client?.dni || '',
     gender: medicalHistory?.client?.dni || 'Masculino',
-    birth_date: medicalHistory?.client?.birth_date || '',
+    age: medicalHistory?.client?.age || '',
     phone: medicalHistory?.client?.phone || '',
     address: medicalHistory?.client?.address || ''
   })
@@ -162,21 +162,21 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
             <Box mt={4} width='80%'>
               <HStack mb={4} flexDirection={['column', 'column', 'row', 'row']}>
                 <FormControl>
-                  <Text>Nombre :</Text>
+                  <Text>Nombres:</Text>
                   <Field name='first_names' />
                 </FormControl>
                 <FormControl>
-                  <Text>Cedula :</Text>
-                  <Field name='dni' />
+                  <Text>Apellidos:</Text>
+                  <Field name='last_names' />
                 </FormControl>
                 <FormControl>
-                  <Text>Apellido :</Text>
-                  <Field name='last_names' />
+                  <Text>Cédula:</Text>
+                  <Field name='dni' />
                 </FormControl>
               </HStack>
               <HStack mb={4} w={['auto', 'auto', '66%']} flexDirection={['column', 'column', 'row', 'row']}>
                 <FormControl>
-                  <Text>Sexo :</Text>
+                  <Text>Sexo:</Text>
                   <Field as='select' name='sexo'>
                     <option value='masculino'>Masculino</option>
                     <option value='femenino'>Femenino</option>
@@ -184,25 +184,27 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
                 </FormControl>
                 <Spacer />
                 <FormControl>
-                  <Text>Numero de telefono :</Text>
+                  <Text>Teléfono:</Text>
                   <Field name='phone' />
                 </FormControl>
                 <Spacer />
               </HStack>
               <HStack mb={4} flexDirection={['column', 'column', 'row', 'row']}>
                 <FormControl>
-                  <Text>Direccion :</Text>
+                  <Text>Dirección:</Text>
                   <Field name='address' />
                 </FormControl>
                 <FormControl>
-                  <Text>Correo :</Text>
+                  <Text>Correo:</Text>
                   <Field name='email' />
                 </FormControl>
                 <FormControl>
-                  <Text>Fecha de nacimiento:</Text>
+                  <Text>Edad:</Text>
                   <Field
-                    type='date'
-                    name='birth_date'
+                    type='number'
+                    name='age'
+                    min='1'
+                    max='120'
                   />
                 </FormControl>
               </HStack>

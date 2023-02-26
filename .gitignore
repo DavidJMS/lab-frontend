@@ -180,4 +180,9 @@ psd
 thumb
 sketch
 
+# Firebase
+.firebase
+firebase.json
+.firebaserc
+
 # End of https://www.toptal.com/developers/gitignore/api/react,node

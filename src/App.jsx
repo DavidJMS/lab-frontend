@@ -43,7 +43,7 @@ function App () {
           <Route path='examenes' element={<LayoutListExams />} />
           <Route path='*' element={<MedicalHistories />} />
           <Route path='finanzas' element={<Financials />} />
-          <Route path='Login' element={<LoginPage />} />
+          <Route path='login' element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
     </StoryProvider>
