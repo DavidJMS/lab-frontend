@@ -4,7 +4,7 @@ import {
 } from '@chakra-ui/react'
 import PaginationButtons from '../ui/PaginationButtons'
 import FinancialsFilter from '../components/FinancialsFilter'
-import { getFinancials } from '../../services/financials'
+import { getPayments } from '../../services/financials'
 import TableFinancials from '../ui/TableFinancials'
 import { useState, useEffect } from 'react'
 import SpinnerLayout from '../components/Spinner'
@@ -19,7 +19,7 @@ const LayoutFinancials = () => {
 
   const fetchData = async (props = undefined) => {
     try {
-      const data = props ? await getFinancials(props) : await getFinancials()
+      const data = props ? await getPayments(props) : await getPayments()
       setData(data.data)
       setLoading(true)
     } catch (error) {

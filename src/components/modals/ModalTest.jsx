@@ -1,25 +1,27 @@
-import React from 'react'
-import LayoutClient from '../Layouts/LayoutClient'
+import React, { useState } from 'react'
 import {
-  Modal, ModalOverlay, ModalContent, Box, Input, Checkbox, HStack, Image, Text,
-  ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, useDisclosure
+  Modal, ModalOverlay, ModalContent, Box, Input, HStack, Image, Text,
+  ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, useDisclosure, Checkbox
 } from '@chakra-ui/react'
-import LayoutModalTest from '../Layouts/LayoutModalTest'
 import examData from '../../hooks/examData'
 import SearchIcon from '../../assets/SearchTest.svg'
+import { BsFillBookmarkCheckFill } from 'react-icons/bs'
+import { AiFillEdit } from 'react-icons/ai'
 
-const ModalTest = ({ handleExamData }) => {
+const ModalTest = ({ handleExamData, exams }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const dataExam = examData()
   const [size, setSize] = React.useState('xl')
+
+  const [examSelected, setExamSelected] = useState([])
 
   const handleSizeClick = (newSize) => {
     setSize(newSize)
     onOpen()
   }
-  const passData = (exam) => {
-    console.log(exam)
-    handleExamData(exam)
+  const passData = () => {
+    handleExamData(examSelected)
+    onClose()
   }
 
   return (
@@ -42,14 +44,16 @@ const ModalTest = ({ handleExamData }) => {
                     <HStack border='1px solid #D0D0D0' borderRadius='6px' color='#718096' padding='1rem' w='100%' height='2.5rem'>
                       <Text>{exam.name}</Text>
                     </HStack>
-                    <Text onClick={() => [passData(exam), onClose()]}>Elegir</Text>
+                    {!examSelected.includes(exam) && !exams.find(element => element.id === exam.id)
+                      ? <AiFillEdit onClick={() => (setExamSelected([...examSelected, exam]))} />
+                      : <BsFillBookmarkCheckFill />}
                   </HStack>
                 ))}
               </Box>
             </Box>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Cerrar</Button>
+            <Button onClick={passData}>Guardar</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

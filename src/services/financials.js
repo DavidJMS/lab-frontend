@@ -1,8 +1,8 @@
 import api from './api'
 
-const createFinancials = async (data) => {
+const createPayments = async (data) => {
   try {
-    const res = await api.post('medical/financials/', data)
+    const res = await api.post('medical/Payments/', data)
     if (res.status === 201) return true
   } catch (error) {
     console.log()
@@ -10,9 +10,9 @@ const createFinancials = async (data) => {
   }
 }
 
-const getFinancials = (props) => {
+const getPayments = (props) => {
   try {
-    let url = 'medical/financials/'
+    let url = 'medical/Payments/'
     if (props?.typeFilter === 'date') {
       url = url + `?payment_date__date=${props.date}`
     } else if (props?.typeFilter === 'range') {
@@ -25,9 +25,9 @@ const getFinancials = (props) => {
   }
 }
 
-const editFinancials = (data, id) => {
+const editPayments = (data, id) => {
   try {
-    const res = api.put(`medical/financials/${id}/`, data)
+    const res = api.put(`medical/Payments/${id}/`, data)
     if (res.status === 204) return true
     else return false
   } catch {
@@ -36,18 +36,47 @@ const editFinancials = (data, id) => {
   }
 }
 
-const deleteFinancials = (id) => {
+const deletePayments = (id) => {
   try {
-    const res = api.delete(`medical/financials/${id}`)
+    const res = api.delete(`medical/Payments/${id}`)
     return res
   } catch {
     console.log()
   }
 }
 
+const getTodayTasa = async () => {
+  try {
+    const res = await api.get('financials/price-dollar/today_tasa/')
+    return res.data
+  } catch {
+    console.log()
+  }
+}
+
+const getPricesDollar = async () => {
+  try {
+    const res = await api.get('financials/price-dollar/')
+    return res.data
+  } catch {
+    console.log()
+  }
+}
+
+const createPriceDollar = async (data) => {
+  try {
+    const res = await api.post('financials/price-dollar/', data)
+    return res
+  } catch {
+    console.log()
+  }
+}
 export {
-  getFinancials,
-  createFinancials,
-  deleteFinancials,
-  editFinancials
+  getPayments,
+  createPayments,
+  deletePayments,
+  editPayments,
+  getPricesDollar,
+  getTodayTasa,
+  createPriceDollar
 }

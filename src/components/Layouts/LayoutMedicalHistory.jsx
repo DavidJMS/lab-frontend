@@ -1,15 +1,12 @@
 import { Box, Flex, HStack, Link, useMediaQuery } from '@chakra-ui/react'
 import TableMedicalHistory from '../ui/TableMedicalHistory'
 import PaginationButtons from '../ui/PaginationButtons'
-import Header from './Header'
 import Filters from '../../pages/MedicalHistories/components/Filters'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
 const LayoutMedicalHistory = ({ data, filterMedicalHistories }) => {
-  const title = 'Historial Clinico'
   const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
   const navigate = useNavigate()
-
   return (
     <Box width='100%'>
       {/* <Header title={title} /> */}

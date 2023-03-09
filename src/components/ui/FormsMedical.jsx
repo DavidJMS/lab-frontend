@@ -15,7 +15,8 @@ import {
   Td,
   Thead,
   Tbody,
-  Th
+  Th,
+  Badge
 } from '@chakra-ui/react'
 import ModalClient from '../modals/ModalClient'
 import { Field } from '../shared/FormFields'
@@ -27,7 +28,7 @@ import { useNavigate } from 'react-router-dom'
 
 // services
 import { createMedical } from '../../services/medical'
-import { deleteFinancials } from '../../services/financials'
+import { deletePayments } from '../../services/financials'
 
 // My Validation Definition to use in form
 const validationShema = Yup.object({
@@ -49,7 +50,12 @@ const validationShema = Yup.object({
     .max(25, 'El maximo de caracteres es de 25')
 })
 
-const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
+const FormsMedical = ({
+  medicalHistory,
+  payments,
+  getMedicalPayments,
+  price
+}) => {
   // Some utils to use
   const toast = useToast()
   const navigate = useNavigate()
@@ -83,11 +89,16 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
   }, [loading])
 
   // Funtions to hanlde form data
-  const handleAddExamData = (newExam) => {
-    if (!examData.some((exam) => exam.id === newExam.id)) {
-      setExamData(examData => [...examData, newExam])
-      setTotalPay(totalPay + parseFloat(newExam.price))
-    }
+  const handleAddExamData = (newExams) => {
+    let priceToSum = 0
+    newExams.forEach(newExam => {
+      if (!examData.some((exam) => exam.id === newExam.id)) {
+        const priceFormated = parseFloat(newExam.price)
+        priceToSum = priceToSum + priceFormated
+        setExamData(examData => [...examData, newExam])
+      }
+    })
+    setTotalPay(totalPay + priceToSum)
   }
 
   const handleRemoveExamData = (props) => {
@@ -99,7 +110,7 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
   }
 
   const handleDeletePayment = async (paymentId) => {
-    const resp = await deleteFinancials(paymentId)
+    const resp = await deletePayments(paymentId)
     if (resp) getMedicalPayments()
   }
 
@@ -214,7 +225,7 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
             </Box>
             <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
               <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
-                <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Solicitud de Examen</Text>
+                <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Solicitud De Examen</Text>
               </Box>
               <Box mt={4} width='80%'>
                 {examData.length > 0 && (
@@ -235,7 +246,7 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
                           }}
                         >
                           <Td color='#8E9196'>{exam.name}</Td>
-                          <Td color='#8E9196'>costo: {exam.price}</Td>
+                          <Td color='#8E9196'>{exam.price}</Td>
                           <Td textAlign='center' color='#8E9196'><Img cursor='pointer' height='1.2rem' src={deleteIcon} onClick={() => { handleRemoveExamData(exam) }} /></Td>
                         </Tr>
                       ))}
@@ -243,7 +254,7 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
                   </Table>
                 )}
                 <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
-                  <ModalTest handleExamData={handleAddExamData} />
+                  <ModalTest handleExamData={handleAddExamData} exams={examData} />
                 </HStack>
               </Box>
             </Box>
@@ -301,7 +312,11 @@ const FormsMedical = ({ medicalHistory, payments, getMedicalPayments }) => {
             <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
               <Box w='85%'>
                 <HStack mt={4} w='100%' justifyContent='left'>
-                  <Text mb={4} float='left'>Total a pagar: {totalPay}</Text>
+                  {totalPay &&
+                    <Text mb={4} float='left'>Total a pagar:
+                      <Badge ml={1}>{totalPay}$ </Badge>
+                      <Badge ml={1}>{totalPay * parseFloat(price.price)}Bs </Badge>
+                    </Text>}
                 </HStack>
               </Box>
             </Box>

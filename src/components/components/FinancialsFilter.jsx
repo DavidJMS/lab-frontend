@@ -46,7 +46,7 @@ const FinancialsFilter = ({ handleSubmit }) => {
                     <Image maxW='4rem' minH='2rem' minW='2rem' width={['3.5rem', '4rem', '7rem']} src={SearchIcon} />
                   </button>
                 </HStack>
-                </FormControl>
+              </FormControl>
               : <>
                 <FormControl w={['90%', '100%']}>
                   <Text fontSize={['.8rem', '1rem']}>Desde</Text>
@@ -72,7 +72,6 @@ const FinancialsFilter = ({ handleSubmit }) => {
                   </HStack>
                 </FormControl>
               </>}
-
           </HStack>
         </Form>
       )}

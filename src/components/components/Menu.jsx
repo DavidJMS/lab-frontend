@@ -8,9 +8,10 @@ export default function Example () {
   return (
     <>
       <Box display='flex'>
-      <HStack mr={4} color='#FFFF'>
+        <HStack mr={4} color='#FFFF'>
           <Menu menuButton={<MenuButton>Finanzas</MenuButton>} transition>
-            <MenuItem><Link to='/finanzas'>Finanzas</Link></MenuItem>
+            <MenuItem><Link to='/pagos'>Pagos</Link></MenuItem>
+            <MenuItem><Link to='/tasas'>Tasas</Link></MenuItem>
           </Menu>
         </HStack>
         <HStack mr={4} color='#FFFF'>

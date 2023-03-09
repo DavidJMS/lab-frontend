@@ -10,7 +10,6 @@ const MedicalHistories = () => {
   useEffect(() => {
     const getData = async () => {
       const data = await getMedicalHistories()
-      console.log(data)
       setData(data)
     }
     getData()
@@ -20,7 +19,12 @@ const MedicalHistories = () => {
     setData(dataFiltered)
   }
   if (!data) return <></>
-  return <LayoutMedicalHistory data={data} filterMedicalHistories={filterMedicalHistories} />
+  return (
+    <LayoutMedicalHistory
+      data={data}
+      filterMedicalHistories={filterMedicalHistories}
+    />
+  )
 }
 
 export default MedicalHistories
