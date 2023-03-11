@@ -2,7 +2,7 @@ import api from './api'
 
 const createPayments = async (data) => {
   try {
-    const res = await api.post('medical/Payments/', data)
+    const res = await api.post('financials/payments/', data)
     if (res.status === 201) return true
   } catch (error) {
     console.log()
@@ -12,7 +12,7 @@ const createPayments = async (data) => {
 
 const getPayments = (props) => {
   try {
-    let url = 'medical/Payments/'
+    let url = 'financials/payments/'
     if (props?.typeFilter === 'date') {
       url = url + `?payment_date__date=${props.date}`
     } else if (props?.typeFilter === 'range') {
@@ -27,7 +27,7 @@ const getPayments = (props) => {
 
 const editPayments = (data, id) => {
   try {
-    const res = api.put(`medical/Payments/${id}/`, data)
+    const res = api.put(`financials/payments/${id}/`, data)
     if (res.status === 204) return true
     else return false
   } catch {
@@ -38,7 +38,7 @@ const editPayments = (data, id) => {
 
 const deletePayments = (id) => {
   try {
-    const res = api.delete(`medical/Payments/${id}`)
+    const res = api.delete(`financials/payments/${id}`)
     return res
   } catch {
     console.log()

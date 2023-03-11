@@ -296,6 +296,8 @@ const FormsMedical = ({
                       <ModalCreateFinancials
                         getMedicalPayments={getMedicalPayments}
                         medicalId={medicalHistory?.id}
+                        price={parseFloat(price?.price)}
+                        priceId={price.id}
                       />
                     </HStack>
                   </Box>
