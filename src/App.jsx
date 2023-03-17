@@ -25,6 +25,7 @@ import Financials from './pages/Financials'
 import EditMedicalHistory from './pages/EditMedicalHistory'
 import LoginPage from './pages/LoginPage'
 import Exchange from './pages/Exchange'
+import ShareResults from '@/pages/ShareResult'
 
 // Components
 import Header from './components/Layouts/Header'
@@ -42,6 +43,7 @@ function App () {
           <Route path='agregar-historia-medica' element={<AddFormMedical />} />
           <Route path='editar-historia-:medicalId' element={<EditMedicalHistory />} />
           <Route path='examenes' element={<LayoutListExams />} />
+          <Route path='resultado/:idResult' element={<ShareResults />} />
           <Route path='*' element={<MedicalHistories />} />
           <Route path='pagos' element={<Financials />} />
           <Route path='tasas' element={<Exchange />} />

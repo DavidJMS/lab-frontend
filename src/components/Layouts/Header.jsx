@@ -49,11 +49,7 @@ const Header = () => {
       setIsLogin(false)
     }
   }, [location.pathname])
-
-  console.log(location.pathname, isLogin)
-
-  // console.log(typeof (location.pathname), location.pathname ? location.pathname[0:-1] : "s")
-
+  if (location.pathname.includes('resultado')) return <></>
   return (
     <Box bgColor='#0DA7D9' display='flex' justifyContent='space-between' alignItems='center' width='100%' height='3rem'>
       {isLogin
@@ -61,61 +57,61 @@ const Header = () => {
         : <>
           <Text ml={4} color='#F5F5F5' fontWeight='500' fontSize={['.8rem', '1.5rem']}>{location && location.pathname.slice(1).toUpperCase() || 'HISTORIAS MEDICAS'}</Text>
           {IsNotSmallScreen
-             ? <Example />
-             : <nav>
-               <div className='logo'>
-            <Link to='/' />
-          </div>
+            ? <Example />
+            : <nav>
+              <div className='logo'>
+                <Link to='/' />
+              </div>
 
-               <input type='checkbox' id='click' />
-               <label htmlFor='click' className='menu--btn'>
-            <img src={HamburguerIcon} id='click' className='img' alt='' />
-          </label>
+              <input type='checkbox' id='click' />
+              <label htmlFor='click' className='menu--btn'>
+                <img src={HamburguerIcon} id='click' className='img' alt='' />
+              </label>
 
-               <ul>
-            <li><Link to='/finanzas'>Finanzas</Link></li>
-            <li>
-            <Link onClick={() => handleVisibleHistory()}>Historial Medico</Link>
-          </li>
-            {isVisibleHistory &&
-            <Menu position='absolute' zIndex='1'>
-              <MenuGroup textAlign='center' backgroundColor='#5EC4E4'>
-                <MenuItem textAlign='center' w='100%' color='#FFFF' backgroundColor='#5EC4E4'>
-                  <Link to='/'>Historial</Link>
-                </MenuItem>
-                <MenuItem textAlign='center' w='100%' color='#FFFF' backgroundColor='#5EC4E4'>
-                  <Link to='/agregar-historia-medica'>Agregar</Link>
-                </MenuItem>
-              </MenuGroup>
-            </Menu>}
-            <li>
-            <Link onClick={() => handleVisibleClient()}>Cliente</Link>
-          </li>
-            {isVisibleClient &&
-            <Menu position='absolute' zIndex='1'>
-              <MenuGroup textAlign='center' backgroundColor='#5EC4E4'>
-                <MenuItem color='#FFFF' textAlign='center' w='100%' backgroundColor='#5EC4E4'>
-                  <Link color='#FFFF' to='/clientes'>Listado</Link>
-                </MenuItem>
-                <MenuItem textAlign='center' w='100%' color='#FFFF' backgroundColor='#5EC4E4'>
-                  <Link to='/agregar-cliente'>Agregar</Link>
-                </MenuItem>
-              </MenuGroup>
-            </Menu>}
-            <li>
-            <Link onClick={() => handleVisibleExam()}>Examenes</Link>
-          </li>
-            {isVisibleExam &&
-            <Menu position='absolute' zIndex='1'>
-              <MenuGroup textAlign='center' backgroundColor='#5EC4E4'>
-                <MenuItem textAlign='center' color='#FFFF' w='100%' backgroundColor='#5EC4E4'>
-                  <Link to='/examenes'>Listado</Link>
-                </MenuItem>
-              </MenuGroup>
-            </Menu>}
-          </ul>
-               </nav>}
-          </>}
+              <ul>
+                <li><Link to='/finanzas'>Finanzas</Link></li>
+                <li>
+                  <Link onClick={() => handleVisibleHistory()}>Historial Medico</Link>
+                </li>
+                {isVisibleHistory &&
+                  <Menu position='absolute' zIndex='1'>
+                    <MenuGroup textAlign='center' backgroundColor='#5EC4E4'>
+                      <MenuItem textAlign='center' w='100%' color='#FFFF' backgroundColor='#5EC4E4'>
+                        <Link to='/'>Historial</Link>
+                      </MenuItem>
+                      <MenuItem textAlign='center' w='100%' color='#FFFF' backgroundColor='#5EC4E4'>
+                        <Link to='/agregar-historia-medica'>Agregar</Link>
+                      </MenuItem>
+                    </MenuGroup>
+                  </Menu>}
+                <li>
+                  <Link onClick={() => handleVisibleClient()}>Cliente</Link>
+                </li>
+                {isVisibleClient &&
+                  <Menu position='absolute' zIndex='1'>
+                    <MenuGroup textAlign='center' backgroundColor='#5EC4E4'>
+                      <MenuItem color='#FFFF' textAlign='center' w='100%' backgroundColor='#5EC4E4'>
+                        <Link color='#FFFF' to='/clientes'>Listado</Link>
+                      </MenuItem>
+                      <MenuItem textAlign='center' w='100%' color='#FFFF' backgroundColor='#5EC4E4'>
+                        <Link to='/agregar-cliente'>Agregar</Link>
+                      </MenuItem>
+                    </MenuGroup>
+                  </Menu>}
+                <li>
+                  <Link onClick={() => handleVisibleExam()}>Examenes</Link>
+                </li>
+                {isVisibleExam &&
+                  <Menu position='absolute' zIndex='1'>
+                    <MenuGroup textAlign='center' backgroundColor='#5EC4E4'>
+                      <MenuItem textAlign='center' color='#FFFF' w='100%' backgroundColor='#5EC4E4'>
+                        <Link to='/examenes'>Listado</Link>
+                      </MenuItem>
+                    </MenuGroup>
+                  </Menu>}
+              </ul>
+            </nav>}
+        </>}
     </Box>
   )
 }

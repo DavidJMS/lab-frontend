@@ -86,7 +86,7 @@ const ModalCreateFinancials = ({ getMedicalPayments, medicalId, price, priceId }
                 handleSubmit(values)
               }}
             >
-              {({ values, errors }) => (
+              {({ values }) => (
                 <Form>
                   <FormObserver />
                   <Box w='100%' display='flex' flexDirection='column' alignItems='center'>

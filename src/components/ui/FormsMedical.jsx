@@ -1,3 +1,4 @@
+// Dependencies
 import React, { useState, useEffect } from 'react'
 import { Formik, Form } from 'formik'
 import {
@@ -18,17 +19,26 @@ import {
   Th,
   Badge
 } from '@chakra-ui/react'
-import ModalClient from '../modals/ModalClient'
-import { Field } from '../shared/FormFields'
-import ModalTest from '../modals/ModalTest'
 import * as Yup from 'yup'
-import deleteIcon from '../../assets/Delete.svg'
-import ModalCreateFinancials from '../modals/ModalCreateFinancials'
 import { useNavigate } from 'react-router-dom'
 
-// services
+// Form Components
+import { Field } from '../shared/FormFields'
+
+// Modals
+import ModalClient from '../modals/ModalClient'
+import ModalHandleResult from '@/components/modals/ModalHandleResult'
+import ModalTest from '../modals/ModalTest'
+import ModalCreateFinancials from '../modals/ModalCreateFinancials'
+
+// Assets
+import deleteIcon from '../../assets/Delete.svg'
+import { AiFillFileText } from 'react-icons/ai'
+
+// Services
 import { createMedical } from '../../services/medical'
 import { deletePayments } from '../../services/financials'
+import { deleteResult } from '../../services/results'
 
 // My Validation Definition to use in form
 const validationShema = Yup.object({
@@ -50,11 +60,14 @@ const validationShema = Yup.object({
     .max(25, 'El maximo de caracteres es de 25')
 })
 
+// Main Component
 const FormsMedical = ({
   medicalHistory,
   payments,
   getMedicalPayments,
-  price
+  price,
+  results = [],
+  getMedicalResults = undefined
 }) => {
   // Some utils to use
   const toast = useToast()
@@ -73,7 +86,6 @@ const FormsMedical = ({
   })
   const [totalPay, setTotalPay] = useState(medicalHistory?.total_pay || 0)
   const [examData, setExamData] = useState(medicalHistory?.medical_exams || [])
-  const [results_exams, setResults_exams] = useState()// This only use if components is used in edit page
 
   // Some useEffects
   useEffect(() => {
@@ -83,12 +95,12 @@ const FormsMedical = ({
   }, [userData, examData])
 
   useEffect(() => {
-    if (examData && loading === true || userData && loading === true) {
+    if ((examData && loading === true) || (userData && loading === true)) {
       setLoading(false)
     }
   }, [loading])
 
-  // Funtions to hanlde form data
+  // Funtions to handle form data
   const handleAddExamData = (newExams) => {
     let priceToSum = 0
     newExams.forEach(newExam => {
@@ -114,7 +126,10 @@ const FormsMedical = ({
     if (resp) getMedicalPayments()
   }
 
-  const handleFileChange = (e) => setResults_exams({ ...Form, [e.target.name]: e.target.files[0] })
+  const handleDeleteResult = async (resultId) => {
+    const resp = await deleteResult(resultId)
+    if (resp) getMedicalResults()
+  }
 
   const handleSubmit = async (data) => {
     try {
@@ -147,6 +162,7 @@ const FormsMedical = ({
     }
   }
 
+  // Rendering...
   if (loading) return <Spinner />
   return (
     <>
@@ -155,7 +171,6 @@ const FormsMedical = ({
           {
             medical_exams: examData ? examData.map(exam => (exam.id)) : [],
             total_pay: totalPay,
-            results_exams,
             ...userData
           }
         }
@@ -269,9 +284,12 @@ const FormsMedical = ({
                       <Table fontSize={['.5rem', '1rem']} variant='simple' width='80%' m={4}>
                         <Thead bg='#F4F7FF'>
                           <Tr>
-                            <Th w='42%'>Monto</Th>
-                            <Th>Tipo de pago</Th>
+                            <Th>Bolivares</Th>
+                            <Th>Dolares</Th>
+                            <Th>Divisa</Th>
+                            <Th>Metodo</Th>
                             <Th>Referencia</Th>
+                            <Th>Fecha</Th>
                             <Th>Acciones</Th>
                           </Tr>
                         </Thead>
@@ -283,9 +301,12 @@ const FormsMedical = ({
                                 background: 'gray.50'
                               }}
                             >
-                              <Td color='#8E9196'>{payment.amount}</Td>
+                              <Td color='#8E9196'>{payment.amount_bolivares}BS</Td>
+                              <Td>{payment.amount_dollars}$ </Td>
+                              <Td color='#8E9196'>{payment.divisa}</Td>
                               <Td color='#8E9196'>{payment.method_payment}</Td>
                               <Td color='#8E9196'>{payment.number_ref || 'No Aplica'}</Td>
+                              <Td color='#8E9196'>{payment.create_at || 'No Aplica'}</Td>
                               <Td textAlign='center' color='#8E9196'><Img cursor='pointer' height='1.2rem' src={deleteIcon} onClick={() => { handleDeletePayment(payment.id) }} /></Td>
                             </Tr>
                           ))}
@@ -307,17 +328,55 @@ const FormsMedical = ({
                     <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Resultado del Examen</Text>
                   </Box>
                   <Box mt={4} width='80%'>
-                    <input type='file' onChange={(e) => setResults_exams({ [e.target.name]: e.target.files[0] })} />
+                    {results.length > 0 && (
+                      <Table fontSize={['.5rem', '1rem']} variant='simple' width='80%' m={4}>
+                        <Thead bg='#F4F7FF'>
+                          <Tr>
+                            <Th>Nombre</Th>
+                            <Th>Archivo</Th>
+                            <Th>Acciones</Th>
+                          </Tr>
+                        </Thead>
+                        <Tbody>
+                          {results.map((result, index) => (
+                            <Tr
+                              key={index}
+                              _hover={{
+                                background: 'gray.50'
+                              }}
+                            >
+                              <Td color='#8E9196'>{result.name}</Td>
+                              <Td>
+                                <a href={result.document} target='blank'>
+                                  <AiFillFileText size='1.8rem' color='#0DA7D9' />
+                                </a>
+                              </Td>
+                              <Td textAlign='center' color='#8E9196'>
+                                <Img cursor='pointer' height='1.2rem' src={deleteIcon} onClick={() => { handleDeleteResult(result.id) }} />
+                              </Td>
+                            </Tr>
+                          ))}
+                        </Tbody>
+                      </Table>
+                    )}
+                    <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
+                      <ModalHandleResult
+                        getMedicalResults={getMedicalResults}
+                        medicalId={medicalHistory?.id}
+                        price={parseFloat(price?.price)}
+                        priceId={price.id}
+                      />
+                    </HStack>
                   </Box>
                 </Box>
               </>}
             <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
               <Box w='85%'>
-                <HStack mt={4} w='100%' justifyContent='left'>
+                <HStack mt={4} w='100%' justifyContent='left' fontSize={18}>
                   {totalPay &&
                     <Text mb={4} float='left'>Total a pagar:
-                      <Badge ml={1}>{totalPay}$ </Badge>
-                      <Badge ml={1}>{totalPay * parseFloat(price.price)}Bs </Badge>
+                      <Badge fontSize={15} ml={1}>{totalPay}$ </Badge>
+                      <Badge fontSize={15} ml={1}>{totalPay * parseFloat(price.price)}Bs </Badge>
                     </Text>}
                 </HStack>
               </Box>
