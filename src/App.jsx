@@ -44,10 +44,10 @@ function App () {
           <Route path='editar-historia-:medicalId' element={<EditMedicalHistory />} />
           <Route path='examenes' element={<LayoutListExams />} />
           <Route path='resultado/:idResult' element={<ShareResults />} />
-          <Route path='*' element={<MedicalHistories />} />
           <Route path='pagos' element={<Financials />} />
           <Route path='tasas' element={<Exchange />} />
           <Route path='login' element={<LoginPage />} />
+          <Route path='*' element={<MedicalHistories />} />
         </Routes>
       </BrowserRouter>
     </StoryProvider>

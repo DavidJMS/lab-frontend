@@ -17,7 +17,7 @@ import { getResultByCode } from '@/services/results'
 // Assets
 import { TbSend } from 'react-icons/tb'
 import backgroundImg from '@/assets/background.jpg'
-import logo from '@/assets/logo3.jpg'
+import logo from '@/assets/logo.jpg'
 
 export default function SecuredModal ({ setResults, onOpen }) {
   const { idResult } = useParams()
@@ -68,7 +68,9 @@ export default function SecuredModal ({ setResults, onOpen }) {
         isOpen={isOpen}
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent
+          m='0 2rem'
+        >
           <ModalHeader color='#0DA7D9' textAlign='center' w='100%'>
             <Image mb='.5rem' src={logo} />
             Hey!
@@ -93,13 +95,13 @@ export default function SecuredModal ({ setResults, onOpen }) {
                       <HStack mb={4} display='flex' flexDirection={['column', 'column', 'row']}>
                         <FormControl>
                           <Text align='center' mb='1rem'>Un gusto saludarte, necesitamos que ingreses el código para poder obtener los resultados de tus examenes</Text>
-                          <Field type='text' name='code' max='5' placeholder='Ingresa el código' />
+                          <Field type='text' name='code' placeholder='Ingresa el código' />
                         </FormControl>
                       </HStack>
                     </Box>
                     <HStack w='100%' justifyContent='center'>
                       <Button mb='1rem' type='submit' disabled={disabled}>
-                        <Text m='5px'>Enviar</Text>
+                        <Text>Enviar</Text>
                         <TbSend size='1.3rem' color='white' />
                       </Button>
                     </HStack>

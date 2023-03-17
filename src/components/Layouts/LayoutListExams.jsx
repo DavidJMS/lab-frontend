@@ -77,8 +77,7 @@ const LayoutListExams = () => {
                 <Th>Nombre</Th>
                 <Th>Descripción</Th>
                 <Th>Precio</Th>
-                <Th>Editar</Th>
-                <Th>Eliminar</Th>
+                <Th textAlign='center'>Acciones</Th>
               </Tr>
             </Thead>}
           <Tbody>
@@ -87,10 +86,10 @@ const LayoutListExams = () => {
                 <Td><Text color='#8E9196'>{exam.name}</Text></Td>
                 <Td><Text color='#8E9196'>{exam.description}</Text></Td>
                 <Td><Text color='#8E9196'>{exam.price}</Text></Td>
-                <Td>
+                <Td display='flex'>
                   <ModalTypesExams exam={exam} fetchExams={fetchExams} />
+                  <Img cursor='pointer' onClick={() => handleDelete(exam.id)} src={DeleteIcon} />
                 </Td>
-                <Td><Img cursor='pointer' onClick={() => handleDelete(exam.id)} src={DeleteIcon} /></Td>
               </Tr>
             ))}
           </Tbody>

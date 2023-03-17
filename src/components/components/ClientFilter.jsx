@@ -23,7 +23,7 @@ const ClientFilter = ({ getData }) => {
     >
       <Form>
         <HStack w='100%' padding={4}>
-          <Text fontSize={['.9rem', '1rem']}>Cedula:</Text>
+          <Text fontSize={['.9rem', '1rem']}>Cédula:</Text>
           <Field w={['50%', 'auto']} name='dni' type='text' />
           <button type='submit'>
             <Image height='2rem' w={['3.5rem', 'auto']} src={SearchIcon} />
