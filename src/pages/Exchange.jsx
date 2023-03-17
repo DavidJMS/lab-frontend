@@ -35,7 +35,9 @@ const LayoutExchange = () => {
     <Box width='100%'>
       <Box mb={4} width='100%' justifyContent='center'>
         <Box w={['100%', '100%', '100%']} display='flex' flexDirection='column' alignItems='center'>
-          <ModalExchange fetchData={fetchData} />
+          <Box width={['80%']} display='flex' flexDirection={['row', 'row', 'row', 'row']} justifyContent='end' mt='1rem'>
+            <ModalExchange fetchData={fetchData} />
+          </Box>
           <Box width={['80%']} display='flex' flexDirection={['row', 'row', 'row', 'row']} justifyContent='center'>
             <TableExchange data={data} />
           </Box>
