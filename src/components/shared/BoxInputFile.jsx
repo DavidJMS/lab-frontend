@@ -309,7 +309,7 @@ export const BoxInputNomina = ({ setFiles, files, errors, setErrors }) => {
 
       if (filesInfo.length >= required) {
         handleError({ title: 'No hacen falta mas archivos' })
-        error = 'maximo alcanzado'
+        error = 'máximo alcanzado'
         return
       }
       if (!window.pdfjsLib) {
@@ -367,7 +367,7 @@ export const BoxInputEdoCuenta = ({ setFiles, files, errors, setErrors }) => {
 
       if (filesInfo.length >= required) {
         handleError({ title: 'No hacen falta mas archivos' })
-        error = 'maximo alcanzado'
+        error = 'máximo alcanzado'
         return
       }
       if (!window.pdfjsLib) {
@@ -424,7 +424,7 @@ export const BoxInputIneFront = ({ setFiles, files, errors, setErrors }) => {
 
       if (filesInfo.length >= required) {
         handleError({ title: 'No hacen falta mas archivos' })
-        error = 'maximo alcanzado'
+        error = 'máximo alcanzado'
         return
       }
 
@@ -482,7 +482,7 @@ export const BoxInputIneBack = ({ setFiles, files, errors, setErrors }) => {
 
       if (filesInfo.length >= required) {
         handleError({ title: 'No hacen falta mas archivos' })
-        error = 'maximo alcanzado'
+        error = 'máximo alcanzado'
         return
       }
 
@@ -540,7 +540,7 @@ export const BoxInputSelfie = ({ setFiles, files, errors, setErrors }) => {
 
       if (filesInfo.length >= required) {
         handleError({ title: 'No hacen falta mas archivos' })
-        error = 'maximo alcanzado'
+        error = 'máximo alcanzado'
         return
       }
 

@@ -1,6 +1,6 @@
 // Dependencies
 import React, { useState, useEffect } from 'react'
-import { Formik, Form } from 'formik'
+import { Formik, Form, useFormikContext } from 'formik'
 import {
   Text,
   HStack,
@@ -21,6 +21,7 @@ import {
 } from '@chakra-ui/react'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
+import { RiShareForward2Fill } from 'react-icons/ri'
 
 // Form Components
 import { Field } from '../shared/FormFields'
@@ -43,22 +44,43 @@ import { deleteResult } from '../../services/results'
 // My Validation Definition to use in form
 const validationShema = Yup.object({
   first_names: Yup.string()
-    .max(25, 'El maximo de caracteres es de 25'),
+    .max(30, 'El máximo de caracteres es de 30')
+    .min(3, 'El máximo de caracteres es de 3')
+    .required('Requerido!'),
   last_names: Yup.string()
-    .max(25, 'El maximo de caracteres es de 25'),
+    .max(30, 'El máximo de caracteres es de 30')
+    .min(3, 'El máximo de caracteres es de 3')
+    .required('Requerido!'),
   email: Yup.string()
-    .max(25, 'El maximo de caracteres es de 25'),
+    .max(30, 'El máximo de caracteres es de 100')
+    .min(3, 'El máximo de caracteres es de 3')
+    .email('Introduzca un email válido'),
   dni: Yup.string()
-    .max(25, 'El maximo de caracteres es de 25'),
-  gender: Yup.string()
-    .max(25, 'El maximo de caracteres es de 25'),
-  birth_date: Yup.string()
-    .max(25, 'El maximo de caracteres es de 25'),
+    .max(30, 'El máximo de caracteres es de 30')
+    .min(7, 'El máximo de caracteres es de 7')
+    .required('Requerido!'),
+  gender: Yup.string().oneOf(
+    ['masculino', 'femenino'],
+    'Genero inválido')
+    .required('Requerido!'),
+  age: Yup.number()
+    .positive('Inválido')
+    .integer('Inválido')
+    .required('Requerido!'),
   phone: Yup.string()
-    .max(25, 'El maximo de caracteres es de 25'),
+    .matches('^[0-9-+]{9,15}$', 'Inválido')
+    .required('Requerido!'),
   address: Yup.string()
-    .max(25, 'El maximo de caracteres es de 25')
+    .max(30, 'El máximo de caracteres es de 30')
+    .required('Requerido!'),
+  medical_exams: Yup.array()
+    .min(1, 'Seleccione un tipo de examen!')
 })
+
+const HandleErrorExam = () => {
+  const { errors } = useFormikContext()
+  return <Text color='#F44336' fontSize='14px'>{errors.medical_exams}</Text>
+}
 
 // Main Component
 const FormsMedical = ({
@@ -100,6 +122,17 @@ const FormsMedical = ({
     }
   }, [loading])
 
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(`${window.location.origin}/resultado/${medicalHistory?.id}`)
+    toast({
+      title: 'Acceso Copiado!',
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+      position: 'top-right'
+    })
+  }
+
   // Funtions to handle form data
   const handleAddExamData = (newExams) => {
     let priceToSum = 0
@@ -110,7 +143,8 @@ const FormsMedical = ({
         setExamData(examData => [...examData, newExam])
       }
     })
-    setTotalPay(totalPay + priceToSum)
+    const totalPayOperation = (totalPay + priceToSum).toFixed(2)
+    setTotalPay(totalPayOperation)
   }
 
   const handleRemoveExamData = (props) => {
@@ -118,7 +152,8 @@ const FormsMedical = ({
       return exam.id !== props.id
     })
     setExamData(newExamData)
-    setTotalPay(totalPay - parseFloat(props.price))
+    const totalPayOperation = (totalPay - parseFloat(props.price)).toFixed(2)
+    setTotalPay(totalPayOperation)
   }
 
   const handleDeletePayment = async (paymentId) => {
@@ -169,7 +204,7 @@ const FormsMedical = ({
       <Formik
         initialValues={
           {
-            medical_exams: examData ? examData.map(exam => (exam.id)) : [],
+            medical_exams: examData ? examData.map(exam => (exam.id)) : '',
             total_pay: totalPay,
             ...userData
           }
@@ -203,7 +238,7 @@ const FormsMedical = ({
               <HStack mb={4} w={['auto', 'auto', '66%']} flexDirection={['column', 'column', 'row', 'row']}>
                 <FormControl>
                   <Text>Sexo:</Text>
-                  <Field as='select' name='sexo'>
+                  <Field as='select' name='gender'>
                     <option value='masculino'>Masculino</option>
                     <option value='femenino'>Femenino</option>
                   </Field>
@@ -268,6 +303,8 @@ const FormsMedical = ({
                     </Tbody>
                   </Table>
                 )}
+                {/* <Field name='medical_exams' /> */}
+                <HandleErrorExam />
                 <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
                   <ModalTest handleExamData={handleAddExamData} exams={examData} />
                 </HStack>
@@ -372,12 +409,27 @@ const FormsMedical = ({
               </>}
             <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
               <Box w='85%'>
-                <HStack mt={4} w='100%' justifyContent='left' fontSize={18}>
+                <HStack w='100%' justifyContent='left' fontSize={18}>
                   {totalPay &&
                     <Text mb={4} float='left'>Total a pagar:
                       <Badge fontSize={15} ml={1}>{totalPay}$ </Badge>
-                      <Badge fontSize={15} ml={1}>{totalPay * parseFloat(price.price)}Bs </Badge>
+                      <Badge fontSize={15} ml={1}>{(totalPay * parseFloat(price.price)).toFixed(2)} Bs </Badge>
                     </Text>}
+                </HStack>
+                <HStack justifyContent='left' fontSize={18}>
+                  {medicalHistory &&
+                    <Text mb={4} float='left'>Código de acceso:
+                      <Badge fontSize={15} ml={1}>
+                        {medicalHistory?.code}
+                      </Badge>
+                    </Text>}
+                </HStack>
+                <HStack justifyContent='left' fontSize={18}>
+                  {medicalHistory &&
+                    <>
+                      <Text float='left'> Link de Acceso
+                      </Text> <RiShareForward2Fill onClick={handleCopyLink} />
+                    </>}
                 </HStack>
               </Box>
             </Box>

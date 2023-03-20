@@ -392,7 +392,7 @@ export const BoxInputNomina = ({ setFiles, files, errors, setErrors }) => {
 
       if (filesInfo.length >= required) {
         showingTimerToast({ title: 'No hacen falta mas recibos de nómina', position: 'center' })
-        error = 'maximo alcanzado'
+        error = 'máximo alcanzado'
         return
       }
       if (!window.pdfjsLib) {
@@ -475,7 +475,7 @@ export const BoxInputEdoCuenta = ({ setFiles, files, errors, setErrors }) => {
 
       if (filesInfo.length >= required) {
         showingTimerToast({ title: 'No hacen falta mas estados de cuenta', position: 'center' })
-        error = 'maximo alcanzado'
+        error = 'máximo alcanzado'
         return
       }
       if (!window.pdfjsLib) {
@@ -538,7 +538,7 @@ export const BoxInputIneFront = ({ setFiles, files, errors, setErrors }) => {
 
       if (filesInfo.length >= required) {
         showingTimerToast({ title: 'No hacen falta mas fotos', position: 'center' })
-        error = 'maximo alcanzado'
+        error = 'máximo alcanzado'
         reject(error)
       }
 
@@ -596,7 +596,7 @@ export const BoxInputIneBack = ({ setFiles, files, errors, setErrors }) => {
 
       if (filesInfo.length >= required) {
         showingTimerToast({ title: 'No hacen falta mas fotos', position: 'center' })
-        error = 'maximo alcanzado'
+        error = 'máximo alcanzado'
         reject(error)
       }
 
@@ -654,7 +654,7 @@ export const BoxInputSelfie = ({ setFiles, files, errors, setErrors }) => {
 
       if (filesInfo.length >= required) {
         showingTimerToast({ title: 'No hacen falta mas fotos', position: 'center' })
-        error = 'maximo alcanzado'
+        error = 'máximo alcanzado'
         reject(error)
       }
 

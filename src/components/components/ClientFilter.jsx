@@ -11,7 +11,7 @@ import { Field } from '../shared/FormFields'
 const ClientFilter = ({ getData }) => {
   const validationSchema = Yup.object({
     dni: Yup.string()
-      .max(15, 'El maximo de caracteres es de 15')
+      .max(15, 'El máximo de caracteres es de 15')
   })
   return (
     <Formik

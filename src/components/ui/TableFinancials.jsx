@@ -33,8 +33,8 @@ const TableFinancials = ({ data }) => {
           {data && data.map((payment) => (
             <Tr key={payment.id}>
               <Td><Text color='#8E9196'>{payment?.medical_history?.client?.full_name}</Text></Td>
-              <Td color='#8E9196'>{payment.amount_bolivares}BS</Td>
-              <Td color='#8E9196'>{payment.amount_dollars}$ </Td>
+              <Td color='#8E9196'>{payment.amount_bolivares} bs</Td>
+              <Td color='#8E9196'>{payment.amount_dollars} $ </Td>
               <Td color='#8E9196'>{payment.divisa}</Td>
               <Td color='#8E9196'>{payment.method_payment}</Td>
               <Td color='#8E9196'>{payment.number_ref || 'No Aplica'}</Td>

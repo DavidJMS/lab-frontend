@@ -13,10 +13,10 @@ const createPayments = async (data) => {
 const getPayments = (props) => {
   try {
     let url = 'financials/payments/'
-    if (props?.typeFilter === 'date') {
-      url = url + `?payment_date__date=${props.date}`
+    if (props?.typeFilter === 'dia') {
+      url = url + `?create_at__date=${props.date}`
     } else if (props?.typeFilter === 'range') {
-      url = url + `?payment_date__range=${props.range__start},${props.range__end}`
+      url = url + `?create_at__range=${props.range__start},${props.range__end}`
     }
     const res = api.get(url)
     return res

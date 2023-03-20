@@ -27,35 +27,35 @@ const ClientForm = ({ client }) => {
   // Validation Schema
   const validationSchema = Yup.object({
     first_names: Yup.string()
-      .max(30, 'El maximo de caracteres es de 30')
-      .min(3, 'El minimo de caracteres es de 3')
-      .required('Requerido'),
+      .max(30, 'El máximo de caracteres es de 30')
+      .min(3, 'El máximo de caracteres es de 3')
+      .required('Requerido!'),
     last_names: Yup.string()
-      .max(30, 'El maximo de caracteres es de 30')
-      .min(3, 'El minimo de caracteres es de 3')
-      .required('Requerido'),
+      .max(30, 'El máximo de caracteres es de 30')
+      .min(3, 'El máximo de caracteres es de 3')
+      .required('Requerido!'),
     email: Yup.string()
-      .max(30, 'El maximo de caracteres es de 100')
-      .min(3, 'El minimo de caracteres es de 3')
-      .email('Introduzca un email valido'),
+      .max(30, 'El máximo de caracteres es de 100')
+      .min(3, 'El máximo de caracteres es de 3')
+      .email('Introduzca un email válido'),
     dni: Yup.string()
-      .max(30, 'El maximo de caracteres es de 30')
-      .min(7, 'El minimo de caracteres es de 7')
-      .required('Requerido'),
+      .max(30, 'El máximo de caracteres es de 30')
+      .min(7, 'El máximo de caracteres es de 7')
+      .required('Requerido!'),
     gender: Yup.string().oneOf(
       ['masculino', 'femenino'],
-      'Genero invalido')
-      .required('Requerido'),
+      'Genero inválido')
+      .required('Requerido!'),
     age: Yup.number()
-      .positive('Invalido')
-      .integer('Invalido')
-      .required('Requerido'),
+      .positive('Inválido')
+      .integer('Inválido')
+      .required('Requerido!'),
     phone: Yup.string()
-      .matches('^[0-9-+]{9,15}$', 'Invalido')
-      .required('Requerido'),
+      .matches('^[0-9-+]{9,15}$', 'Inválido')
+      .required('Requerido!'),
     address: Yup.string()
-      .max(30, 'El maximo de caracteres es de 30')
-      .required('Requerido')
+      .max(30, 'El máximo de caracteres es de 30')
+      .required('Requerido!')
   })
 
   // Functions to submit data
@@ -148,7 +148,7 @@ const ClientForm = ({ client }) => {
         else handleSubmit(data)
       }}
     >
-      <Form id='form'>
+      <Form>
         <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
           <Box mt={4} width='80%'>
             <HStack mb={4} display='flex' flexDirection={['column', 'column', 'row']}>
@@ -197,7 +197,6 @@ const ClientForm = ({ client }) => {
                 />
               </FormControl>
             </HStack>
-
           </Box>
           <HStack mt={4} w='100%' justifyContent='center'>
             <Button w='20%' type='submit' disabled={disabled}>{client ? 'Editar' : 'Crear'}</Button>

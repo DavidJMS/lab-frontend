@@ -2,7 +2,6 @@ import {
   Box,
   Flex
 } from '@chakra-ui/react'
-import PaginationButtons from '../ui/PaginationButtons'
 import FinancialsFilter from '../components/FinancialsFilter'
 import { getPayments } from '../../services/financials'
 import TableFinancials from '../ui/TableFinancials'

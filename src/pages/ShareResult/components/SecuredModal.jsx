@@ -26,8 +26,8 @@ export default function SecuredModal ({ setResults, onOpen }) {
   const toast = useToast()
   const validationSchema = Yup.object({
     code: Yup.string()
-      .min(6, 'El minimo son 6 caracteres')
-      .max(6, 'El maximo son 6 caracteres')
+      .min(6, 'El máximo son 6 caracteres')
+      .max(6, 'El máximo son 6 caracteres')
       .required('Requerido!')
   })
   const handleSubmit = async (data) => {

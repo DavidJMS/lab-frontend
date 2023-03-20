@@ -25,7 +25,7 @@ const ModalCreateFinancials = ({ getMedicalPayments, medicalId, price, priceId }
     ),
     method_payment: Yup.string().oneOf(
       ['Pago Interbancario', 'Efectivo'],
-      'Metodo de pago invalido'
+      'Metodo de pago inválido'
     ),
     amount_bolivares: Yup.number()
       .positive()
@@ -34,8 +34,8 @@ const ModalCreateFinancials = ({ getMedicalPayments, medicalId, price, priceId }
       .positive()
       .required('Este campo es requerido'),
     number_ref: Yup.string()
-      .min(3, 'El minimo son 3 caracteres')
-      .max(30, 'El minimo son 30 caracteres'),
+      .min(3, 'El máximo son 3 caracteres')
+      .max(30, 'El máximo son 30 caracteres'),
     medical_history: Yup.number().positive(),
     price: Yup.number().positive()
   })

@@ -22,7 +22,9 @@ import * as Yup from 'yup'
 
 const validationSchema = Yup.object({
   price: Yup.number()
-    .positive('El precio debe de ser positivo')
+    .positive('Precio inválido')
+    .max(12, 'Inválido')
+    .required('Requerido!')
 })
 
 const ModalExchange = ({ fetchData }) => {
@@ -72,7 +74,7 @@ const ModalExchange = ({ fetchData }) => {
       <Modal onClose={onClose} isOpen={isOpen} size='xl'>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader bgColor='#0DA7D9' height='.5rem' color='#F5F5F5' textAlign='center' w='100%'>Crear Tasa</ModalHeader>
+          <ModalHeader bgColor='#0DA7D9' height='.5rem' color='#F5F5F5' textAlign='center' w='100%'>Agregar Nueva Tasa</ModalHeader>
           <ModalCloseButton color='#F5F5F5' />
           <ModalBody w='100%'>
             <Formik

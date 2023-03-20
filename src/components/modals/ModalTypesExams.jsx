@@ -32,15 +32,15 @@ const ModalTypesExams = ({ exam, fetchExams }) => {
   const toast = useToast()
   const validationSchema = Yup.object({
     name: Yup.string()
-      .min(3, 'El minimo son 3 caracteres')
-      .max(50, 'El maximo son 50 caracteres')
+      .min(3, 'El máximo son 3 caracteres')
+      .max(50, 'El máximo son 50 caracteres')
       .required('Requerido!'),
     description: Yup.string()
-      .min(5, 'El minimo son 5 caracteres')
-      .max(250, 'El maximo son 250 caracteres'),
+      .min(5, 'El máximo son 5 caracteres')
+      .max(250, 'El máximo son 250 caracteres'),
     price: Yup.number()
-      .positive('Invalido')
-      .max(9999999999.99, 'El maximo son 9999999999.99 caracteres')
+      .positive('Inválido')
+      .max(9999999999.99, 'El máximo son 9999999999.99 caracteres')
   })
   const handleSizeClick = (newSize) => {
     setSize(newSize)

@@ -33,8 +33,8 @@ const ModalHandleResult = ({ getMedicalResults, medicalId }) => {
     document: Yup.mixed()
       .required('Este campo es requerido'),
     name: Yup.string()
-      .min(3, 'El minimo son 3 caracteres')
-      .max(50, 'El maximo son 50 caracteres')
+      .min(3, 'El máximo son 3 caracteres')
+      .max(50, 'El máximo son 50 caracteres')
       .required('Este campo es requerido')
   })
   // Functions to save
