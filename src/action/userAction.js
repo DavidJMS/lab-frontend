@@ -9,11 +9,9 @@ import LocalStorageUserService from '../services/localStorage'
 export const loginUser = createAsyncThunk('user/login', async (data, { rejectWithValue }) => {
   try {
     const response = await login(data)
-    console.log(response)
     if (response) {
-      console.log(response.user)
       LocalStorageUserService.setUser(response)
-      return response.user
+      return response
     }
     return false
   } catch (error) {

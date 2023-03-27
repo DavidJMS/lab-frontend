@@ -3,6 +3,7 @@ import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
 import '@szhsin/react-menu/dist/index.css'
 import '@szhsin/react-menu/dist/transitions/slide.css'
 import { Link } from 'react-router-dom'
+import { BiExit } from 'react-icons/bi'
 
 export default function Example () {
   return (
@@ -31,7 +32,9 @@ export default function Example () {
             <MenuItem><Link to='/examenes'>Lista de examenes</Link></MenuItem>
           </Menu>
         </HStack>
-
+        <HStack mr={4} color='#FFFF'>
+          <Link to='/login'><BiExit /></Link>
+        </HStack>
       </Box>
     </>
   )

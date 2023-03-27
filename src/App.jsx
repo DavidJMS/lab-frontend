@@ -27,6 +27,9 @@ import LoginPage from './pages/LoginPage'
 import Exchange from './pages/Exchange'
 import ShareResults from '@/pages/ShareResult'
 
+// Actions
+import PrivateRoute from '@/router/UserRouter'
+
 // Components
 import Header from './components/Layouts/Header'
 
@@ -36,16 +39,18 @@ function App () {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path='' element={<MedicalHistories />} />
-          <Route path='clientes' element={<ClientHistories />} />
-          <Route path='editar-cliente-:clientId' element={<EditClient />} />
-          <Route path='agregar-cliente' element={<AddClient />} />
-          <Route path='agregar-historia-medica' element={<AddFormMedical />} />
-          <Route path='editar-historia-:medicalId' element={<EditMedicalHistory />} />
-          <Route path='examenes' element={<LayoutListExams />} />
-          <Route path='resultado/:idResult' element={<ShareResults />} />
-          <Route path='pagos' element={<Financials />} />
-          <Route path='tasas' element={<Exchange />} />
+          <Route exact path='/' element={<PrivateRoute />}>
+            <Route path='' element={<MedicalHistories />} />
+            <Route path='clientes' element={<ClientHistories />} />
+            <Route path='editar-cliente-:clientId' element={<EditClient />} />
+            <Route path='agregar-cliente' element={<AddClient />} />
+            <Route path='agregar-historia-medica' element={<AddFormMedical />} />
+            <Route path='editar-historia-:medicalId' element={<EditMedicalHistory />} />
+            <Route path='examenes' element={<LayoutListExams />} />
+            <Route path='resultado/:idResult' element={<ShareResults />} />
+            <Route path='pagos' element={<Financials />} />
+            <Route path='tasas' element={<Exchange />} />
+          </Route>
           <Route path='login' element={<LoginPage />} />
           <Route path='*' element={<MedicalHistories />} />
         </Routes>
