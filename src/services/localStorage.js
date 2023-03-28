@@ -1,7 +1,10 @@
 class LocalStorageUserService {
-
   setUser(data) {
     window.localStorage.setItem('user', JSON.stringify(data))
+  }
+
+  getUser() {
+    return JSON.parse(window.localStorage.getItem('user'))
   }
 
   getLocalRefreshToken() {
@@ -20,6 +23,12 @@ class LocalStorageUserService {
     } else {
       return {}
     }
+  }
+
+  updateLocalAccessToken(token) {
+    const user = JSON.parse(window.localStorage.getItem('user'))
+    user.access = token
+    window.localStorage.setItem('user', JSON.stringify(user))
   }
 
   removeUser() {

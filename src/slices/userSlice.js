@@ -1,10 +1,11 @@
 // userSlice.js
 import { createSlice } from '@reduxjs/toolkit'
 import { loginUser } from '../action/userAction'
+import LocalStorageUserService from '@/services/localStorage'
 
 const initialState = {
   loading: false,
-  userInfo: null,
+  userInfo: LocalStorageUserService.getUser(),
   error: null,
   success: false
 }
