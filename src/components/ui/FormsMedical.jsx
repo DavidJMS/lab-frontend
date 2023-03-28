@@ -277,12 +277,12 @@ const FormsMedical = ({
               <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
                 <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Solicitud De Examen</Text>
               </Box>
-              <Box mt={4} width='80%'>
+              <Box mt={4} width={['96%','80%']}>
                 {examData.length > 0 && (
-                  <Table fontSize={['.5rem', '1rem']} variant='simple' width='80%' m={4}>
-                    <Thead bg='#F4F7FF'>
-                      <Tr>
-                        <Th w='42%'>Nombre</Th>
+                  <Table fontSize={['.8rem', '1rem']} variant='simple' width='80%' m={4}>
+                    <Thead bg='#F4F7FF' >
+                      <Tr fontSize={['.8rem', '1rem']}>
+                        <Th w={['30%','42%']}>Nombre</Th>
                         <Th>Costo</Th>
                         <Th>Eliminar</Th>
                       </Tr>
@@ -297,7 +297,7 @@ const FormsMedical = ({
                         >
                           <Td color='#8E9196'>{exam.name}</Td>
                           <Td color='#8E9196'>{exam.price}</Td>
-                          <Td textAlign='center' color='#8E9196'><Img cursor='pointer' height='1.2rem' src={deleteIcon} onClick={() => { handleRemoveExamData(exam) }} /></Td>
+                          <Td textAlign='center' color='#8E9196'><Img cursor='pointer' height={['1rem','1.2rem' ]}src={deleteIcon} onClick={() => { handleRemoveExamData(exam) }} /></Td>
                         </Tr>
                       ))}
                     </Tbody>
@@ -305,7 +305,7 @@ const FormsMedical = ({
                 )}
                 {/* <Field name='medical_exams' /> */}
                 <HandleErrorExam />
-                <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
+                <HStack justifyContent='end' w={['90%' ,'100%']} mt={['10px', '10px', '0px']} display='flex'>
                   <ModalTest handleExamData={handleAddExamData} exams={examData} />
                 </HStack>
               </Box>
@@ -316,9 +316,9 @@ const FormsMedical = ({
                   <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
                     <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos de Pago</Text>
                   </Box>
-                  <Box mt={4} width='80%'>
+                  <Box mt={4} width={['96%', '96%', '80%','80%']}>
                     {payments.length > 0 && (
-                      <Table fontSize={['.5rem', '1rem']} variant='simple' width='80%' m={4}>
+                      <Table fontSize={['.5rem', '1rem']} variant='simple' width='100%' m={4}>
                         <Thead bg='#F4F7FF'>
                           <Tr>
                             <Th>Bolivares</Th>
