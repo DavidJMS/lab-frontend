@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
   BrowserRouter,
   Routes,
@@ -28,7 +27,7 @@ import Exchange from './pages/Exchange'
 import ShareResults from '@/pages/ShareResult'
 
 // Actions
-import PrivateRoute from '@/router/UserRouter'
+import UserRoute from '@/router/UserRoute'
 
 // Components
 import Header from './components/Layouts/Header'
@@ -39,7 +38,7 @@ function App () {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route exact path='/' element={<PrivateRoute />}>
+          <Route exact path='/' element={<UserRoute />}>
             <Route path='' element={<MedicalHistories />} />
             <Route path='clientes' element={<ClientHistories />} />
             <Route path='editar-cliente-:clientId' element={<EditClient />} />
