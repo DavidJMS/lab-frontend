@@ -60,19 +60,16 @@ const validationShema = Yup.object({
     .min(7, 'El máximo de caracteres es de 7')
     .required('Requerido!'),
   gender: Yup.string().oneOf(
-    ['masculino', 'femenino'],
-    'Genero inválido')
-    .required('Requerido!'),
+    ['masculino', 'femenino', 'Masculino', 'Femenino'],
+    'Genero inválido'),
   age: Yup.number()
     .positive('Inválido')
     .integer('Inválido')
     .required('Requerido!'),
   phone: Yup.string()
-    .matches('^[0-9-+]{9,15}$', 'Inválido')
-    .required('Requerido!'),
+    .matches('^[0-9-+]{9,15}$', 'Inválido'),
   address: Yup.string()
-    .max(30, 'El máximo de caracteres es de 30')
-    .required('Requerido!'),
+    .max(30, 'El máximo de caracteres es de 30'),
   medical_exams: Yup.array()
     .min(1, 'Seleccione un tipo de examen!')
 })
@@ -277,12 +274,12 @@ const FormsMedical = ({
               <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
                 <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Solicitud De Examen</Text>
               </Box>
-              <Box mt={4} width={['96%','80%']}>
+              <Box mt={4} width={['96%', '80%']}>
                 {examData.length > 0 && (
                   <Table fontSize={['.8rem', '1rem']} variant='simple' width='80%' m={4}>
-                    <Thead bg='#F4F7FF' >
+                    <Thead bg='#F4F7FF'>
                       <Tr fontSize={['.8rem', '1rem']}>
-                        <Th w={['30%','42%']}>Nombre</Th>
+                        <Th w={['30%', '42%']}>Nombre</Th>
                         <Th>Costo</Th>
                         <Th>Eliminar</Th>
                       </Tr>
@@ -297,7 +294,7 @@ const FormsMedical = ({
                         >
                           <Td color='#8E9196'>{exam.name}</Td>
                           <Td color='#8E9196'>{exam.price}</Td>
-                          <Td textAlign='center' color='#8E9196'><Img cursor='pointer' height={['1rem','1.2rem' ]}src={deleteIcon} onClick={() => { handleRemoveExamData(exam) }} /></Td>
+                          <Td textAlign='center' color='#8E9196'><Img cursor='pointer' height={['1rem', '1.2rem']} src={deleteIcon} onClick={() => { handleRemoveExamData(exam) }} /></Td>
                         </Tr>
                       ))}
                     </Tbody>
@@ -305,7 +302,7 @@ const FormsMedical = ({
                 )}
                 {/* <Field name='medical_exams' /> */}
                 <HandleErrorExam />
-                <HStack justifyContent='end' w={['90%' ,'100%']} mt={['10px', '10px', '0px']} display='flex'>
+                <HStack justifyContent='end' w={['90%', '100%']} mt={['10px', '10px', '0px']} display='flex'>
                   <ModalTest handleExamData={handleAddExamData} exams={examData} />
                 </HStack>
               </Box>
@@ -316,7 +313,7 @@ const FormsMedical = ({
                   <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
                     <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos de Pago</Text>
                   </Box>
-                  <Box mt={4} width={['96%', '96%', '80%','80%']}>
+                  <Box mt={4} width={['96%', '96%', '80%', '80%']}>
                     {payments.length > 0 && (
                       <Table fontSize={['.5rem', '1rem']} variant='simple' width='100%' m={4}>
                         <Thead bg='#F4F7FF'>
@@ -414,6 +411,14 @@ const FormsMedical = ({
                     <Text mb={4} float='left'>Total a pagar:
                       <Badge fontSize={15} ml={1}>{totalPay}$ </Badge>
                       <Badge fontSize={15} ml={1}>{(totalPay * parseFloat(price.price)).toFixed(2)} Bs </Badge>
+                    </Text>}
+                </HStack>
+                <HStack justifyContent='left' fontSize={18}>
+                  {medicalHistory &&
+                    <Text mb={4} float='left'>Número:
+                      <Badge fontSize={15} ml={1}>
+                        {medicalHistory?.number_id}
+                      </Badge>
                     </Text>}
                 </HStack>
                 <HStack justifyContent='left' fontSize={18}>

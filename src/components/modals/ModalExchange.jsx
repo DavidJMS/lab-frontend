@@ -23,7 +23,6 @@ import * as Yup from 'yup'
 const validationSchema = Yup.object({
   price: Yup.number()
     .positive('Precio inválido')
-    .max(12, 'Inválido')
     .required('Requerido!')
 })
 

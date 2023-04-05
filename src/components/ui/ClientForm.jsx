@@ -43,7 +43,7 @@ const ClientForm = ({ client }) => {
       .min(7, 'El máximo de caracteres es de 7')
       .required('Requerido!'),
     gender: Yup.string().oneOf(
-      ['masculino', 'femenino'],
+      ['masculino', 'femenino', 'Masculino', 'Femenino'],
       'Genero inválido')
       .required('Requerido!'),
     age: Yup.number()
@@ -51,11 +51,9 @@ const ClientForm = ({ client }) => {
       .integer('Inválido')
       .required('Requerido!'),
     phone: Yup.string()
-      .matches('^[0-9-+]{9,15}$', 'Inválido')
-      .required('Requerido!'),
+      .matches('^[0-9-+]{9,15}$', 'Inválido'),
     address: Yup.string()
       .max(30, 'El máximo de caracteres es de 30')
-      .required('Requerido!')
   })
 
   // Functions to submit data

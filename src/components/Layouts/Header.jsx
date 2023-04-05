@@ -49,7 +49,7 @@ const Header = () => {
       setIsLogin(false)
     }
   }, [location.pathname])
-  if (location.pathname.includes('resultado')) return <></>
+  if (location.pathname.includes('resultado') || location.pathname.includes('login')) return <></>
   return (
     <Box bgColor='#0DA7D9' display='flex' justifyContent='space-between' alignItems='center' width='100%' height='3rem'>
       {isLogin
@@ -110,8 +110,8 @@ const Header = () => {
                     </MenuGroup>
                   </Menu>}
               </ul>
-            </nav>}
-        </>}
+              </nav>}
+          </>}
     </Box>
   )
 }
