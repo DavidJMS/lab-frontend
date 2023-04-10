@@ -14,8 +14,8 @@ const LayoutMedicalHistory = ({ data, filterMedicalHistories }) => {
         <Box w={['100%', '100%', '100%']} display='flex' flexDirection='column' alignItems='center'>
           <Flex flexDirection={['colum', 'row']} justifyContent='space-around' w={['100%', '66%']}>
             <Filters handleSubmit={filterMedicalHistories} />
-            <HStack width={['90px', '100px']} position='relative' mt={['120px', '100px', '0px']}>
-              {IsNotSmallScreen &&
+            {IsNotSmallScreen &&
+              <HStack width={['90px', '100px']} position='relative' display={{ base: 'none', lg: 'flex' }}>
                 <Link
                   as={RouterLink}
                   to='/agregar-historia-medica'
@@ -24,9 +24,12 @@ const LayoutMedicalHistory = ({ data, filterMedicalHistories }) => {
                   fontSize={['.8rem', '1rem']}
                   padding='0.5rem'
                   borderRadius='10px' mr={8}
-                >Agregar
-                </Link>}
-            </HStack>
+                  _hover={{ color: '#fff' }}
+                  alignItems='center'
+                >
+                  Agregar
+                </Link>
+              </HStack>}
           </Flex>
           <Box width={['40%', '80%', '100%']} display='flex' flexDirection={['row', 'row', 'row', 'row']} justifyContent='center'>
             <TableMedicalHistory data={data} navigate={navigate} />

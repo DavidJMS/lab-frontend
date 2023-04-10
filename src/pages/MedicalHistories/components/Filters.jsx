@@ -14,8 +14,6 @@ const Filters = ({ handleSubmit }) => {
     dni: Yup.string()
       .max(15, 'El máximo de caracteres es de 15')
   })
-
-
   return (
     <Formik
       initialValues={{ dni: '', date: '' }}
@@ -26,27 +24,35 @@ const Filters = ({ handleSubmit }) => {
       }}
     >
       <Form className='form--medical__history'>
-        <HStack mb={4} mt={4} w={['100%', '100%', '84%', '84%']} flexDirection={['column', 'column', 'row', 'row']} >
-          <FormControl w={['90%', '100%']}>
-          <Text fontSize={['.8rem', '1rem']}>Cedula</Text>
-          <Field name='dni' w={['85%', 'auto']} />
+        <HStack
+          mb={4}
+          mt={4}
+          w={['100%', '100%', '100%', '100%']}
+          flexDirection={['column', 'column', 'row', 'row']}
+        >
+          <FormControl w={['90%', '100%', '50%']}>
+            <Field
+              name='dni'
+              w={['100%', '100%', 'auto']}
+              placeholder='Cédula'
+              my='0.5rem'
+            />
           </FormControl>
-          <FormControl w={['90%', '100%']}>
-          <Text fontSize={['.8rem', '1rem']}>Fecha</Text>
-          <HStack w={['100%', '80%']}>
-          <Field
-            w={['100%', 'auto']}
-            name='date'
-            type='date'
-          />
-          <button type='submit' className='button--filter'>
-            <Image maxW={'4rem'} minH={'2rem'} minW={'2rem'} width={['3.5rem', '4rem', '7rem']} src={SearchIcon} />
-          </button>
-          </HStack>
+          <FormControl w={['90%', '100%', '50%']}>
+            <Field
+              w={['100%', '100%', 'auto']}
+              name='date'
+              my='0.5rem'
+              type='date'
+            />
+          </FormControl>
+          <FormControl w={['90%', '100%']} float={{ base: 'right', md: 'none' }}>
+            <button type='submit' className='button--filter'>
+              <Image maxW='4rem' minH='2rem' minW='2rem' width={['3.5rem', '4rem', '7rem']} src={SearchIcon} />
+            </button>
           </FormControl>
         </HStack>
       </Form>
-
     </Formik>
   )
 }

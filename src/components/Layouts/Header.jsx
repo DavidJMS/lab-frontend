@@ -55,7 +55,9 @@ const Header = () => {
       {isLogin
         ? <Text ml={4} color='#F5F5F5' fontWeight='500' fontSize={['.8rem', '1.5rem']}>Login</Text>
         : <>
-          <Text ml={4} color='#F5F5F5' fontWeight='500' fontSize={['.8rem', '1.5rem']}>{location && location.pathname.slice(1).toUpperCase() || 'HISTORIAS MEDICAS'}</Text>
+          <Text ml={4} color='#F5F5F5' fontWeight='500' fontSize={{ base: '16px', md: '1.5rem' }}>
+            {(location && location.pathname.slice(1).toUpperCase()) || 'HISTORIAS MÉDICAS'}
+          </Text>
           {IsNotSmallScreen
             ? <Example />
             : <nav>
@@ -110,8 +112,8 @@ const Header = () => {
                     </MenuGroup>
                   </Menu>}
               </ul>
-              </nav>}
-          </>}
+            </nav>}
+        </>}
     </Box>
   )
 }

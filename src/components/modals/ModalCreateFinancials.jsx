@@ -23,6 +23,10 @@ const ModalCreateFinancials = ({ getMedicalPayments, medicalId, price, priceId }
       ['Dolares', 'Bolivares'],
       'Divisa invalida'
     ),
+    type: Yup.string().oneOf(
+      ['Vuelto', 'Pago del cliente'],
+      'Tipo de pago inválido'
+    ),
     method_payment: Yup.string().oneOf(
       ['Pago Interbancario', 'Efectivo'],
       'Metodo de pago inválido'
@@ -78,6 +82,7 @@ const ModalCreateFinancials = ({ getMedicalPayments, medicalId, price, priceId }
                 amount_bolivares: '',
                 amount_dollars: '',
                 number_ref: '',
+                type: 'Pago del cliente',
                 medical_history: medicalId,
                 price: priceId
               }}
@@ -102,8 +107,17 @@ const ModalCreateFinancials = ({ getMedicalPayments, medicalId, price, priceId }
                       </HStack>
                       <HStack mb={4} mt={4} display='flex' flexDirection={['column', 'column', 'row']}>
                         <FormControl>
+                          <Text>Tipo de pago</Text>
+                          <Field as='select' name='type' p='2'>
+                            <option value='Pago del cliente'>Pago del cliente</option>
+                            <option value='Vuelto'>Vuelto</option>
+                          </Field>
+                        </FormControl>
+                      </HStack>
+                      <HStack mb={4} mt={4} display='flex' flexDirection={['column', 'column', 'row']}>
+                        <FormControl>
                           <Text>Método de pago</Text>
-                          <Field as='select' name='method_payment'>
+                          <Field as='select' name='method_payment' p='2'>
                             <option value='Pago Interbancario'>Pago Interbancario</option>
                             <option value='Efectivo'>Efectivo</option>
                           </Field>

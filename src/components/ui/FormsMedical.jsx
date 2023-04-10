@@ -321,7 +321,8 @@ const FormsMedical = ({
                             <Th>Bolivares</Th>
                             <Th>Dolares</Th>
                             <Th>Divisa</Th>
-                            <Th>Metodo</Th>
+                            <Th>Método</Th>
+                            <Th>Tipo</Th>
                             <Th>Referencia</Th>
                             <Th>Fecha</Th>
                             <Th>Acciones</Th>
@@ -330,15 +331,17 @@ const FormsMedical = ({
                         <Tbody>
                           {payments.map((payment, index) => (
                             <Tr
+                              textAlign='center'
                               key={index}
                               _hover={{
                                 background: 'gray.50'
                               }}
                             >
-                              <Td color='#8E9196'>{payment.amount_bolivares}BS</Td>
-                              <Td>{payment.amount_dollars}$ </Td>
+                              <Td color='#8E9196'>{payment.amount_bolivares}</Td>
+                              <Td>{payment.amount_dollars}</Td>
                               <Td color='#8E9196'>{payment.divisa}</Td>
                               <Td color='#8E9196'>{payment.method_payment}</Td>
+                              <Td color='#8E9196'>{payment.type}</Td>
                               <Td color='#8E9196'>{payment.number_ref || 'No Aplica'}</Td>
                               <Td color='#8E9196'>{payment.create_at || 'No Aplica'}</Td>
                               <Td textAlign='center' color='#8E9196'><Img cursor='pointer' height='1.2rem' src={deleteIcon} onClick={() => { handleDeletePayment(payment.id) }} /></Td>
