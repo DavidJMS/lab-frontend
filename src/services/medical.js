@@ -11,11 +11,15 @@ const getMedical = async (id) => {
 const getMedicalHistories = async (props) => {
   try {
     let url = 'medical/history-client/'
-    if (props?.dni) {
-      url = url + `?client__dni=${props.dni}`
-    }
-    if (props?.date) {
-      url = url + `?create_at__date=${props.date}`
+    if (props?.linkPagination) {
+      url = props.linkPagination
+    } else {
+      if (props?.dni) {
+        url = url + `?client__dni=${props.dni}`
+      }
+      if (props?.date) {
+        url = url + `?create_at__date=${props.date}`
+      }
     }
     const res = await api.get(url)
     return res.data

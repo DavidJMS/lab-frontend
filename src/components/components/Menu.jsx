@@ -4,6 +4,7 @@ import '@szhsin/react-menu/dist/index.css'
 import '@szhsin/react-menu/dist/transitions/slide.css'
 import { Link } from 'react-router-dom'
 import { BiExit } from 'react-icons/bi'
+import ModalMoney from '../modals/ModalMoney'
 
 export default function Example () {
   return (
@@ -13,6 +14,7 @@ export default function Example () {
           <Menu menuButton={<MenuButton>Finanzas</MenuButton>} transition>
             <MenuItem><Link to='/pagos'>Pagos</Link></MenuItem>
             <MenuItem><Link to='/tasas'>Tasas</Link></MenuItem>
+            <MenuItem><Link to='#Money'><ModalMoney /></Link></MenuItem>
           </Menu>
         </HStack>
         <HStack mr={4} color='#FFFF'>

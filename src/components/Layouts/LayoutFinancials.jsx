@@ -19,7 +19,7 @@ const LayoutFinancials = () => {
   const fetchData = async (props = undefined) => {
     try {
       const data = props ? await getPayments(props) : await getPayments()
-      setData(data.data)
+      setData(data.results)
       setLoading(true)
     } catch (error) {
       console.log(error)
@@ -44,7 +44,7 @@ const LayoutFinancials = () => {
           <Box width={['80%']} display='flex' flexDirection={['row', 'row', 'row', 'row']} justifyContent='center'>
             <TableFinancials data={data} />
           </Box>
-          <span>Total registrado: {data && data.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.amount_dollars), 0.0)}$ | {data && data.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.amount_bolivares), 0.0)}BS</span>
+          <span>Total registrado: {data && data.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.amount_dollars), 0.0)}$ | {data && data.reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue.amount_bolivares), 0.0).toFixed(2)}BS</span>
         </Box>
       </Box>
     </Box>

@@ -10,7 +10,7 @@ const createPayments = async (data) => {
   }
 }
 
-const getPayments = (props) => {
+const getPayments = async (props) => {
   try {
     let url = 'financials/payments/'
     if (props?.typeFilter === 'dia') {
@@ -18,8 +18,8 @@ const getPayments = (props) => {
     } else if (props?.typeFilter === 'range') {
       url = url + `?create_at__range=${props.range__start},${props.range__end}`
     }
-    const res = api.get(url)
-    return res
+    const res = await api.get(url)
+    return res.data
   } catch {
     console.log()
   }
@@ -71,6 +71,16 @@ const createPriceDollar = async (data) => {
     console.log()
   }
 }
+
+const getCashFlow = async () => {
+  try {
+    const res = await api.get('financials/get_cash_flow/')
+    return res.data
+  } catch {
+    console.log()
+  }
+}
+
 export {
   getPayments,
   createPayments,
@@ -78,5 +88,6 @@ export {
   editPayments,
   getPricesDollar,
   getTodayTasa,
-  createPriceDollar
+  createPriceDollar,
+  getCashFlow
 }

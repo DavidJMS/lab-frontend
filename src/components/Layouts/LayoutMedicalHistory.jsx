@@ -4,7 +4,7 @@ import PaginationButtons from '../ui/PaginationButtons'
 import Filters from '../../pages/MedicalHistories/components/Filters'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 
-const LayoutMedicalHistory = ({ data, filterMedicalHistories }) => {
+const LayoutMedicalHistory = ({ data, filterMedicalHistories, setNumberPagination }) => {
   const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
   const navigate = useNavigate()
   return (
@@ -37,7 +37,7 @@ const LayoutMedicalHistory = ({ data, filterMedicalHistories }) => {
         </Box>
       </Box>
       <Flex justifyContent={['center', 'flex-end']} w='80%'>
-        <PaginationButtons />
+        <PaginationButtons setNumberPagination={setNumberPagination} />
       </Flex>
     </Box>
   )

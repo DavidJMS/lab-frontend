@@ -9,14 +9,18 @@ const createClient = async (data) => {
   }
 }
 
-const getClients = (props) => {
+const getClients = async (props) => {
   try {
     let url = 'client/'
-    if (props?.dni) {
-      url = url + `?dni=${props.dni}`
+    if (props?.linkPagination) {
+      url = props.linkPagination
+    } else {
+      if (props?.dni) {
+        url = url + `?dni=${props.dni}`
+      }
     }
-    const res = api.get(url)
-    return res
+    const res = await api.get(url)
+    return res.data
   } catch {
     console.log()
   }
@@ -45,6 +49,7 @@ const deleteClient = (id) => {
     return res
   } catch {
     console.log()
+    return { error: false }
   }
 }
 

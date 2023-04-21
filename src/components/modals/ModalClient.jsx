@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { Formik, Form } from 'formik'
 import {
   Modal, ModalOverlay, ModalContent,
   ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, useDisclosure, useMediaQuery
   , useToast, Box,
-  Text,
-  HStack,
   Table,
   Thead,
   Tr,
   Th,
   Tbody,
-  Td,
-  Image
+  Td
 } from '@chakra-ui/react'
 import { getClients, deleteClient } from '../../services/clients'
-import * as Yup from 'yup'
-import SearchIcon from '../../assets/SearchClient.svg'
-import { Field } from '../../components/shared/FormFields'
 import ClientFilter from '../components/ClientFilter'
 
 const ModalClient = ({ setUserData }) => {
@@ -26,11 +19,6 @@ const ModalClient = ({ setUserData }) => {
   const toast = useToast()
   const [size, setSize] = React.useState('full')
   const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
-
-  const validationSchema = Yup.object({
-    dni: Yup.string()
-      .max(15, 'El máximo de caracteres es de 15')
-  })
 
   const handleSizeClick = (newSize) => {
     setSize(newSize)
@@ -44,7 +32,7 @@ const ModalClient = ({ setUserData }) => {
   const getData = async (params = undefined) => {
     try {
       const data = params === undefined ? await getClients() : await getClients(params)
-      setData(data.data)
+      setData(data.results)
     } catch (error) {
       console.log(error)
     }
@@ -52,34 +40,6 @@ const ModalClient = ({ setUserData }) => {
   useEffect(() => {
     getData()
   }, [])
-
-  const handleDelete = async (id) => {
-    try {
-      await deleteClient(id)
-      location.reload()
-      toast({
-        title: 'Exito',
-        description: 'Cliente eliminado de manera exitosa',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right'
-      })
-    } catch (error) {
-      setLoading(false)
-      toast({
-        title: 'Error',
-        description: 'Hubo en error, intentelo luego.',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-        position: 'top-right'
-      })
-    }
-  }
-
-  const sizes = ['full']
-
   return (
     <>
       <Button
@@ -110,13 +70,13 @@ const ModalClient = ({ setUserData }) => {
                         <Th fontSize={['.5rem', '1rem']}>Nmro de telefono</Th>
                         <Th fontSize={['.5rem', '1rem']}>Escoger</Th>
                       </Tr>
-                    </Thead>
+                      </Thead>
                     : <Thead bg='#F4F7FF'>
                       <Tr>
                         <Th fontSize={['.9rem', '1rem']}>Nombres y Apellidos</Th>
                         <Th fontSize={['.9rem', '1rem']}>Cedula</Th>
                       </Tr>
-                    </Thead>}
+                      </Thead>}
 
                   <Tbody>
                     {data.map((client) => (

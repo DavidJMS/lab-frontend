@@ -6,8 +6,6 @@ import {
   Th,
   Tbody,
   Td,
-  Flex,
-  Box,
   useMediaQuery
 } from '@chakra-ui/react'
 

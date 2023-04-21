@@ -6,22 +6,29 @@ import DeleteIcon from '../../assets/Delete.svg'
 
 import ExamenFilter from '../components/ExamFilter'
 import SpinnerLayout from '../components/Spinner'
+import PaginationButtons from '../ui/PaginationButtons'
 
 const LayoutListExams = () => {
   const [loading, setLoading] = useState(false)
   const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
   const [dataExam, setDataExam] = useState([])
   const toast = useToast()
+
+  const [linkPagination, setlinkPagination] = useState(undefined)
+  const [nextPagination, setNextPagination] = useState(null)
+  const [previousPagination, setpreviousPagination] = useState(null)
+
   useEffect(() => {
     fetchExams()
-  }, [])
+  }, [linkPagination])
 
   const fetchExams = async (props = undefined) => {
-    console.log(props)
     try {
       setLoading(true)
-      const data = props?.name ? await getExams(props) : await getExams()
-      setDataExam(data.data)
+      const data = props?.name ? await getExams({ linkPagination: undefined, ...props }) : await getExams({ linkPagination })
+      setDataExam(data?.results)
+      setNextPagination(data?.next)
+      setpreviousPagination(data?.previous)
     } catch (error) {
       console.log(error)
     } finally {
@@ -60,6 +67,13 @@ const LayoutListExams = () => {
     }
   }
 
+  const setNumberPaginationLogic = (number) => {
+    if (!previousPagination && number === -1) return
+    if (!nextPagination && number === 1) return
+    if (number === -1) setlinkPagination(previousPagination)
+    else setlinkPagination(nextPagination)
+  }
+
   if (loading) {
     return (
       <SpinnerLayout />
@@ -69,7 +83,10 @@ const LayoutListExams = () => {
   return (
     <>
       <Box width='100%' display='flex' flexDirection='column' alignItems='center' m={4}>
-        <ExamenFilter handleSubmit={fetchExams} />
+        <Flex flexDirection={['colum', 'row']} justifyContent='space-between' w={['90%']}>
+          <ExamenFilter handleSubmit={fetchExams} />
+          <ModalTypesExams fetchExams={fetchExams} />
+        </Flex>
         <Table fontSize={['.8rem', '1rem']} variant='simple' width='90%' m={4}>
           {IsNotSmallScreen &&
             <Thead bg='#F4F7FF'>
@@ -95,8 +112,8 @@ const LayoutListExams = () => {
           </Tbody>
         </Table>
       </Box>
-      <Flex justifyContent='flex-end'>
-        <ModalTypesExams fetchExams={fetchExams} />
+      <Flex justifyContent={['center', 'flex-end']} w='95%'>
+        <PaginationButtons setNumberPagination={setNumberPaginationLogic} />
       </Flex>
     </>
   )

@@ -9,14 +9,18 @@ const createExam = async (data) => {
   }
 }
 
-const getExams = (props) => {
+const getExams = async (props) => {
   try {
     let url = 'medical/exams/'
-    if (props?.name) {
-      url = url + `?name__icontains=${props.name}`
+    if (props?.linkPagination) {
+      url = props.linkPagination
+    } else {
+      if (props?.name) {
+        url = url + `?name__icontains=${props.name}`
+      }
     }
-    const res = api.get(url)
-    return res
+    const res = await api.get(url)
+    return res?.data
   } catch {
     console.log()
   }

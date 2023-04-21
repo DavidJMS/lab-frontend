@@ -112,14 +112,15 @@ const ModalTypesExams = ({ exam, fetchExams }) => {
             onClick={() => handleSizeClick(size)}
           >
           <Img src={EditIcon} />
-        </Button>
+          </Button>
         : <Button
             bgColor='#D0D0D0'
             mr={8}
             onClick={() => handleSizeClick(size)}
+            display={{ base: 'none', lg: 'flex' }}
           >
           Agregar
-          </Button>}
+        </Button>}
 
       <Modal onClose={onClose} isOpen={isOpen} size='xl'>
         <ModalOverlay />

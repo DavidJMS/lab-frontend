@@ -10,15 +10,21 @@ const ClientHistories = () => {
   const [data, setData] = useState([])
   const toast = useToast()
 
+  const [linkPagination, setlinkPagination] = useState(undefined)
+  const [nextPagination, setNextPagination] = useState(null)
+  const [previousPagination, setpreviousPagination] = useState(null)
+
   useEffect(() => {
     getData()
-  }, [])
+  }, [linkPagination])
 
   const getData = async (params = undefined) => {
     try {
       setLoading(true)
-      const data = params === undefined ? await getClients() : await getClients(params)
-      setData(data.data)
+      const data = params === undefined ? await getClients({ linkPagination }) : await getClients({ linkPagination: undefined, ...params })
+      setData(data?.results)
+      setNextPagination(data?.next)
+      setpreviousPagination(data?.previous)
     } catch (error) {
       console.log(error)
     } finally {
@@ -29,7 +35,7 @@ const ClientHistories = () => {
   const handleDelete = async (id) => {
     try {
       await deleteClient(id)
-      location.reload()
+      setData(data.filter(e => e.id !== id))
       toast({
         title: 'Exito',
         description: 'Cliente eliminado de manera exitosa',
@@ -51,6 +57,13 @@ const ClientHistories = () => {
     }
   }
 
+  const setNumberPaginationLogic = (number) => {
+    if (!previousPagination && number === -1) return
+    if (!nextPagination && number === 1) return
+    if (number === -1) setlinkPagination(previousPagination)
+    else setlinkPagination(nextPagination)
+  }
+
   if (loading) {
     return (
       <SpinnerLayout />
@@ -58,7 +71,12 @@ const ClientHistories = () => {
   }
   return (
     <Box>
-      <LayoutClient data={data} handleDelete={handleDelete} getData={getData} />
+      <LayoutClient
+        data={data}
+        handleDelete={handleDelete}
+        getData={getData}
+        setNumberPagination={setNumberPaginationLogic}
+      />
     </Box>
   )
 }

@@ -1,6 +1,5 @@
 import { Formik, Form } from 'formik'
 import {
-  Text,
   HStack,
   Image,
   FormControl
@@ -19,7 +18,6 @@ const Filters = ({ handleSubmit }) => {
       initialValues={{ dni: '', date: '' }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmiting }) => {
-        console.log(values)
         handleSubmit(values)
       }}
     >

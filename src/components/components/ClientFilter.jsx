@@ -22,11 +22,11 @@ const ClientFilter = ({ getData }) => {
       }}
     >
       <Form>
-        <HStack w='100%' padding={4}>
+        <HStack w='100%' paddingTop={4}>
           <Text fontSize={['.9rem', '1rem']}>Cédula:</Text>
           <Field w={['50%', 'auto']} name='dni' type='text' />
-          <button type='submit'>
-            <Image height='2rem' w={['3.5rem', 'auto']} src={SearchIcon} />
+          <button type='submit' className='button--filter'>
+            <Image maxW='4rem' minH='2rem' minW='2rem' width={['3.5rem', '4rem', '7rem']} src={SearchIcon} />
           </button>
         </HStack>
       </Form>
