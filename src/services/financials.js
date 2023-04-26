@@ -89,6 +89,16 @@ const getCashFlows = async () => {
     console.log()
   }
 }
+
+const desactivateCashFlows = async (data) => {
+  try {
+    console.log(data)
+    const res = await api.post('financials/cash-flow/desactivate/', data)
+    return res.data
+  } catch {
+    console.log()
+  }
+}
 export {
   getPayments,
   createPayments,
@@ -98,5 +108,6 @@ export {
   getTodayTasa,
   createPriceDollar,
   getCashFlow,
-  getCashFlows
+  getCashFlows,
+  desactivateCashFlows
 }

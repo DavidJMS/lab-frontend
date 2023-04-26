@@ -4,7 +4,7 @@ import {
   ModalHeader, ModalCloseButton, ModalBody, ModalFooter,
   Table, Thead, Tr, Th, Tbody, Td, Button
 } from '@chakra-ui/react'
-import { getCashFlow } from '@/services/financials'
+import { getCashFlow, desactivateCashFlows } from '@/services/financials'
 
 const ModalMoney = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -54,7 +54,7 @@ const ModalMoney = () => {
               : <Text>No existe registros en la caja activos</Text>}
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>
+            <Button onClick={() => { desactivateCashFlows({ id: cashFlow?.id }); getPaymentsData() }}>
               Realizar Cierre de caja
             </Button>
           </ModalFooter>
