@@ -11,7 +11,7 @@ export const loginUser = createAsyncThunk('user/login', async (data, { rejectWit
     const response = await login(data)
     if (!response.error) {
       LocalStorageUserService.setUser(response.data)
-      return { error: false }
+      return { error: false, ...response.data }
     }
     return response
   } catch (error) {

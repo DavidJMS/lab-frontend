@@ -21,6 +21,7 @@ import AddClient from './pages/AddClient'
 import AddFormMedical from './pages/AddFormMedical'
 import LayoutListExams from './components/Layouts/LayoutListExams'
 import Financials from './pages/Financials'
+import Movements from './pages/Movements'
 import EditMedicalHistory from './pages/EditMedicalHistory'
 import LoginPage from './pages/LoginPage'
 import Exchange from './pages/Exchange'
@@ -49,6 +50,7 @@ function App () {
             <Route path='resultado/:idResult' element={<ShareResults />} />
             <Route path='pagos' element={<Financials />} />
             <Route path='tasas' element={<Exchange />} />
+            <Route path='movimientos' element={<Movements />} />
           </Route>
           <Route path='login' element={<LoginPage />} />
           <Route path='*' element={<MedicalHistories />} />

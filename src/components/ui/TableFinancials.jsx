@@ -30,7 +30,7 @@ const TableFinancials = ({ data }) => {
         <Tbody>
           {data && data.map((payment) => (
             <Tr key={payment.id}>
-              <Td><Text color='#8E9196'>{payment?.medical_history?.client?.full_name}</Text></Td>
+              <Td><Text color='#8E9196'>{payment?.medical_history?.client?.full_name || `${payment?.medical_history?.client?.first_names} ${payment?.medical_history?.client?.last_names}`} </Text></Td>
               <Td color='#8E9196'>{payment.amount_bolivares} bs</Td>
               <Td color='#8E9196'>{payment.amount_dollars} $ </Td>
               <Td color='#8E9196'>{payment.divisa}</Td>

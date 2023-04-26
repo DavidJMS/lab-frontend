@@ -74,13 +74,21 @@ const createPriceDollar = async (data) => {
 
 const getCashFlow = async () => {
   try {
-    const res = await api.get('financials/get_cash_flow/')
+    const res = await api.get('financials/cash-flow/get_cash_flow/')
     return res.data
   } catch {
     console.log()
   }
 }
 
+const getCashFlows = async () => {
+  try {
+    const res = await api.get('financials/cash-flow/')
+    return res.data
+  } catch {
+    console.log()
+  }
+}
 export {
   getPayments,
   createPayments,
@@ -89,5 +97,6 @@ export {
   getPricesDollar,
   getTodayTasa,
   createPriceDollar,
-  getCashFlow
+  getCashFlow,
+  getCashFlows
 }

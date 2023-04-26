@@ -20,6 +20,12 @@ const getMedicalHistories = async (props) => {
       if (props?.date) {
         url = url + `?create_at__date=${props.date}`
       }
+      if (props?.number_id) {
+        url = url + `?number_id=${props.number_id}`
+      }
+      if (props?.with_samples !== undefined && props?.with_samples !== 'ninguno') {
+        url = url + `?with_samples=${props.with_samples}`
+      }
     }
     const res = await api.get(url)
     return res.data

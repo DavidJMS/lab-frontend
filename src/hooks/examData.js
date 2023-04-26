@@ -10,7 +10,7 @@ const examData = () => {
   const fetchData = async () => {
     try {
       const data = await getExams()
-      setDataExam(data.data)
+      setDataExam(data.results)
     } catch (error) {
       console.log(error)
     }

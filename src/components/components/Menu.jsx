@@ -15,6 +15,7 @@ export default function Example () {
             <MenuItem><Link to='/pagos'>Pagos</Link></MenuItem>
             <MenuItem><Link to='/tasas'>Tasas</Link></MenuItem>
             <MenuItem><Link to='#Money'><ModalMoney /></Link></MenuItem>
+            <MenuItem><Link to='/movimientos'>Movimientos</Link></MenuItem>
           </Menu>
         </HStack>
         <HStack mr={4} color='#FFFF'>
