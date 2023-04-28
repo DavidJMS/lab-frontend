@@ -1,6 +1,5 @@
 import { Formik, Form } from 'formik'
 import {
-  Text,
   HStack,
   Image
 } from '@chakra-ui/react'
@@ -11,11 +10,15 @@ import { Field } from '../shared/FormFields'
 const ClientFilter = ({ getData }) => {
   const validationSchema = Yup.object({
     dni: Yup.string()
-      .max(15, 'El máximo de caracteres es de 15')
+      .max(15, 'El máximo de caracteres es de 15'),
+    first_names: Yup.string()
+      .max(30, 'El máximo de caracteres es de 30'),
+    last_names: Yup.string()
+      .max(30, 'El máximo de caracteres es de 30')
   })
   return (
     <Formik
-      initialValues={{ dni: '' }}
+      initialValues={{ dni: '', first_names: '', last_names: '' }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmiting }) => {
         getData(values)
@@ -23,8 +26,9 @@ const ClientFilter = ({ getData }) => {
     >
       <Form>
         <HStack w='100%' paddingTop={4}>
-          <Text fontSize={['.9rem', '1rem']}>Cédula:</Text>
-          <Field w={['50%', 'auto']} name='dni' type='text' />
+          <Field w={['50%', 'auto']} name='dni' type='text' placeholder='Cédula' />
+          <Field w={['50%', 'auto']} name='first_names' type='text' placeholder='Nombres' />
+          <Field w={['50%', 'auto']} name='last_names' type='text' placeholder='Apellidos' />
           <button type='submit' className='button--filter'>
             <Image maxW='4rem' minH='2rem' minW='2rem' width={['3.5rem', '4rem', '7rem']} src={SearchIcon} />
           </button>

@@ -7,7 +7,7 @@ import { FcFolder } from 'react-icons/fc'
 
 // Assets
 import backgroundImg from '@/assets/background.jpg'
-import logo from '@/assets/logo.jpg'
+import logo from '@/assets/logo_grande2.png'
 
 // Environment Const
 const API_URL = import.meta.env.VITE_BE_SERVER

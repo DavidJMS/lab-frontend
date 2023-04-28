@@ -12,7 +12,7 @@ import * as Yup from 'yup'
 
 import { TbSend } from 'react-icons/tb'
 import backgroundImg from '@/assets/background.jpg'
-import logo from '@/assets/logo.jpg'
+import logo from '@/assets/logo_grande2.png'
 
 const Login = () => {
   const toast = useToast()

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import { Spinner } from '@chakra-ui/react'
+
 import LayoutMedicalHistory from '../../components/Layouts/LayoutMedicalHistory'
 
 // Services
@@ -11,13 +13,13 @@ const MedicalHistories = () => {
   const [nextPagination, setNextPagination] = useState(null)
   const [previousPagination, setpreviousPagination] = useState(null)
 
+  const getData = async () => {
+    const data = await getMedicalHistories({ linkPagination })
+    setData(data?.results)
+    setNextPagination(data?.next)
+    setpreviousPagination(data?.previous)
+  }
   useEffect(() => {
-    const getData = async () => {
-      const data = await getMedicalHistories({ linkPagination })
-      setData(data?.results)
-      setNextPagination(data?.next)
-      setpreviousPagination(data?.previous)
-    }
     getData()
   }, [linkPagination])
 
@@ -34,12 +36,15 @@ const MedicalHistories = () => {
     if (number === -1) setlinkPagination(previousPagination)
     else setlinkPagination(nextPagination)
   }
-  if (!data) return <></>
+
+  if (!data) return <Spinner />
+
   return (
     <LayoutMedicalHistory
       data={data}
       filterMedicalHistories={filterMedicalHistories}
       setNumberPagination={setNumberPaginationLogic}
+      getData={getData}
     />
   )
 }

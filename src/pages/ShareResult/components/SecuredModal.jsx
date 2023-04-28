@@ -17,7 +17,7 @@ import { getResultByCode } from '@/services/results'
 // Assets
 import { TbSend } from 'react-icons/tb'
 import backgroundImg from '@/assets/background.jpg'
-import logo from '@/assets/logo.jpg'
+import logo from '@/assets/logo_grande2.png'
 
 export default function SecuredModal ({ setResults, onOpen }) {
   const { idResult } = useParams()

@@ -17,7 +17,10 @@ import {
   Thead,
   Tbody,
   Th,
-  Badge
+  Badge,
+  InputGroup,
+  IconButton,
+  InputRightAddon
 } from '@chakra-ui/react'
 import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
@@ -30,10 +33,11 @@ import { Field } from '../shared/FormFields'
 import ModalHandleResult from '@/components/modals/ModalHandleResult'
 import ModalTest from '../modals/ModalTest'
 import ModalCreateFinancials from '../modals/ModalCreateFinancials'
+import ModalClient from '../modals/ModalClient'
 
 // Assets
 import deleteIcon from '../../assets/Delete.svg'
-import { AiFillFileText } from 'react-icons/ai'
+import { AiFillFileText, AiOutlineSearch } from 'react-icons/ai'
 
 // Services
 import { createMedical } from '../../services/medical'
@@ -209,7 +213,7 @@ const FormsMedical = ({
     try {
       setLoading(true)
       const res = await createMedical(data)
-      if (res) {
+      if (res.error) {
         toast({
           title: 'Exito',
           description: 'Cliente creado de manera exitosa',
@@ -218,7 +222,7 @@ const FormsMedical = ({
           isClosable: true,
           position: 'top-right'
         })
-        navigate('/')
+        navigate(`/editar-historia-${res.id}`)
       } else {
         toast({
           title: 'Error',
@@ -273,7 +277,10 @@ const FormsMedical = ({
                   </FormControl>
                   <FormControl>
                     <Text>Cédula:</Text>
-                    <Field name='dni' />
+                    <InputGroup>
+                      <Field name='dni' />
+                      <InputRightAddon onClick={() => seachClient({ dni: values.dni })} children={<AiOutlineSearch />} />
+                    </InputGroup>
                   </FormControl>
                 </HStack>
                 <HStack mb={4} w={['auto', 'auto', '66%']} flexDirection={['column', 'column', 'row', 'row']}>
@@ -311,13 +318,7 @@ const FormsMedical = ({
                   </FormControl>
                 </HStack>
                 <HStack justifyContent='end' w='100%' display='flex'>
-                  <Button
-                    bgColor='#D0D0D0'
-                    mr={8}
-                    onClick={() => seachClient({ dni: values.dni })}
-                  >
-                    Buscar
-                  </Button>
+                  <ModalClient setUserData={setUserData} />
                 </HStack>
               </Box>
               <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>

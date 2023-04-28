@@ -16,7 +16,13 @@ const getClients = async (props) => {
       url = props.linkPagination
     } else {
       if (props?.dni) {
-        url = url + `?dni=${props.dni}`
+        url = url + `?dni__iexact=${props.dni}`
+      }
+      if (props?.first_names) {
+        url = url + `?first_names__icontains=${props.first_names}`
+      }
+      if (props?.last_names) {
+        url = url + `?last_names__icontains=${props.last_names}`
       }
     }
     const res = await api.get(url)

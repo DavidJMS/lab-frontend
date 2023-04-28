@@ -35,9 +35,6 @@ const ModalTypesExams = ({ exam, fetchExams }) => {
       .min(3, 'El máximo son 3 caracteres')
       .max(50, 'El máximo son 50 caracteres')
       .required('Requerido!'),
-    description: Yup.string()
-      .min(5, 'El máximo son 5 caracteres')
-      .max(250, 'El máximo son 250 caracteres'),
     price: Yup.number()
       .positive('Inválido')
       .max(9999999999.99, 'El máximo son 9999999999.99 caracteres')
@@ -112,7 +109,7 @@ const ModalTypesExams = ({ exam, fetchExams }) => {
             onClick={() => handleSizeClick(size)}
           >
           <Img src={EditIcon} />
-          </Button>
+        </Button>
         : <Button
             bgColor='#D0D0D0'
             mr={8}
@@ -120,7 +117,7 @@ const ModalTypesExams = ({ exam, fetchExams }) => {
             display={{ base: 'none', lg: 'flex' }}
           >
           Agregar
-        </Button>}
+          </Button>}
 
       <Modal onClose={onClose} isOpen={isOpen} size='xl'>
         <ModalOverlay />
@@ -144,11 +141,6 @@ const ModalTypesExams = ({ exam, fetchExams }) => {
                 <FormGroup>
                   <FormLabel>Nombre</FormLabel>
                   <Field name='name' />
-                </FormGroup>
-
-                <FormGroup mt={4}>
-                  <FormLabel>Descripción</FormLabel>
-                  <Field name='description' />
                 </FormGroup>
 
                 <FormGroup mt={4}>

@@ -81,41 +81,37 @@ const LayoutListExams = () => {
   }
 
   return (
-    <>
-      <Box width='100%' display='flex' flexDirection='column' alignItems='center' m={4}>
-        <Flex flexDirection={['colum', 'row']} justifyContent='space-between' w={['90%']}>
-          <ExamenFilter handleSubmit={fetchExams} />
-          <ModalTypesExams fetchExams={fetchExams} />
-        </Flex>
-        <Table fontSize={['.8rem', '1rem']} variant='simple' width='90%' m={4}>
-          {IsNotSmallScreen &&
-            <Thead bg='#F4F7FF'>
-              <Tr>
-                <Th>Nombre</Th>
-                <Th>Descripción</Th>
-                <Th>Precio</Th>
-                <Th textAlign='center'>Acciones</Th>
-              </Tr>
-            </Thead>}
-          <Tbody>
-            {dataExam && dataExam.map((exam, index) => (
-              <Tr key={index}>
-                <Td><Text color='#8E9196'>{exam.name}</Text></Td>
-                <Td><Text color='#8E9196'>{exam.description}</Text></Td>
-                <Td><Text color='#8E9196'>{exam.price}</Text></Td>
-                <Td display='flex'>
-                  <ModalTypesExams exam={exam} fetchExams={fetchExams} />
-                  <Img cursor='pointer' onClick={() => handleDelete(exam.id)} src={DeleteIcon} />
-                </Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </Box>
-      <Flex justifyContent={['center', 'flex-end']} w='95%'>
+    <Box width='100%' display='flex' flexDirection='column' alignItems='center' m={4}>
+      <Flex flexDirection={['colum', 'row']} justifyContent='space-between' w='50%'>
+        <ExamenFilter handleSubmit={fetchExams} />
+        <ModalTypesExams fetchExams={fetchExams} />
+      </Flex>
+      <Table fontSize={['.8rem', '1rem']} variant='simple' width='50%' m={4}>
+        {IsNotSmallScreen &&
+          <Thead bg='#F4F7FF'>
+            <Tr>
+              <Th>Nombre</Th>
+              <Th>Precio</Th>
+              <Th textAlign='center'>Acciones</Th>
+            </Tr>
+          </Thead>}
+        <Tbody>
+          {dataExam && dataExam.map((exam, index) => (
+            <Tr key={index}>
+              <Td><Text color='#8E9196'>{exam.name}</Text></Td>
+              <Td><Text color='#8E9196'>{exam.price}</Text></Td>
+              <Td display='flex' justifyContent='center'>
+                <ModalTypesExams exam={exam} fetchExams={fetchExams} />
+                <Img cursor='pointer' onClick={() => handleDelete(exam.id)} src={DeleteIcon} />
+              </Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+      <Flex justifyContent={['center', 'flex-end']} w='50%'>
         <PaginationButtons setNumberPagination={setNumberPaginationLogic} />
       </Flex>
-    </>
+    </Box>
   )
 }
 

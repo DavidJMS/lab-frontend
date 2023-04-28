@@ -10,7 +10,7 @@ import {
   Tbody,
   Td
 } from '@chakra-ui/react'
-import { getClients, deleteClient } from '../../services/clients'
+import { getClients } from '../../services/clients'
 import ClientFilter from '../components/ClientFilter'
 
 const ModalClient = ({ setUserData }) => {
@@ -59,15 +59,15 @@ const ModalClient = ({ setUserData }) => {
             <Box>
               <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
                 <Box>
-                  <ClientFilter />
+                  <ClientFilter getData={getData} />
                 </Box>
                 <Table variant='simple' width='100%' m={4}>
                   {IsNotSmallScreen
                     ? <Thead bg='#F4F7FF'>
                       <Tr>
                         <Th fontSize={['.5rem', '1rem']}>Nombres y Apellidos</Th>
-                        <Th fontSize={['.5rem', '1rem']}>Cedula</Th>
-                        <Th fontSize={['.5rem', '1rem']}>Nmro de telefono</Th>
+                        <Th fontSize={['.5rem', '1rem']}>Cédula</Th>
+                        <Th fontSize={['.5rem', '1rem']}>Télefono</Th>
                         <Th fontSize={['.5rem', '1rem']}>Escoger</Th>
                       </Tr>
                       </Thead>
