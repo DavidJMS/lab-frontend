@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {
   Modal, ModalOverlay, ModalContent, Text, useDisclosure,
   ModalHeader, ModalCloseButton, ModalBody, ModalFooter,
-  Table, Thead, Tr, Th, Tbody, Td, Button
+  Table, Thead, Tr, Th, Tbody, Td, Button, useToast
 } from '@chakra-ui/react'
 import { getCashFlow, desactivateCashFlows } from '@/services/financials'
 
@@ -10,6 +10,7 @@ const ModalMoney = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [size, setSize] = React.useState('xl')
   const [cashFlow, setCashflow] = useState(undefined)
+  const toast = useToast()
 
   const getPaymentsData = async () => {
     const data = await getCashFlow()
@@ -23,6 +24,30 @@ const ModalMoney = () => {
   const handleSizeClick = (newSize) => {
     setSize(newSize)
     onOpen()
+  }
+
+  const desactivateFlowAction = async (data) => {
+    const res = await desactivateCashFlows(data)
+    if (!res.error) {
+      getPaymentsData()
+      toast({
+        title: 'Exito',
+        description: 'Caja chica cerrada exitosamente',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right'
+      })
+    } else {
+      toast({
+        title: 'Error',
+        description: 'Hubo en error, intentelo luego.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right'
+      })
+    }
   }
 
   return (
@@ -54,7 +79,7 @@ const ModalMoney = () => {
               : <Text>No existe registros en la caja activos</Text>}
           </ModalBody>
           <ModalFooter>
-            <Button onClick={() => { desactivateCashFlows({ id: cashFlow?.id }); getPaymentsData() }}>
+            <Button onClick={() => { desactivateFlowAction({ id: cashFlow?.id }) }}>
               Realizar Cierre de caja
             </Button>
           </ModalFooter>

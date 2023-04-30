@@ -8,7 +8,7 @@ import { AiOutlineUnorderedList } from 'react-icons/ai'
 
 const ModalExamsOfMedical = ({ data }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [size, setSize] = React.useState('xs')
+  const [size, setSize] = React.useState(['xs', 'lg'])
 
   const handleSizeClick = (newSize) => {
     setSize(newSize)
@@ -21,7 +21,7 @@ const ModalExamsOfMedical = ({ data }) => {
       <Modal onClose={onClose} size={size} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader bgColor='#0DA7D9' height='1rem' color='#F5F5F5' textAlign='center' w='100%'>Caja Chica</ModalHeader>
+          <ModalHeader bgColor='#0DA7D9' height='1rem' color='#F5F5F5' textAlign='center' w='100%'>Examenes De La Historia Clínica</ModalHeader>
           <ModalCloseButton color='#F5F5F5' />
           <ModalBody>
             <Table fontSize={['.8rem', '1rem']} variant='simple' width='90%' m={4}>

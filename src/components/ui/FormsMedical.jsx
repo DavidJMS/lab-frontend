@@ -19,7 +19,7 @@ import {
   Th,
   Badge,
   InputGroup,
-  IconButton,
+  Switch,
   InputRightAddon
 } from '@chakra-ui/react'
 import * as Yup from 'yup'
@@ -40,7 +40,7 @@ import deleteIcon from '../../assets/Delete.svg'
 import { AiFillFileText, AiOutlineSearch } from 'react-icons/ai'
 
 // Services
-import { createMedical } from '../../services/medical'
+import { createMedical, EditMedicalHistory } from '../../services/medical'
 import { deletePayments } from '../../services/financials'
 import { deleteResult } from '../../services/results'
 import { getClients } from '@/services/clients'
@@ -63,9 +63,6 @@ const validationShema = Yup.object({
     .max(30, 'El máximo de caracteres es de 30')
     .min(7, 'El máximo de caracteres es de 7')
     .required('Requerido!'),
-  gender: Yup.string().oneOf(
-    ['masculino', 'femenino', 'Masculino', 'Femenino'],
-    'Genero inválido'),
   age: Yup.number()
     .positive('Inválido')
     .integer('Inválido')
@@ -96,7 +93,7 @@ const FormsMedical = ({
   const toast = useToast()
   const navigate = useNavigate()
   // Const to handle my statement
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [userData, setUserData] = useState({
     first_names: medicalHistory?.client?.first_names || '',
     last_names: medicalHistory?.client?.last_names || '',
@@ -111,18 +108,11 @@ const FormsMedical = ({
   const [totalPaid, setTotalPaid] = useState(medicalHistory?.total_paid || 0)
   const [examData, setExamData] = useState(medicalHistory?.medical_exams || [])
 
-  // Some useEffects
-  useEffect(() => {
-    if (examData || userData) {
-      setLoading(true)
-    }
-  }, [userData, examData])
-
   useEffect(() => {
     if ((examData && loading === true) || (userData && loading === true)) {
       setLoading(false)
     }
-  }, [loading])
+  }, [])
 
   const seachClient = async (params) => {
     try {
@@ -212,17 +202,19 @@ const FormsMedical = ({
   const handleSubmit = async (data) => {
     try {
       setLoading(true)
-      const res = await createMedical(data)
+      const res = medicalHistory ? await EditMedicalHistory(medicalHistory.id, data) : await createMedical(data)
       if (res.error) {
         toast({
           title: 'Exito',
-          description: 'Cliente creado de manera exitosa',
+          description: `Cliente ${medicalHistory ? 'editado' : 'creado'} de manera exitosa`,
           status: 'success',
           duration: 3000,
           isClosable: true,
           position: 'top-right'
         })
-        navigate(`/editar-historia-${res.id}`)
+        if (!medicalHistory) {
+          navigate(`/editar-historia-${res.id}`)
+        }
       } else {
         toast({
           title: 'Error',
@@ -247,6 +239,9 @@ const FormsMedical = ({
       <Formik
         initialValues={
           {
+            result_sent: medicalHistory?.result_sent || false,
+            deadline: medicalHistory?.deadline || null,
+            type: medicalHistory?.type || 'Particular',
             with_samples: medicalHistory?.with_samples || false,
             medical_exams: examData ? examData.map(exam => (exam.id)) : '',
             total_pay: totalPay,
@@ -259,7 +254,7 @@ const FormsMedical = ({
           handleSubmit(values)
         }}
       >
-        {({ values }) => (
+        {({ values, handleChange }) => (
           <Form id='form'>
             <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
               <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
@@ -287,8 +282,8 @@ const FormsMedical = ({
                   <FormControl>
                     <Text>Sexo:</Text>
                     <Field as='select' name='gender'>
-                      <option value='masculino'>Masculino</option>
-                      <option value='femenino'>Femenino</option>
+                      <option value='Masculino'>Masculino</option>
+                      <option value='Femenino'>Femenino</option>
                     </Field>
                   </FormControl>
                   <Spacer />
@@ -317,11 +312,85 @@ const FormsMedical = ({
                     />
                   </FormControl>
                 </HStack>
-                <HStack justifyContent='end' w='100%' display='flex'>
+                <HStack justifyContent='end' w='100%' display='flex' mb={2}>
                   <ModalClient setUserData={setUserData} />
                 </HStack>
               </Box>
-              <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
+              <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
+                <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos Generales</Text>
+              </Box>
+              <Box mt={4} width='80%'>
+                <HStack mb={4} flexDirection={['column', 'column', 'row', 'row']}>
+                  <FormControl>
+                    <Text>Tipo de Solicitud:</Text>
+                    <Field as='select' name='type'>
+                      <option value='Particular'>Particular</option>
+                      <option value='Hospitalizado'>Hospitalizado</option>
+                    </Field>
+                  </FormControl>
+                  <FormControl>
+                    <Text>Cambiar fecha de entrega:</Text>
+                    <Field
+                      name='deadline' type='datetime-local'
+                    />
+                  </FormControl>
+                </HStack>
+              </Box>
+              <Box w='80%' mt={4} display='flex' flexDirection='column'>
+                <HStack w='100%' justifyContent='left' fontSize={18}>
+                  {values.deadline &&
+                    <Text mb={4} float='left'>Fecha de entrega:
+                      <Badge fontSize={15} ml={1}>{values.deadline}</Badge>
+                    </Text>}
+                </HStack>
+                <HStack w='100%' justifyContent='left' fontSize={18}>
+                  {totalPay &&
+                    <Text mb={4} float='left'>Total a pagar:
+                      <Badge fontSize={15} ml={1}>{totalPay}$ </Badge>
+                      <Badge fontSize={15} ml={1}>{(totalPay * parseFloat(price.price)).toFixed(2)} Bs </Badge>
+                    </Text>}
+                </HStack>
+                <HStack w='100%' justifyContent='left' fontSize={18}>
+                  {totalPaid &&
+                    <Text mb={4} float='left'>Total pagado:
+                      <Badge fontSize={15} ml={1}>{totalPaid}$ </Badge>
+                      <Badge fontSize={15} ml={1}>{(totalPaid * parseFloat(price.price)).toFixed(2)} Bs </Badge>
+                    </Text>}
+                </HStack>
+                <HStack w='100%' justifyContent='left' fontSize={18}>
+                  <Text mb={1} float='left'>Muestras Tomadas:</Text>
+                  <Switch colorScheme='blue' isChecked={values.with_samples} name='with_samples' onChange={(e) => { handleChange(e) }} />
+                </HStack>
+                {medicalHistory &&
+                  <HStack w='100%' justifyContent='left' fontSize={18}>
+                    <Text mb={1} float='left'>Resultados entregados:</Text>
+                    <Switch colorScheme='blue' isChecked={values.result_sent} name='result_sent' onChange={(e) => { handleChange(e) }} />
+                  </HStack>}
+                <HStack justifyContent='left' fontSize={18}>
+                  {medicalHistory &&
+                    <Text mb={4} float='left'>Número:
+                      <Badge fontSize={15} ml={1}>
+                        {medicalHistory?.number_id}
+                      </Badge>
+                    </Text>}
+                </HStack>
+                <HStack justifyContent='left' fontSize={18}>
+                  {medicalHistory &&
+                    <Text mb={4} float='left'>Código de acceso:
+                      <Badge fontSize={15} ml={1}>
+                        {medicalHistory?.code}
+                      </Badge>
+                    </Text>}
+                </HStack>
+                <HStack justifyContent='left' fontSize={18}>
+                  {medicalHistory &&
+                    <>
+                      <Text float='left'> Link de Acceso
+                      </Text> <RiShareForward2Fill onClick={handleCopyLink} />
+                    </>}
+                </HStack>
+              </Box>
+              <Box w='100%' mt={2} display='flex' flexDirection='column' alignItems='center'>
                 <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
                   <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Solicitud De Examen</Text>
                 </Box>
@@ -360,7 +429,7 @@ const FormsMedical = ({
               </Box>
               {medicalHistory &&
                 <>
-                  <Box w='100%' mb={8} mt={4} display='flex' flexDirection='column' alignItems='center'>
+                  <Box w='100%' mb={8} mt={2} display='flex' flexDirection='column' alignItems='center'>
                     <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
                       <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos de Pago</Text>
                     </Box>
@@ -411,7 +480,7 @@ const FormsMedical = ({
                       </HStack>
                     </Box>
                   </Box>
-                  <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
+                  <Box w='100%' mt={2} display='flex' flexDirection='column' alignItems='center'>
                     <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
                       <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Resultado del Examen</Text>
                     </Box>
@@ -458,57 +527,8 @@ const FormsMedical = ({
                     </Box>
                   </Box>
                 </>}
-              <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
-                <Box w='85%'>
-                  <HStack w='100%' justifyContent='left' fontSize={18}>
-                    {totalPay &&
-                      <Text mb={4} float='left'>Total a pagar:
-                        <Badge fontSize={15} ml={1}>{totalPay}$ </Badge>
-                        <Badge fontSize={15} ml={1}>{(totalPay * parseFloat(price.price)).toFixed(2)} Bs </Badge>
-                      </Text>}
-                  </HStack>
-                  <HStack w='100%' justifyContent='left' fontSize={18}>
-                    {totalPaid &&
-                      <Text mb={4} float='left'>Total pagado:
-                        <Badge fontSize={15} ml={1}>{totalPaid}$ </Badge>
-                        <Badge fontSize={15} ml={1}>{(totalPaid * parseFloat(price.price)).toFixed(2)} Bs </Badge>
-                      </Text>}
-                  </HStack>
-                  {medicalHistory &&
-                    <HStack w='100%' justifyContent='left' fontSize={18}>
-                      <Text width='220px' mb={4} float='left'>Se tomo la muestra:</Text>
-                      <Field mt='-1rem' width='fit-content' as='select' name='with_samples'>
-                        <option value='true'>Si</option>
-                        <option value='false'>No</option>
-                      </Field>
-                    </HStack>}
-                  <HStack justifyContent='left' fontSize={18}>
-                    {medicalHistory &&
-                      <Text mb={4} float='left'>Número:
-                        <Badge fontSize={15} ml={1}>
-                          {medicalHistory?.number_id}
-                        </Badge>
-                      </Text>}
-                  </HStack>
-                  <HStack justifyContent='left' fontSize={18}>
-                    {medicalHistory &&
-                      <Text mb={4} float='left'>Código de acceso:
-                        <Badge fontSize={15} ml={1}>
-                          {medicalHistory?.code}
-                        </Badge>
-                      </Text>}
-                  </HStack>
-                  <HStack justifyContent='left' fontSize={18}>
-                    {medicalHistory &&
-                      <>
-                        <Text float='left'> Link de Acceso
-                        </Text> <RiShareForward2Fill onClick={handleCopyLink} />
-                      </>}
-                  </HStack>
-                </Box>
-              </Box>
               <HStack mt={4} w='100%' justifyContent='center'>
-                <Button mb={8} w='20%' type='submit'>Crear</Button>
+                <Button mb={8} w='20%' type='submit'>{medicalHistory ? 'Editar' : 'Crear'}</Button>
               </HStack>
             </Box>
           </Form>

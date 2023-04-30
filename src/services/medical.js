@@ -53,6 +53,14 @@ const createMedical = async (data) => {
   }
 }
 
+const EditMedicalHistory = async (id, data) => {
+  try {
+    const res = await api.put(`medical/history-client/${id}/`, data)
+    return { error: true, ...res.data }
+  } catch (error) {
+    return { error: false }
+  }
+}
 const getPaymentsMedical = async (id) => {
   try {
     const res = await api.get(`medical/history-client/${id}/get_payments/`)
@@ -75,6 +83,7 @@ export {
   getMedicalHistories,
   putMedical,
   createMedical,
+  EditMedicalHistory,
   getPaymentsMedical,
   getMedical,
   getResultsMedical
