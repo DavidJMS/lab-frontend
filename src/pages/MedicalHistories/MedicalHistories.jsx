@@ -45,6 +45,7 @@ const MedicalHistories = () => {
       filterMedicalHistories={filterMedicalHistories}
       setNumberPagination={setNumberPaginationLogic}
       getData={getData}
+      setData={setData}
     />
   )
 }

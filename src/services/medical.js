@@ -18,6 +18,15 @@ const putMedical = async (id, data) => {
   }
 }
 
+const deleteMedical = async (id) => {
+  try {
+    const res = await api.delete(`medical/history-client/${id}/`)
+    return { error: false }
+  } catch {
+    return { error: true }
+  }
+}
+
 const getMedicalHistories = async (props) => {
   try {
     let url = 'medical/history-client/'
@@ -82,6 +91,7 @@ const getResultsMedical = async (id) => {
 export {
   getMedicalHistories,
   putMedical,
+  deleteMedical,
   createMedical,
   EditMedicalHistory,
   getPaymentsMedical,

@@ -3,7 +3,7 @@ import {
   Flex
 } from '@chakra-ui/react'
 import FinancialsFilter from '../components/FinancialsFilter'
-import { getPayments } from '../../services/financials'
+import { getTransactions } from '../../services/financials'
 import TableFinancials from '../ui/TableFinancials'
 import { useState, useEffect } from 'react'
 import SpinnerLayout from '../components/Spinner'
@@ -18,7 +18,7 @@ const LayoutFinancials = () => {
 
   const fetchData = async (props = undefined) => {
     try {
-      const data = props ? await getPayments(props) : await getPayments()
+      const data = props ? await getTransactions(props) : await getTransactions()
       setData(data.results)
       setLoading(true)
     } catch (error) {

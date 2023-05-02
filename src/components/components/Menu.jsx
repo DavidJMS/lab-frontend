@@ -5,6 +5,8 @@ import '@szhsin/react-menu/dist/transitions/slide.css'
 import { Link } from 'react-router-dom'
 import { BiExit } from 'react-icons/bi'
 import ModalMoney from '../modals/ModalMoney'
+import ModalCreateFinancials from '../modals/ModalCreateFinancials'
+
 
 export default function Example () {
   return (
@@ -16,7 +18,7 @@ export default function Example () {
             <MenuItem><Link to='/tasas'>Tasas</Link></MenuItem>
             <MenuItem><Link to='#Money'><ModalMoney /></Link></MenuItem>
             <MenuItem><Link to='/movimientos'>Movimientos</Link></MenuItem>
-            <MenuItem><Link to='/movimientos'>Agregar Transansaccion</Link></MenuItem>
+            <MenuItem><ModalCreateFinancials type='Transaccion' /></MenuItem>
           </Menu>
         </HStack>
         <HStack mr={4} color='#FFFF'>

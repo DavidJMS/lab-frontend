@@ -11,13 +11,37 @@ import {
   Switch,
   useToast
 } from '@chakra-ui/react'
+
+import deleteIcon from '../../assets/Delete.svg'
 import editIcon from '../../assets/Edit.svg'
 import ModalExamsOfMedical from '../modals/ModalExamsOfMedical'
-import { putMedical } from '../../services/medical.js'
+import { putMedical, deleteMedical } from '../../services/medical.js'
 
-const TableMedicalHistory = ({ data, navigate, getData }) => {
+const TableMedicalHistory = ({ data, navigate, getData, setData }) => {
   const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
   const toast = useToast()
+
+  const deleteMedicalHistory = async (id) => {
+    const res = await deleteMedical(id)
+    if (!res.error) {
+      setData(data.filter(medical => medical.id != id))
+      toast({
+        title: 'Eliminado!',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right'
+      })
+    } else {
+      toast({
+        title: 'Error eliminando',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right'
+      })
+    }
+  }
 
   const editMedical = async (id, dataRequest) => {
     const dataResponse = await putMedical(id, dataRequest)
@@ -65,7 +89,8 @@ const TableMedicalHistory = ({ data, navigate, getData }) => {
               </Td>
               <Td><Text color='#8E9196' display='flex' justifyContent='center' cursor='pointer'><ModalExamsOfMedical data={medical.medical_exams} /></Text></Td>
               <Td color='#8E9196' display='flex' justifyContent='center'>
-                <Image onClick={() => navigate(`editar-historia-${medical?.id}`)} w={['.5rem', '1.5rem']} cursor='pointer' src={editIcon} alt='editar' />
+                <Image onClick={() => navigate(`editar-historia-${medical?.id}`)} mx='5px' w={['14px', '18px']} cursor='pointer' src={editIcon} alt='editar' />
+                <Image onClick={() => deleteMedicalHistory(medical.id)} mx='5px' w={['14px', '18px']} cursor='pointer' src={deleteIcon} alt='eliminar' />
               </Td>
             </Tr>
           )

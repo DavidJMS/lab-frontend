@@ -41,7 +41,7 @@ import { AiFillFileText, AiOutlineSearch } from 'react-icons/ai'
 
 // Services
 import { createMedical, EditMedicalHistory } from '../../services/medical'
-import { deletePayments } from '../../services/financials'
+import { deleteTransactions } from '../../services/financials'
 import { deleteResult } from '../../services/results'
 import { getClients } from '@/services/clients'
 
@@ -190,7 +190,7 @@ const FormsMedical = ({
   }
 
   const handleDeletePayment = async (paymentId) => {
-    const resp = await deletePayments(paymentId)
+    const resp = await deleteTransactions(paymentId)
     if (resp) getMedicalPayments()
   }
 
@@ -476,6 +476,8 @@ const FormsMedical = ({
                           medicalId={medicalHistory?.id}
                           price={parseFloat(price?.price)}
                           priceId={price.id}
+                          totalPaid={totalPaid}
+                          totalPay={totalPay}
                         />
                       </HStack>
                     </Box>

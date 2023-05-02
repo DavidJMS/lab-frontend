@@ -7,13 +7,49 @@ import {
 import { Formik, Form, useFormikContext, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 
-import { createPayments } from '../../services/financials'
+import { createTransactions, getTodayTasa } from '../../services/financials'
 import { Field } from '../shared/FormFields'
 
-const ModalCreateFinancials = ({ getMedicalPayments, medicalId, price, priceId }) => {
+const CalculateFinancials = ({ totalPaid, totalPay, priceBs}) => {
+
+  const getResult = (result) => {
+    if(result === 0) return <Text color='green' mt={4} fontSize='18px'>Historia pagada satisfactoriamente</Text>
+    else if (result > 0) return <Text color='red' mt={4} fontSize='18px'> El cliente debe {result.toFixed(2)} {(result*priceBs).toFixed(2)}BS</Text>
+    else return <Text color='red' mt={4} fontSize='18px'>Hay que realizar un vuelto de {(result*-1).toFixed(2)}$ {(result*-1*priceBs).toFixed(2)}BS</Text>
+  }
+
+  return (<>
+    {getResult(totalPay - totalPaid)}
+    </>
+  )
+}
+
+const ModalCreateFinancials = ({ 
+  getMedicalPayments, 
+  medicalId, 
+  priceProps, 
+  priceIdProps, 
+  type = 'Pago',
+  totalPay,
+  totalPaid
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [size, setSize] = React.useState('xl')
   const [disabled, setDisabled] = useState(false)
+
+  const [price, setPrice] = useState(priceProps)
+  const [priceId, setPriceId] = useState(priceIdProps)
+  
+  const getData = async () => {
+    const price = await getTodayTasa()
+    setPrice(parseFloat(price?.price))
+    setPriceId(price.id)
+  }
+
+  useEffect(() => {
+    if(!price || !priceId) getData()
+  }, [])
+  
   const handleSizeClick = (newSize) => {
     setSize(newSize)
     onOpen()
@@ -24,8 +60,8 @@ const ModalCreateFinancials = ({ getMedicalPayments, medicalId, price, priceId }
       'Divisa invalida'
     ),
     type: Yup.string().oneOf(
-      ['Vuelto', 'Pago del cliente'],
-      'Tipo de pago inválido'
+      ['Vuelto', 'Pago del cliente', 'Retiro', 'Ingreso'],
+      'Tipo de transacción inválida'
     ),
     method_payment: Yup.string().oneOf(
       ['Pago Interbancario', 'Efectivo'],
@@ -46,7 +82,7 @@ const ModalCreateFinancials = ({ getMedicalPayments, medicalId, price, priceId }
   const handleSubmit = async (data) => {
     try {
       setDisabled(true)
-      const resp = await createPayments(data)
+      const resp = await createTransactions(data)
       // only if create financials is true
       if (resp) getMedicalPayments()
     } catch (error) {
@@ -67,11 +103,16 @@ const ModalCreateFinancials = ({ getMedicalPayments, medicalId, price, priceId }
   }
   return (
     <>
-      <Button bgColor='#D0D0D0' fontSize={['.8rem', '1rem']} mr={8} onClick={() => handleSizeClick(size)}>Agregar</Button>
+      {type === 'Pago' ? 
+        <Button bgColor='#D0D0D0' fontSize={['.8rem', '1rem']} mr={8} onClick={() => handleSizeClick(size)}>Agregar</Button>
+      : <Text onClick={() => handleSizeClick(size)}>Agregar transacción</Text>
+      }
       <Modal onClose={onClose} size={size} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader bgColor='#0DA7D9' height='1rem' color='#F5F5F5' textAlign='center' w='100%'>Registrar Pago</ModalHeader>
+          <ModalHeader bgColor='#0DA7D9' height='1rem' color='#F5F5F5' textAlign='center' w='100%'>
+            {type == 'Pago' ? 'Registrar Pago' : 'Registrar Transacción'}
+          </ModalHeader>
           <ModalCloseButton color='#F5F5F5' />
           <ModalBody>
             <Formik
@@ -95,6 +136,7 @@ const ModalCreateFinancials = ({ getMedicalPayments, medicalId, price, priceId }
                 <Form>
                   <FormObserver />
                   <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
+                    { totalPay && totalPaid && <CalculateFinancials totalPay={totalPay} totalPaid={totalPaid} priceBs={price}/>}
                     <Box mt={4} width='80%'>
                       <HStack mb={4} mt={4} display='flex' flexDirection={['column', 'column', 'row']}>
                         <FormControl>
@@ -107,10 +149,19 @@ const ModalCreateFinancials = ({ getMedicalPayments, medicalId, price, priceId }
                       </HStack>
                       <HStack mb={4} mt={4} display='flex' flexDirection={['column', 'column', 'row']}>
                         <FormControl>
-                          <Text>Tipo de pago</Text>
+                          <Text>Tipo de transacción</Text>
                           <Field as='select' name='type' p='2'>
-                            <option value='Pago del cliente'>Pago del cliente</option>
-                            <option value='Vuelto'>Vuelto</option>
+                            {type === 'Pago' ? 
+                              <>
+                                <option value='Pago del cliente'>Pago del cliente</option>
+                                <option value='Vuelto'>Vuelto</option>
+                              </>
+                            : <>
+                                <option value='Retiro'>Retiro</option>
+                                <option value='Ingreso'>Ingreso</option>
+                              </>
+                          }
+                            
                           </Field>
                         </FormControl>
                       </HStack>

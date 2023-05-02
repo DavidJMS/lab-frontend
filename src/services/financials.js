@@ -1,8 +1,8 @@
 import api from './api'
 
-const createPayments = async (data) => {
+const createTransactions = async (data) => {
   try {
-    const res = await api.post('financials/payments/', data)
+    const res = await api.post('financials/transactions/', data)
     if (res.status === 201) return true
   } catch (error) {
     console.log()
@@ -10,9 +10,9 @@ const createPayments = async (data) => {
   }
 }
 
-const getPayments = async (props) => {
+const getTransactions = async (props) => {
   try {
-    let url = 'financials/payments/'
+    let url = 'financials/transactions/'
     if (props?.typeFilter === 'dia') {
       url = url + `?create_at__date=${props.date}`
     } else if (props?.typeFilter === 'range') {
@@ -25,9 +25,9 @@ const getPayments = async (props) => {
   }
 }
 
-const editPayments = (data, id) => {
+const editTransactions = (data, id) => {
   try {
-    const res = api.put(`financials/payments/${id}/`, data)
+    const res = api.put(`financials/transactions/${id}/`, data)
     if (res.status === 204) return true
     else return false
   } catch {
@@ -36,9 +36,9 @@ const editPayments = (data, id) => {
   }
 }
 
-const deletePayments = (id) => {
+const deleteTransactions = (id) => {
   try {
-    const res = api.delete(`financials/payments/${id}`)
+    const res = api.delete(`financials/transactions/${id}`)
     return res
   } catch {
     console.log()
@@ -100,10 +100,10 @@ const desactivateCashFlows = async (data) => {
   }
 }
 export {
-  getPayments,
-  createPayments,
-  deletePayments,
-  editPayments,
+  getTransactions,
+  createTransactions,
+  deleteTransactions,
+  editTransactions,
   getPricesDollar,
   getTodayTasa,
   createPriceDollar,
