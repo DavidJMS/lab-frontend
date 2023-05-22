@@ -3,10 +3,14 @@ import api from './api'
 const createTransactions = async (data) => {
   try {
     const res = await api.post('financials/transactions/', data)
-    if (res.status === 201) return true
+    if (res.status === 201) {
+      return {
+        error: false, ...res.data
+      }
+    }
   } catch (error) {
     console.log()
-    return false
+    return { error: false }
   }
 }
 
@@ -39,9 +43,10 @@ const editTransactions = (data, id) => {
 const deleteTransactions = (id) => {
   try {
     const res = api.delete(`financials/transactions/${id}`)
-    return res
+    return { error: false, ...res.data }
   } catch {
     console.log()
+    return { error: true }
   }
 }
 
@@ -99,6 +104,35 @@ const desactivateCashFlows = async (data) => {
     console.log()
   }
 }
+
+const createPriceTransaction = async (data) => {
+  try {
+    const res = await api.post('financials/price-transaction/', data)
+    return res.data
+  } catch {
+    console.log()
+  }
+}
+
+const deletePriceTransaction = async (id) => {
+  try {
+    const res = await api.delete(`financials/price-transaction/${id}/`)
+    return { error: false, ...res.data }
+  } catch {
+    console.log()
+    return { error: true }
+  }
+}
+
+const getPriceTransactions = async (id) => {
+  try {
+    const res = await api.get(`financials/price-transaction/${id}/medical/`)
+    return res.data
+  } catch {
+    console.log()
+  }
+}
+
 export {
   getTransactions,
   createTransactions,
@@ -109,5 +143,8 @@ export {
   createPriceDollar,
   getCashFlow,
   getCashFlows,
-  desactivateCashFlows
+  desactivateCashFlows,
+  createPriceTransaction,
+  deletePriceTransaction,
+  getPriceTransactions
 }

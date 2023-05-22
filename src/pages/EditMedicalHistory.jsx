@@ -7,7 +7,7 @@ import FormsMedical from '../components/ui/FormsMedical'
 
 // Services
 import { getMedical as getMedicalService, getPaymentsMedical, getResultsMedical } from '../services/medical'
-import { getTodayTasa } from '@/services/financials'
+import { getTodayTasa, getPriceTransactions } from '@/services/financials'
 
 const EditMedicalHistory = () => {
   const { medicalId } = useParams()
@@ -15,6 +15,7 @@ const EditMedicalHistory = () => {
   const [medicalHistory, setMedicalHistory] = useState()
   const [price, setPrice] = useState(undefined)
   const [results, setResults] = useState()
+  const [priceTransactions, setPriceTransactions] = useState([])
 
   const getMedical = async () => {
     const response = await getMedicalService(medicalId)
@@ -34,11 +35,16 @@ const EditMedicalHistory = () => {
     const response = await getResultsMedical(medicalId)
     setResults(response)
   }
+  const getPriceTransactionsById = async () => {
+    const response = await getPriceTransactions(medicalId)
+    setPriceTransactions(response)
+  }
   useEffect(() => {
     getMedical()
     getMedicalPayments()
     getPrice()
     getMedicalResults()
+    getPriceTransactionsById()
   }, [])
 
   if (!medicalHistory || !payments || !price) return <></>
@@ -47,6 +53,8 @@ const EditMedicalHistory = () => {
     <FormsMedical
       medicalHistory={medicalHistory}
       payments={payments}
+      priceTransactions={priceTransactions}
+      getPriceTransactionsById={getPriceTransactionsById}
       price={price}
       getMedicalPayments={getMedicalPayments}
       results={results}

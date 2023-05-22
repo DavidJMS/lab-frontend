@@ -34,6 +34,7 @@ import ModalHandleResult from '@/components/modals/ModalHandleResult'
 import ModalTest from '../modals/ModalTest'
 import ModalCreateFinancials from '../modals/ModalCreateFinancials'
 import ModalClient from '../modals/ModalClient'
+import ModalPriceTransaction from '../modals/ModalPriceTransaction'
 
 // Assets
 import deleteIcon from '../../assets/Delete.svg'
@@ -41,7 +42,7 @@ import { AiFillFileText, AiOutlineSearch } from 'react-icons/ai'
 
 // Services
 import { createMedical, EditMedicalHistory } from '../../services/medical'
-import { deleteTransactions } from '../../services/financials'
+import { deleteTransactions, deletePriceTransaction } from '../../services/financials'
 import { deleteResult } from '../../services/results'
 import { getClients } from '@/services/clients'
 
@@ -84,6 +85,8 @@ const HandleErrorExam = () => {
 const FormsMedical = ({
   medicalHistory,
   payments,
+  priceTransactions,
+  getPriceTransactionsById,
   getMedicalPayments,
   price,
   results = [],
@@ -190,8 +193,19 @@ const FormsMedical = ({
   }
 
   const handleDeletePayment = async (paymentId) => {
-    const resp = await deleteTransactions(paymentId)
-    if (resp) getMedicalPayments()
+    const res = await deleteTransactions(paymentId)
+    if (!res.error) {
+      getMedicalPayments()
+      setTotalPaid(res.total_paid)
+    }
+  }
+
+  const handleDeletePriceTransaction = async (paymentId) => {
+    const resp = await deletePriceTransaction(paymentId)
+    if (!resp.error) {
+      getPriceTransactionsById()
+      setTotalPay(resp.total_pay)
+    }
   }
 
   const handleDeleteResult = async (resultId) => {
@@ -316,7 +330,44 @@ const FormsMedical = ({
                   <ModalClient setUserData={setUserData} />
                 </HStack>
               </Box>
-              <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
+              <Box w='100%' mt={2} display='flex' flexDirection='column' alignItems='center'>
+                <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
+                  <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Solicitud De Examen</Text>
+                </Box>
+                <Box mt={4} width={['96%', '80%']}>
+                  {examData.length > 0 && (
+                    <Table fontSize={['.8rem', '1rem']} variant='simple' width='80%' m={4}>
+                      <Thead bg='#F4F7FF'>
+                        <Tr fontSize={['.8rem', '1rem']}>
+                          <Th w={['30%', '42%']}>Nombre</Th>
+                          <Th>Costo</Th>
+                          <Th>Eliminar</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {examData && examData.map((exam, index) => (
+                          <Tr
+                            key={exam.id}
+                            _hover={{
+                              background: 'gray.50'
+                            }}
+                          >
+                            <Td color='#8E9196'>{exam.name}</Td>
+                            <Td color='#8E9196'>{exam.price}</Td>
+                            <Td textAlign='center' color='#8E9196'><Img cursor='pointer' height={['1rem', '1.2rem']} src={deleteIcon} onClick={() => { handleRemoveExamData(exam) }} /></Td>
+                          </Tr>
+                        ))}
+                      </Tbody>
+                    </Table>
+                  )}
+                  {/* <Field name='medical_exams' /> */}
+                  <HandleErrorExam />
+                  <HStack justifyContent='end' w={['90%', '100%']} mt={['10px', '10px', '0px']} display='flex'>
+                    <ModalTest handleExamData={handleAddExamData} exams={examData} />
+                  </HStack>
+                </Box>
+              </Box>
+              <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%' mt={4}>
                 <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos Generales</Text>
               </Box>
               <Box mt={4} width='80%'>
@@ -390,43 +441,6 @@ const FormsMedical = ({
                     </>}
                 </HStack>
               </Box>
-              <Box w='100%' mt={2} display='flex' flexDirection='column' alignItems='center'>
-                <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
-                  <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Solicitud De Examen</Text>
-                </Box>
-                <Box mt={4} width={['96%', '80%']}>
-                  {examData.length > 0 && (
-                    <Table fontSize={['.8rem', '1rem']} variant='simple' width='80%' m={4}>
-                      <Thead bg='#F4F7FF'>
-                        <Tr fontSize={['.8rem', '1rem']}>
-                          <Th w={['30%', '42%']}>Nombre</Th>
-                          <Th>Costo</Th>
-                          <Th>Eliminar</Th>
-                        </Tr>
-                      </Thead>
-                      <Tbody>
-                        {examData && examData.map((exam, index) => (
-                          <Tr
-                            key={exam.id}
-                            _hover={{
-                              background: 'gray.50'
-                            }}
-                          >
-                            <Td color='#8E9196'>{exam.name}</Td>
-                            <Td color='#8E9196'>{exam.price}</Td>
-                            <Td textAlign='center' color='#8E9196'><Img cursor='pointer' height={['1rem', '1.2rem']} src={deleteIcon} onClick={() => { handleRemoveExamData(exam) }} /></Td>
-                          </Tr>
-                        ))}
-                      </Tbody>
-                    </Table>
-                  )}
-                  {/* <Field name='medical_exams' /> */}
-                  <HandleErrorExam />
-                  <HStack justifyContent='end' w={['90%', '100%']} mt={['10px', '10px', '0px']} display='flex'>
-                    <ModalTest handleExamData={handleAddExamData} exams={examData} />
-                  </HStack>
-                </Box>
-              </Box>
               {medicalHistory &&
                 <>
                   <Box w='100%' mb={8} mt={2} display='flex' flexDirection='column' alignItems='center'>
@@ -478,6 +492,56 @@ const FormsMedical = ({
                           priceId={price.id}
                           totalPaid={totalPaid}
                           totalPay={totalPay}
+                          setTotalPaid={setTotalPaid}
+                        />
+                      </HStack>
+                    </Box>
+                  </Box>
+                  <Box w='100%' mb={8} mt={2} display='flex' flexDirection='column' alignItems='center'>
+                    <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
+                      <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Descuentos - Aumentos</Text>
+                    </Box>
+                    <Box mt={4} width={['96%', '96%', '80%', '80%']}>
+                      {priceTransactions.length > 0 && (
+                        <Table fontSize={['.5rem', '1rem']} variant='simple' width='100%' m={4}>
+                          <Thead bg='#F4F7FF'>
+                            <Tr>
+                              <Th>Tasa</Th>
+                              <Th>Bolivares</Th>
+                              <Th>Dolares</Th>
+                              <Th>Concepto</Th>
+                              <Th>Fecha</Th>
+                              <Th>Eliminar</Th>
+                            </Tr>
+                          </Thead>
+                          <Tbody>
+                            {priceTransactions.map((transaction, index) => (
+                              <Tr
+                                textAlign='center'
+                                key={index}
+                                _hover={{
+                                  background: 'gray.50'
+                                }}
+                              >
+                                <Td color='#8E9196'>{transaction.price}</Td>
+                                <Td color='#8E9196'>{transaction.amount_bolivares}</Td>
+                                <Td color='#8E9196'>{transaction.amount_dollars}</Td>
+                                <Td color='#8E9196'>{transaction.concept}</Td>
+                                <Td color='#8E9196'>{transaction.create_at || 'No Aplica'}</Td>
+                                <Td textAlign='center' color='#8E9196'><Img cursor='pointer' height='1.2rem' src={deleteIcon} onClick={() => { handleDeletePriceTransaction(transaction.id) }} /></Td>
+                              </Tr>
+                            ))}
+                          </Tbody>
+                        </Table>
+                      )}
+                      <HStack justifyContent='end' w='100%' mt={['10px', '10px', '0px']} display='flex'>
+                        <ModalPriceTransaction
+                          price={parseFloat(price?.price)}
+                          priceId={price?.id}
+                          medicalId={medicalHistory?.id}
+                          setTotalPay={setTotalPay}
+                          totaltoPay={totalPay - totalPaid}
+                          getPriceTransactionsById={getPriceTransactionsById}
                         />
                       </HStack>
                     </Box>

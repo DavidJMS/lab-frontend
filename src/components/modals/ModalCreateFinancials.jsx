@@ -10,26 +10,26 @@ import * as Yup from 'yup'
 import { createTransactions, getTodayTasa } from '../../services/financials'
 import { Field } from '../shared/FormFields'
 
-const CalculateFinancials = ({ totalPaid, totalPay, priceBs}) => {
-
+const CalculateFinancials = ({ totalPaid, totalPay, priceBs }) => {
   const getResult = (result) => {
-    if(result === 0) return <Text color='green' mt={4} fontSize='18px'>Historia pagada satisfactoriamente</Text>
-    else if (result > 0) return <Text color='red' mt={4} fontSize='18px'> El cliente debe {result.toFixed(2)} {(result*priceBs).toFixed(2)}BS</Text>
-    else return <Text color='red' mt={4} fontSize='18px'>Hay que realizar un vuelto de {(result*-1).toFixed(2)}$ {(result*-1*priceBs).toFixed(2)}BS</Text>
+    if (result === 0) return <Text color='green' mt={4} fontSize='18px'>Historia pagada satisfactoriamente</Text>
+    else if (result > 0) return <Text color='red' mt={4} fontSize='18px'> El cliente debe {result.toFixed(2)} {(result * priceBs).toFixed(2)}BS</Text>
+    else return <Text color='red' mt={4} fontSize='18px'>Hay que realizar un vuelto de {(result * -1).toFixed(2)}$ {(result * -1 * priceBs).toFixed(2)}BS</Text>
   }
-
-  return (<>
-    {getResult(totalPay - totalPaid)}
+  return (
+    <>
+      {getResult(totalPay - totalPaid)}
     </>
   )
 }
 
-const ModalCreateFinancials = ({ 
-  getMedicalPayments, 
-  medicalId, 
-  priceProps, 
-  priceIdProps, 
+const ModalCreateFinancials = ({
+  getMedicalPayments,
+  medicalId,
+  priceProps,
+  priceIdProps,
   type = 'Pago',
+  setTotalPaid,
   totalPay,
   totalPaid
 }) => {
@@ -39,7 +39,7 @@ const ModalCreateFinancials = ({
 
   const [price, setPrice] = useState(priceProps)
   const [priceId, setPriceId] = useState(priceIdProps)
-  
+
   const getData = async () => {
     const price = await getTodayTasa()
     setPrice(parseFloat(price?.price))
@@ -47,9 +47,9 @@ const ModalCreateFinancials = ({
   }
 
   useEffect(() => {
-    if(!price || !priceId) getData()
+    if (!price || !priceId) getData()
   }, [])
-  
+
   const handleSizeClick = (newSize) => {
     setSize(newSize)
     onOpen()
@@ -84,7 +84,10 @@ const ModalCreateFinancials = ({
       setDisabled(true)
       const resp = await createTransactions(data)
       // only if create financials is true
-      if (resp) getMedicalPayments()
+      if (!resp.error) {
+        getMedicalPayments()
+        setTotalPaid(resp.total_paid)
+      }
     } catch (error) {
       console.log(error)
     } finally {
@@ -103,10 +106,9 @@ const ModalCreateFinancials = ({
   }
   return (
     <>
-      {type === 'Pago' ? 
-        <Button bgColor='#D0D0D0' fontSize={['.8rem', '1rem']} mr={8} onClick={() => handleSizeClick(size)}>Agregar</Button>
-      : <Text onClick={() => handleSizeClick(size)}>Agregar transacción</Text>
-      }
+      {type === 'Pago'
+        ? <Button bgColor='#D0D0D0' fontSize={['.8rem', '1rem']} mr={8} onClick={() => handleSizeClick(size)}>Agregar</Button>
+        : <Text onClick={() => handleSizeClick(size)}>Agregar transacción</Text>}
       <Modal onClose={onClose} size={size} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
@@ -136,7 +138,7 @@ const ModalCreateFinancials = ({
                 <Form>
                   <FormObserver />
                   <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
-                    { totalPay && totalPaid && <CalculateFinancials totalPay={totalPay} totalPaid={totalPaid} priceBs={price}/>}
+                    {totalPay && totalPaid && <CalculateFinancials totalPay={totalPay} totalPaid={totalPaid} priceBs={price} />}
                     <Box mt={4} width='80%'>
                       <HStack mb={4} mt={4} display='flex' flexDirection={['column', 'column', 'row']}>
                         <FormControl>
@@ -151,17 +153,16 @@ const ModalCreateFinancials = ({
                         <FormControl>
                           <Text>Tipo de transacción</Text>
                           <Field as='select' name='type' p='2'>
-                            {type === 'Pago' ? 
-                              <>
+                            {type === 'Pago'
+                              ? <>
                                 <option value='Pago del cliente'>Pago del cliente</option>
                                 <option value='Vuelto'>Vuelto</option>
                               </>
-                            : <>
+                              : <>
                                 <option value='Retiro'>Retiro</option>
                                 <option value='Ingreso'>Ingreso</option>
-                              </>
-                          }
-                            
+                              </>}
+
                           </Field>
                         </FormControl>
                       </HStack>
