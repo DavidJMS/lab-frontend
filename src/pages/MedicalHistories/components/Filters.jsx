@@ -35,7 +35,11 @@ const Filters = ({ handleSubmit }) => {
           flexDirection={['column', 'column', 'row', 'row']}
         >
           <FormControl display='inline-flex'>
-            <Field
+          <Field as='select' name='dni'>
+            <option value='dni'>Cédula</option>
+            <option value='number_id'>Número</option>
+          </Field>
+            {/* <Field
               name='dni'
               placeholder='Cédula'
               my='0.5rem'
@@ -45,10 +49,10 @@ const Filters = ({ handleSubmit }) => {
               name='number_id'
               placeholder='Número'
               my='0.5rem'
-            />
+            /> */}
           </FormControl>
-          <FormControl display='inline-flex' px='1rem'>
-            <Text mx='1rem'> Filtrar por muestra</Text>
+          <FormControl display={['block', 'bloack', 'inline-flex', 'inline-flex']} px='1rem'>
+            <Text fontSize='.8rem'> Filtrar por muestra</Text>
             <Field as='select' name='with_samples' w='fit-content'>
               <option value='true'>Si</option>
               <option value='false'>No</option>
