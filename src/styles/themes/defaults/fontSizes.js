@@ -10,7 +10,7 @@ const fontSizes = {
       "4xl":"2.25rem", // h4
       "5xl":"3rem", // h3
       "6xl":"3.75rem", // h2
-      "7xl":"4.5rem", // h1
+      "7xl":"3.5rem", // h1
     },
   };
   

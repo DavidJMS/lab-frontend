@@ -26,9 +26,14 @@ const ClientFilter = ({ getData }) => {
     >
       <Form>
         <HStack w='100%' paddingTop={4}>
-          <Field w={['50%', 'auto']} name='dni' type='text' placeholder='Cédula' />
+        <Field as='select' name='filter'>
+          <option value='dni'>Cédula</option>
+          <option value='first_names'>Nombres</option>
+          <option value='last_names'>Apellidos</option>
+        </Field>
+          {/* <Field w={['50%', 'auto']} name='dni' type='text' placeholder='Cédula' />
           <Field w={['50%', 'auto']} name='first_names' type='text' placeholder='Nombres' />
-          <Field w={['50%', 'auto']} name='last_names' type='text' placeholder='Apellidos' />
+          <Field w={['50%', 'auto']} name='last_names' type='text' placeholder='Apellidos' /> */}
           <button type='submit' className='button--filter'>
             <Image maxW='4rem' minH='2rem' minW='2rem' width={['3.5rem', '4rem', '7rem']} src={SearchIcon} />
           </button>

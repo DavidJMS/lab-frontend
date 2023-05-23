@@ -46,8 +46,8 @@ const TableClient = ({ data, handleDelete }) => {
             <Td paddingInlineEnd='0' paddingStart='0.5rem' paddingEnd='0.5rem' color='#8E9196'>{client.dni || 'No Disponible'}</Td>
             <Td paddingInlineEnd='0' paddingStart='0.5rem' paddingEnd='0.5rem' color='#8E9196'>{client.phone || 'No Disponible'}</Td>
             <Td paddingInlineEnd='0' paddingStart='0.5rem' paddingEnd='0.5rem' color='#8E9196' alignItems='center' display='flex'>
-              <Image m='0 10px' cursor='pointer' w={['.5rem', '.7rem', '1rem', '1.5rem']} onClick={() => handleDelete(client.id)} src={iconDelete} />
-              <Image m='0 10px' onClick={() => navigate(`/editar-cliente-${client.id}`)} w={['.5rem', '1.5rem']} cursor='pointer' src={IconEdit} />
+              <Image m='0 10px' cursor='pointer' w={['.7rem', '.7rem', '1rem', '1.5rem']} onClick={() => handleDelete(client.id)} src={iconDelete} />
+              <Image m='0 10px' onClick={() => navigate(`/editar-cliente-${client.id}`)} w={['.7rem', '1.5rem']} cursor='pointer' src={IconEdit} />
             </Td>
           </Tr>
         ))}

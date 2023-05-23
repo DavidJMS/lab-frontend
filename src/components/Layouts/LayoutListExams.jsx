@@ -100,9 +100,9 @@ const LayoutListExams = () => {
             <Tr key={index}>
               <Td><Text color='#8E9196'>{exam.name}</Text></Td>
               <Td><Text color='#8E9196'>{exam.price}</Text></Td>
-              <Td display='flex' justifyContent='center'>
-                <ModalTypesExams exam={exam} fetchExams={fetchExams} />
-                <Img cursor='pointer' onClick={() => handleDelete(exam.id)} src={DeleteIcon} />
+              <Td mt={6} display='flex' justifyContent='center'>
+                <ModalTypesExams height={['.8rem','auto']} exam={exam} fetchExams={fetchExams} />
+                <Img height={['.8rem','auto']} cursor='pointer' onClick={() => handleDelete(exam.id)} src={DeleteIcon} />
               </Td>
             </Tr>
           ))}

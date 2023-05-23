@@ -105,10 +105,11 @@ const ModalTypesExams = ({ exam, fetchExams }) => {
       {exam
         ? <Button
             bgColor='#FFFF'
-            mr={8}
+            mr={4}
             onClick={() => handleSizeClick(size)}
+            height={['.8rem','auto']}
           >
-          <Img src={EditIcon} />
+          <Img height={['.8rem','auto']} maxW={'none'} src={EditIcon} />
         </Button>
         : <Button
             bgColor='#D0D0D0'
