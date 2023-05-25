@@ -10,7 +10,7 @@ const createTransactions = async (data) => {
     }
   } catch (error) {
     console.log()
-    return { error: false }
+    return { error: true }
   }
 }
 
@@ -29,9 +29,9 @@ const getTransactions = async (props) => {
   }
 }
 
-const editTransactions = (data, id) => {
+const editTransactions = async (data, id) => {
   try {
-    const res = api.put(`financials/transactions/${id}/`, data)
+    const res = await api.put(`financials/transactions/${id}/`, data)
     if (res.status === 204) return true
     else return false
   } catch {
@@ -40,9 +40,9 @@ const editTransactions = (data, id) => {
   }
 }
 
-const deleteTransactions = (id) => {
+const deleteTransactions = async (id) => {
   try {
-    const res = api.delete(`financials/transactions/${id}`)
+    const res = await api.delete(`financials/transactions/${id}`)
     return { error: false, ...res.data }
   } catch {
     console.log()
@@ -97,7 +97,6 @@ const getCashFlows = async () => {
 
 const desactivateCashFlows = async (data) => {
   try {
-    console.log(data)
     const res = await api.post('financials/cash-flow/desactivate/', data)
     return res.data
   } catch {

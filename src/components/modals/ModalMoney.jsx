@@ -66,6 +66,7 @@ const ModalMoney = () => {
                     <Th>Total en bs/efectivo</Th>
                     <Th>Total en bs/banco</Th>
                     <Th>Total en $/efectivo</Th>
+                    <Th>Total en $/banco</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
@@ -73,9 +74,11 @@ const ModalMoney = () => {
                     <Td><Text color='#8E9196'>{cashFlow.amount_bolivares_cash}</Text></Td>
                     <Td color='#8E9196'>{cashFlow.amount_bolivares_bank}</Td>
                     <Td color='#8E9196'>{cashFlow.amount_dollars_cash}</Td>
+                    <Td color='#8E9196'>{cashFlow.amount_dollars_bank}
+                    </Td>
                   </Tr>
                 </Tbody>
-                </Table>
+              </Table>
               : <Text>No existe registros en la caja activos</Text>}
           </ModalBody>
           <ModalFooter>

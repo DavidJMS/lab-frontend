@@ -26,6 +26,8 @@ import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
 import { RiShareForward2Fill } from 'react-icons/ri'
 
+import CalculateFinancials from '../components/CalculateFinancials'
+
 // Form Components
 import { Field } from '../shared/FormFields'
 
@@ -90,6 +92,7 @@ const FormsMedical = ({
   getMedicalPayments,
   price,
   results = [],
+  setMedicalHistory,
   getMedicalResults = undefined
 }) => {
   // Some utils to use
@@ -110,6 +113,7 @@ const FormsMedical = ({
   const [totalPay, setTotalPay] = useState(medicalHistory?.total_pay || 0)
   const [totalPaid, setTotalPaid] = useState(medicalHistory?.total_paid || 0)
   const [examData, setExamData] = useState(medicalHistory?.medical_exams || [])
+  const [deadline, setDeadline] = useState(medicalHistory?.deadline)
 
   useEffect(() => {
     if ((examData && loading === true) || (userData && loading === true)) {
@@ -195,22 +199,76 @@ const FormsMedical = ({
   const handleDeletePayment = async (paymentId) => {
     const res = await deleteTransactions(paymentId)
     if (!res.error) {
+      toast({
+        title: 'Éxito',
+        description: 'Pago eliminado!',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right'
+      })
       getMedicalPayments()
       setTotalPaid(res.total_paid)
+    } else {
+      toast({
+        title: 'Éxito',
+        description: 'Hubo un error eliminando el pago',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right'
+      })
     }
   }
 
   const handleDeletePriceTransaction = async (paymentId) => {
     const resp = await deletePriceTransaction(paymentId)
     if (!resp.error) {
+      toast({
+        title: 'Éxito',
+        description: 'Transaccioón eliminada!',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right'
+      })
       getPriceTransactionsById()
       setTotalPay(resp.total_pay)
+    } else {
+      toast({
+        title: 'Error',
+        description: 'Hubo un error!',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right'
+      })
     }
   }
 
   const handleDeleteResult = async (resultId) => {
     const resp = await deleteResult(resultId)
-    if (resp) getMedicalResults()
+    if (resp) {
+      getMedicalResults(
+        toast({
+          title: 'Éxito',
+          description: 'Documento eliminad!',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top-right'
+        })
+      )
+    } else {
+      toast({
+        title: 'Error',
+        description: 'Hubo un error!',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right'
+      })
+    }
   }
 
   const handleSubmit = async (data) => {
@@ -220,14 +278,17 @@ const FormsMedical = ({
       if (res.error) {
         toast({
           title: 'Exito',
-          description: `Cliente ${medicalHistory ? 'editado' : 'creado'} de manera exitosa`,
+          description: `La historia fue ${medicalHistory ? 'editada' : 'creada'} de manera exitosa`,
           status: 'success',
           duration: 3000,
           isClosable: true,
           position: 'top-right'
         })
         if (!medicalHistory) {
+          console.log('sss')
           navigate(`/editar-historia-${res.id}`)
+        } else {
+          setMedicalHistory(res)
         }
       } else {
         toast({
@@ -249,9 +310,8 @@ const FormsMedical = ({
   // Rendering...
   if (loading) return <Spinner />
   return (
-    <>
-      <Formik
-        initialValues={
+    <Formik
+      initialValues={
           {
             result_sent: medicalHistory?.result_sent || false,
             deadline: medicalHistory?.deadline || null,
@@ -259,18 +319,22 @@ const FormsMedical = ({
             with_samples: medicalHistory?.with_samples || false,
             medical_exams: examData ? examData.map(exam => (exam.id)) : '',
             total_pay: totalPay,
+            number_id: medicalHistory?.number_id,
             ...userData
           }
         }
-        enableReinitialize
-        validationSchema={validationShema}
-        onSubmit={(values) => {
-          handleSubmit(values)
-        }}
-      >
-        {({ values, handleChange }) => (
-          <Form id='form'>
-            <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
+      enableReinitialize
+      validationSchema={validationShema}
+      onSubmit={(values) => {
+        if (deadline) {
+          if (values.deadline === deadline) delete values.deadline
+        }
+        handleSubmit(values)
+      }}
+    >
+      {({ values, handleChange }) => (
+        <Form id='form'>
+          <Box w='100%' mt={4} display='flex' flexDirection='column' alignItems='center'>
               <Box backgroundColor='#0DA7D9' height='2.5rem' borderRadius='5px' w='85%'>
                 <Text fontSize='1.5rem' color='#FFFF' textAlign='center'>Datos Personales</Text>
               </Box>
@@ -386,15 +450,21 @@ const FormsMedical = ({
                     />
                   </FormControl>
                 </HStack>
+                {medicalHistory &&
+                  <HStack mb={4} flexDirection={['column', 'column', 'row', 'row']}>
+                    <FormControl>
+                      <Text mb={4} float='left'>Número:</Text>
+                      <Field
+                        name='number_id'
+                      />
+                    </FormControl>
+                  </HStack>}
               </Box>
               <Box w='80%' mt={4} display='flex' flexDirection='column'>
                 <HStack w='100%' justifyContent='left' fontSize={18}>
-                  {values.deadline &&
-                    <Text mb={4} float='left'>Fecha de entrega:
-                      <Badge fontSize={15} ml={1}>{values.deadline}</Badge>
-                    </Text>}
+                  {totalPay && <CalculateFinancials totalPaid={totalPaid} totalPay={totalPay} priceBs={parseFloat(price?.price)} />}
                 </HStack>
-                <HStack w='100%' justifyContent='left' fontSize={18}>
+                <HStack w='100%' justifyContent='left' fontSize={18} marginTop={4}>
                   {totalPay &&
                     <Text mb={4} float='left'>Total a pagar:
                       <Badge fontSize={15} ml={1}>{totalPay}$ </Badge>
@@ -409,6 +479,12 @@ const FormsMedical = ({
                     </Text>}
                 </HStack>
                 <HStack w='100%' justifyContent='left' fontSize={18}>
+                  {values.deadline &&
+                    <Text mb={4} float='left'>Fecha de entrega:
+                      <Badge fontSize={15} ml={1}>{values.deadline}</Badge>
+                    </Text>}
+                </HStack>
+                <HStack w='100%' justifyContent='left' fontSize={18}>
                   <Text mb={1} float='left'>Muestras Tomadas:</Text>
                   <Switch colorScheme='blue' isChecked={values.with_samples} name='with_samples' onChange={(e) => { handleChange(e) }} />
                 </HStack>
@@ -417,14 +493,7 @@ const FormsMedical = ({
                     <Text mb={1} float='left'>Resultados entregados:</Text>
                     <Switch colorScheme='blue' isChecked={values.result_sent} name='result_sent' onChange={(e) => { handleChange(e) }} />
                   </HStack>}
-                <HStack justifyContent='left' fontSize={18}>
-                  {medicalHistory &&
-                    <Text mb={4} float='left'>Número:
-                      <Badge fontSize={15} ml={1}>
-                        {medicalHistory?.number_id}
-                      </Badge>
-                    </Text>}
-                </HStack>
+                <HStack justifyContent='left' fontSize={18} />
                 <HStack justifyContent='left' fontSize={18}>
                   {medicalHistory &&
                     <Text mb={4} float='left'>Código de acceso:
@@ -597,10 +666,9 @@ const FormsMedical = ({
                 <Button mb={8} w='20%' type='submit'>{medicalHistory ? 'Editar' : 'Crear'}</Button>
               </HStack>
             </Box>
-          </Form>
-        )}
-      </Formik>
-    </>
+        </Form>
+      )}
+    </Formik>
   )
 }
 

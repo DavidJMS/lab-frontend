@@ -18,9 +18,10 @@ const TableFinancials = ({ data }) => {
         {IsNotSmallScreen &&
           <Thead bg='#F4F7FF'>
             <Tr>
-              <Th>Fecha de creacion</Th>
+              <Th>Fecha de creación</Th>
               <Th>Activa</Th>
               <Th>Dolares en Efectivo</Th>
+              <Th>Dolares en el banco</Th>
               <Th>Bolivares en efectivo</Th>
               <Th>Bolivares en el banco</Th>
               <Th>Transacciones</Th>
@@ -32,6 +33,7 @@ const TableFinancials = ({ data }) => {
               <Td><Text color='#8E9196'>{cashFlow?.create_at}</Text></Td>
               <Td color='#8E9196'>{cashFlow?.is_active ? 'Si' : 'No'} </Td>
               <Td color='#8E9196'>{cashFlow.amount_dollars_cash} $ </Td>
+              <Td color='#8E9196'>{cashFlow.amount_dollars_bank} $ </Td>
               <Td color='#8E9196'>{cashFlow.amount_bolivares_cash}</Td>
               <Td color='#8E9196'>{cashFlow.amount_bolivares_bank}</Td>
               <Td><ModalMovements data={cashFlow?.transactions} /></Td>

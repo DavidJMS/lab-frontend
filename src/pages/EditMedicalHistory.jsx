@@ -59,6 +59,7 @@ const EditMedicalHistory = () => {
       getMedicalPayments={getMedicalPayments}
       results={results}
       getMedicalResults={getMedicalResults}
+      setMedicalHistory={setMedicalHistory}
     />
   )
 }

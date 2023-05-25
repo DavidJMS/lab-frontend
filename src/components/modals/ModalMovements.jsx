@@ -34,7 +34,7 @@ const ModalMovements = ({ data }) => {
           <ModalBody w='100%'>
             <Box>
               <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
-                <TableFinancials data={data} />
+                <TableFinancials data={data} fromModal />
               </Box>
             </Box>
           </ModalBody>
