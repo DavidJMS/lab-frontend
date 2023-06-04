@@ -6,8 +6,7 @@ import {
   Th,
   Tbody,
   Td,
-  Image,
-  useMediaQuery
+  Image
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 
@@ -16,21 +15,21 @@ import IconEdit from '../../assets/Edit.svg'
 
 const TableClient = ({ data, handleDelete }) => {
   const navigate = useNavigate()
-
-  const [IsNotSmallScreen] = useMediaQuery('(min-width: 600px)')
-
   return (
-    <Table fontSize={['.8rem', '1rem']} variant='simple' width='80%' m={4}>
-      {IsNotSmallScreen &&
-        <Thead bg='#F4F7FF'>
-          <Tr>
-            <Th>Nombres</Th>
-            <Th>Apellidos</Th>
-            <Th>Cédula</Th>
-            <Th>Teléfono</Th>
-            <Th>Acciones</Th>
-          </Tr>
-        </Thead>}
+    <Table
+      fontSize={['.8rem', '1rem']}
+      variant='simple'
+      my={4}
+    >
+      <Thead bg='#F4F7FF'>
+        <Tr>
+          <Th>Nombres</Th>
+          <Th>Apellidos</Th>
+          <Th>Cédula</Th>
+          <Th>Teléfono</Th>
+          <Th>Acciones</Th>
+        </Tr>
+      </Thead>
       <Tbody>
         {data.map((client) => (
           <Tr
@@ -46,8 +45,8 @@ const TableClient = ({ data, handleDelete }) => {
             <Td paddingInlineEnd='0' paddingStart='0.5rem' paddingEnd='0.5rem' color='#8E9196'>{client.dni || 'No Disponible'}</Td>
             <Td paddingInlineEnd='0' paddingStart='0.5rem' paddingEnd='0.5rem' color='#8E9196'>{client.phone || 'No Disponible'}</Td>
             <Td paddingInlineEnd='0' paddingStart='0.5rem' paddingEnd='0.5rem' color='#8E9196' alignItems='center' display='flex'>
-              <Image m='0 10px' cursor='pointer' w={['.5rem', '.7rem', '1rem', '1.5rem']} onClick={() => handleDelete(client.id)} src={iconDelete} />
-              <Image m='0 10px' onClick={() => navigate(`/editar-cliente-${client.id}`)} w={['.5rem', '1.5rem']} cursor='pointer' src={IconEdit} />
+              <Image m='0 10px' height='20px' cursor='pointer' onClick={() => handleDelete(client.id)} src={iconDelete} />
+              <Image m='0 10px' height='20px' onClick={() => navigate(`/editar-cliente-${client.id}`)} cursor='pointer' src={IconEdit} />
             </Td>
           </Tr>
         ))}

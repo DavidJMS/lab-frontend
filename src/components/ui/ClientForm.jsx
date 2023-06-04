@@ -149,23 +149,23 @@ const ClientForm = ({ client }) => {
       <Form>
         <Box w='100%' display='flex' flexDirection='column' alignItems='center'>
           <Box mt={4} width='80%'>
-            <HStack mb={4} display='flex' flexDirection={['column', 'column', 'row']}>
+            <HStack display='flex' flexDirection={['column', 'column', 'row']}>
               <FormControl>
-                <Text>Nombres:</Text>
+                <Text mt='10px'>Nombres:</Text>
                 <Field name='first_names' />
               </FormControl>
               <FormControl>
-                <Text>Apellidos:</Text>
+                <Text mt='10px'>Apellidos:</Text>
                 <Field name='last_names' />
               </FormControl>
-              <FormControl>
-                <Text>Cédula:</Text>
+              <FormControl mt={4}>
+                <Text mt='10px'>Cédula:</Text>
                 <Field name='dni' />
               </FormControl>
             </HStack>
-            <HStack mb={4} mt={4} w={['100%', '100%', '66%']} display='flex' flexDirection={['column', 'column', 'row']}>
+            <HStack w={['100%', '100%', '66%']} display='flex' flexDirection={['column', 'column', 'row']}>
               <FormControl>
-                <Text>Sexo:</Text>
+                <Text mt='10px'>Sexo:</Text>
                 <Field as='select' name='gender'>
                   <option value='masculino'>Masculino</option>
                   <option value='femenino'>Femenino</option>
@@ -173,22 +173,22 @@ const ClientForm = ({ client }) => {
               </FormControl>
               <Spacer />
               <FormControl>
-                <Text mt={[4, 4, 0]}>Teléfono:</Text>
+                <Text mt='10px'>Teléfono:</Text>
                 <Field name='phone' />
               </FormControl>
               <Spacer />
             </HStack>
-            <HStack mb={4} display='flex' flexDirection={['column', 'column', 'row']}>
+            <HStack display='flex' flexDirection={['column', 'column', 'row']}>
               <FormControl>
-                <Text>Dirección:</Text>
+                <Text mt='10px'>Dirección:</Text>
                 <Field name='address' />
               </FormControl>
               <FormControl>
-                <Text>Correo:</Text>
+                <Text mt='10px'>Correo:</Text>
                 <Field name='email' type='email' />
               </FormControl>
               <FormControl>
-                <Text>Edad:</Text>
+                <Text mt='10px'>Edad:</Text>
                 <Field
                   type='number'
                   name='age'

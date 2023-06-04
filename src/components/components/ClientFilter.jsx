@@ -1,6 +1,6 @@
 import { Formik, Form } from 'formik'
 import {
-  HStack,
+  Flex,
   Image
 } from '@chakra-ui/react'
 import * as Yup from 'yup'
@@ -25,14 +25,16 @@ const ClientFilter = ({ getData }) => {
       }}
     >
       <Form>
-        <HStack w='100%' paddingTop={4}>
-          <Field w={['50%', 'auto']} name='dni' type='text' placeholder='Cédula' />
-          <Field w={['50%', 'auto']} name='first_names' type='text' placeholder='Nombres' />
-          <Field w={['50%', 'auto']} name='last_names' type='text' placeholder='Apellidos' />
-          <button type='submit' className='button--filter'>
-            <Image maxW='4rem' minH='2rem' minW='2rem' width={['3.5rem', '4rem', '7rem']} src={SearchIcon} />
-          </button>
-        </HStack>
+        <Flex flexDirection={{ base: 'column-reverse', md: 'row' }} paddingTop='20px' w={{ base: '100%', md: 'fit-content' }}>
+          <Field w={{ base: '100%', md: 'fit-content' }} m='2.5px' name='dni' type='text' placeholder='Cédula' />
+          <Field w={{ base: '100%', md: 'fit-content' }} m='2.5px' name='first_names' type='text' placeholder='Nombres' />
+          <Field w={{ base: '100%', md: 'fit-content' }} m='2.5px' name='last_names' type='text' placeholder='Apellidos' />
+          <Flex m='2.5px' justifyContent='end'>
+            <button type='submit' className='button--filter'>
+              <Image maxW='4rem' minH='2rem' minW='2rem' width={['188.5rem', '4rem', '7rem']} src={SearchIcon} />
+            </button>
+          </Flex>
+        </Flex>
       </Form>
     </Formik>
   )
