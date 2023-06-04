@@ -81,34 +81,53 @@ const LayoutListExams = () => {
   }
 
   return (
-    <Box width='100%' display='flex' flexDirection='column' alignItems='center' m={4}>
-      <Flex flexDirection={['colum', 'row']} justifyContent='space-between' w='50%'>
+    <Box
+      width='100%'
+      display='flex'
+      flexDirection='column'
+      alignItems='center'
+      p={4}
+    >
+      <Flex
+        flexDirection={['colum',
+          'row']}
+        justifyContent='space-between'
+        w={{
+          base: '100%',
+          md: '50%'
+        }}
+      >
         <ExamenFilter handleSubmit={fetchExams} />
         <ModalTypesExams fetchExams={fetchExams} />
       </Flex>
-      <Table fontSize={['.8rem', '1rem']} variant='simple' width='50%' m={4}>
-        {IsNotSmallScreen &&
-          <Thead bg='#F4F7FF'>
-            <Tr>
-              <Th>Nombre</Th>
-              <Th>Precio</Th>
-              <Th textAlign='center'>Acciones</Th>
-            </Tr>
-          </Thead>}
+      <Table
+        fontSize={['.8rem',
+          '1rem']}
+        variant='simple'
+        w={{ base: '100%', md: '50%' }}
+        m={4}
+      >
+        <Thead bg='#F4F7FF'>
+          <Tr>
+            <Th>Nombre</Th>
+            <Th>Precio</Th>
+            <Th textAlign='center'>Acciones</Th>
+          </Tr>
+        </Thead>
         <Tbody>
           {dataExam && dataExam.map((exam, index) => (
             <Tr key={index}>
               <Td><Text color='#8E9196'>{exam.name}</Text></Td>
               <Td><Text color='#8E9196'>{exam.price}</Text></Td>
-              <Td display='flex' justifyContent='center'>
+              <Td display='flex' alignItems='center' justifyContent='center'>
                 <ModalTypesExams exam={exam} fetchExams={fetchExams} />
-                <Img cursor='pointer' onClick={() => handleDelete(exam.id)} src={DeleteIcon} />
+                <Img height='20px' mx='10px' cursor='pointer' onClick={() => handleDelete(exam.id)} src={DeleteIcon} />
               </Td>
             </Tr>
           ))}
         </Tbody>
       </Table>
-      <Flex justifyContent={['center', 'flex-end']} w='50%'>
+      <Flex justifyContent={['flex-end']} w={{ base: '100%', md: '50%' }} p={{ base: '10px', md: 0 }}>
         <PaginationButtons setNumberPagination={setNumberPaginationLogic} />
       </Flex>
     </Box>

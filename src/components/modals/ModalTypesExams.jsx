@@ -28,7 +28,6 @@ import EditIcon from '../../assets/Edit.svg'
 
 const ModalTypesExams = ({ exam, fetchExams }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [size, setSize] = React.useState('full')
   const toast = useToast()
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -39,8 +38,7 @@ const ModalTypesExams = ({ exam, fetchExams }) => {
       .positive('Inválido')
       .max(9999999999.99, 'El máximo son 9999999999.99 caracteres')
   })
-  const handleSizeClick = (newSize) => {
-    setSize(newSize)
+  const handleSizeClick = () => {
     onOpen()
   }
   const handleSubmit = async (data) => {
@@ -105,21 +103,22 @@ const ModalTypesExams = ({ exam, fetchExams }) => {
       {exam
         ? <Button
             bgColor='#FFFF'
-            mr={8}
-            onClick={() => handleSizeClick(size)}
+            onClick={() => handleSizeClick()}
+            padding='0px'
           >
-          <Img src={EditIcon} />
+          <Img src={EditIcon} height='20px' />
         </Button>
         : <Button
             bgColor='#D0D0D0'
-            mr={8}
-            onClick={() => handleSizeClick(size)}
-            display={{ base: 'none', lg: 'flex' }}
+            onClick={() => handleSizeClick()}
+            display={{ base: 'flex' }}
+            fontSize={{ base: '12px', md: '16px' }}
+            padding='5px 8px'
           >
           Agregar
           </Button>}
 
-      <Modal onClose={onClose} isOpen={isOpen} size='xl'>
+      <Modal onClose={onClose} isOpen={isOpen} size={{ base: 'xs', md: 'xl' }}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader bgColor='#0DA7D9' height='.5rem' color='#F5F5F5' textAlign='center' w='100%'>Crear Examen</ModalHeader>
@@ -147,8 +146,8 @@ const ModalTypesExams = ({ exam, fetchExams }) => {
                   <FormLabel>Precio en Dolares</FormLabel>
                   <Field name='price' type='number' />
                 </FormGroup>
-                <HStack mt={4} w='100%' justifyContent='center'>
-                  <Button w='20%' type='submit'>Crear</Button>
+                <HStack mt={4} w='100%' justifyContent='end'>
+                  <Button type='submit'>Crear</Button>
                 </HStack>
               </Form>
             </Formik>
