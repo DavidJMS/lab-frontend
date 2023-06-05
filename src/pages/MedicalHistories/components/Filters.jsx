@@ -3,7 +3,9 @@ import {
   HStack,
   Image,
   FormControl,
-  Text
+  Text,
+  Flex,
+  Box
 } from '@chakra-ui/react'
 import SearchIcon from '../../../assets/SearchClient.svg'
 import { Field } from '../../../components/shared/FormFields'
@@ -31,7 +33,7 @@ const Filters = ({ handleSubmit }) => {
         <HStack
           mb={4}
           mt={4}
-          w={['100%', '100%', '100%', '100%']}
+          w='100%'
           flexDirection={['column', 'column', 'row', 'row']}
         >
           <FormControl display='inline-flex'>
@@ -47,14 +49,6 @@ const Filters = ({ handleSubmit }) => {
               my='0.5rem'
             />
           </FormControl>
-          <FormControl display='inline-flex' px='1rem'>
-            <Text mx='1rem'> Filtrar por muestra</Text>
-            <Field as='select' name='with_samples' w='fit-content'>
-              <option value='true'>Si</option>
-              <option value='false'>No</option>
-              <option value='ninguno'>Ninguno</option>
-            </Field>
-          </FormControl>
           <FormControl w={['100%', '100%', '50%']}>
             <Field
               w={['100%', '100%', 'auto']}
@@ -63,12 +57,30 @@ const Filters = ({ handleSubmit }) => {
               type='date'
             />
           </FormControl>
-          <FormControl w={['90%', '100%']} float={{ base: 'right', md: 'none' }}>
-            <button type='submit' className='button--filter'>
-              <Image maxW='4rem' minH='2rem' minW='2rem' width={['3.5rem', '4rem', '7rem']} src={SearchIcon} />
-            </button>
-          </FormControl>
         </HStack>
+        <Flex
+          mb={4}
+          mt={4}
+          alignItems='center'
+        >
+          <Flex alignItems='center'>
+            <Text mx='1rem'>Muestra</Text>
+            <Field
+              as='select'
+              name='with_samples'
+              w='100px'
+              h='45px'
+              marginRight='10px'
+            >
+              <option value='true'>Si</option>
+              <option value='false'>No</option>
+              <option value='ninguno'>Ninguno</option>
+            </Field>
+          </Flex>
+          <button type='submit' className='button--filter'>
+            <Image maxW='4rem' minH='2rem' minW='2rem' src={SearchIcon} />
+          </button>
+        </Flex>
       </Form>
     </Formik>
   )
